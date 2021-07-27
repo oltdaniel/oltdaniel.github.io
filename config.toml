@@ -1,0 +1,51 @@
+baseURL = "https://oltdaniel.eu"
+languageCode = "en-us"
+title = "oltdaniel"
+theme = "PaperMod"
+paginate = 5
+enableEmoji = true
+
+[params]
+DateFormat = "2006-01-02"
+keywords = ["Blog", "Portfolio", "HomeLab"]
+description = "homelab - simple software - large datasets"
+ShowShareButtons = false
+env = "production"
+displayFullLangName = true
+
+[params.homeInfoParams]
+Title = "Hi there ⚡️"
+Content = "homelab - simple software - large datasets"
+
+[[params.socialIcons]]
+name = "github"
+url = "https://github.com/oltdaniel"
+
+[[params.socialIcons]]
+name = "RsS"
+url = "index.xml"
+
+[taxonomies]
+tag = "tags"
+
+[languages.en]
+weight = 1
+languageName = ":eu:"
+languageAltTitle = "English"
+
+[[languages.en.menu.main]]
+name = "Tags"
+url = "tags"
+
+[languages.de]
+weight = 2
+languageName = ":de:"
+languageAltTitle = "Deutsch"
+
+[languages.de.homeInfoParams]
+Title = "Hallo ⚡️"
+Content = "homelab - einfache software - große datensätze"
+
+[[languages.de.menu.main]]
+name = "Tags"
+url = "de/tags"
