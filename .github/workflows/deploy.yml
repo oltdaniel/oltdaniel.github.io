@@ -2,15 +2,13 @@ name: github pages
 
 on:
   push:
-    branches:
-      - master  # Set a branch to deploy
+    branches: [ master ]
   pull_request:
+    branches: [ master ]
 
 jobs:
   deploy:
     runs-on: ubuntu-20.04
-    concurrency:
-      group: ${{ github.workflow }}-${{ github.ref }}
     steps:
       - uses: actions/checkout@v2
         with:
@@ -26,10 +24,12 @@ jobs:
       - name: Build
         run: hugo --minify
 
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
-        if: ${{ github.ref == 'refs/heads/master' }}
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./public
-          cname: oltdaniel.eu
+      - name: Action - rsync
+        uses: up9cloud/action-rsync@v1.3
+        env:
+            HOST: oltdaniel.eu
+            USER: ${{secrets.DEPLOY_USER}}
+            KEY: ${{secrets.DEPLOY_SSH_KEY}}
+            TARGET: ${{secrets.DEPLOY_TARGET}}
+            SOURCE: ./public/
+            ARGS_MORE: --no-o --no-g --no-perms -O -J
