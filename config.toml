@@ -5,6 +5,9 @@ theme = "PaperMod"
 paginate = 5
 enableEmoji = true
 
+[markup.goldmark.renderer]
+unsafe = true
+
 [permalinks]
   posts = '/:year/:title/'
 
