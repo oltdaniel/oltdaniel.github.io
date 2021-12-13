@@ -5,17 +5,20 @@ theme = "PaperMod"
 paginate = 5
 enableEmoji = true
 
+[permalinks]
+  posts = '/:year/:title/'
+
 [params]
 DateFormat = "2006-01-02"
 keywords = ["Blog", "Portfolio", "HomeLab"]
-description = "homelab - simple software - large datasets"
+description = "homelab - low-level code - microcontrollers"
 ShowShareButtons = false
 env = "production"
 displayFullLangName = true
 
 [params.homeInfoParams]
 Title = "Hi there ⚡️"
-Content = "homelab - simple software - large datasets"
+Content = "homelab - low-level code - microcontrollers"
 
 [[params.socialIcons]]
 name = "github"
@@ -43,8 +46,8 @@ languageName = ":de:"
 languageAltTitle = "Deutsch"
 
 [languages.de.homeInfoParams]
-Title = "Hallo ⚡️"
-Content = "homelab - einfache software - große datensätze"
+Title = "Moin ⚡️"
+Content = "homelab - low-level code - mikrocontroller"
 
 [[languages.de.menu.main]]
 name = "Tags"
