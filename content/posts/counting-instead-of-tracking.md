@@ -1,6 +1,7 @@
 ---
 title: "Counting Instead of Tracking"
 date: 2018-11-15
+tags: ["analytics"]
 ---
 
 Analyzing the traffic a website receives, is a key part in marketing to
