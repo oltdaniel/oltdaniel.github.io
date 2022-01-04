@@ -1,170 +1,301 @@
-<!doctype html><html lang=en dir=auto>
-<head><meta charset=utf-8>
-<meta http-equiv=x-ua-compatible content="IE=edge">
-<meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no">
-<meta name=robots content="index, follow">
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
 <title>Minimal Golang Docker image | oltdaniel</title>
-<meta name=keywords content="golang,docker">
-<meta name=description content="As golang is a compiled programming language, we don&rsquo;t need to store all the unecessary build environments in our final image. So lets see, if we get rid of everything, what we need to importat again to not break anything.
+
+<meta name="keywords" content="golang, docker" />
+<meta name="description" content="As golang is a compiled programming language, we don&rsquo;t need to store all the unecessary build environments in our final image. So lets see, if we get rid of everything, what we need to importat again to not break anything.
 In order to solve everything in a single Dockerfile, we will use multi-stage builds. 1 Our first stage will be focused on the actual compiling of our application. In order to cover as many features on our application as possible, I&rsquo;ll create an API that uses timezone information, calls an external service via https and uses the lua shared library.">
-<meta name=author content>
-<link rel=canonical href=https://oltdaniel.eu/2022/minimal-golang-docker-image/>
-<link href=/assets/css/stylesheet.min.746a86b58bb2b052b5e4df8216510494f04f81e62c08d626150c26c69ca929da.css integrity="sha256-dGqGtYuysFK15N+CFlEElPBPgeYsCNYmFQwmxpypKdo=" rel="preload stylesheet" as=style>
-<link rel=icon href=https://oltdaniel.eu/favicon.ico>
-<link rel=icon type=image/png sizes=16x16 href=https://oltdaniel.eu/favicon-16x16.png>
-<link rel=icon type=image/png sizes=32x32 href=https://oltdaniel.eu/favicon-32x32.png>
-<link rel=apple-touch-icon href=https://oltdaniel.eu/apple-touch-icon.png>
-<link rel=mask-icon href=https://oltdaniel.eu/safari-pinned-tab.svg>
-<meta name=theme-color content="#2e2e33">
-<meta name=msapplication-TileColor content="#2e2e33">
-<meta name=generator content="Hugo 0.91.2">
-<link rel=alternate hreflang=en href=https://oltdaniel.eu/2022/minimal-golang-docker-image/>
-<meta name=msvalidate.01 content="C0FC5820A59ECFDDEEC55CBFBCB401DB">
-<meta name=google-site-verification content="4hixKd4l51-2c06aXIohe8qNvSTziYGFQpDiwC7ciCg">
-<meta property="og:title" content="Minimal Golang Docker image">
+<meta name="author" content="">
+<link rel="canonical" href="https://oltdaniel.eu/2022/minimal-golang-docker-image/" />
+<link href="/assets/css/stylesheet.min.746a86b58bb2b052b5e4df8216510494f04f81e62c08d626150c26c69ca929da.css" integrity="sha256-dGqGtYuysFK15N&#43;CFlEElPBPgeYsCNYmFQwmxpypKdo=" rel="preload stylesheet"
+    as="style">
+
+<link rel="icon" href="https://oltdaniel.eu/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://oltdaniel.eu/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://oltdaniel.eu/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://oltdaniel.eu/apple-touch-icon.png">
+<link rel="mask-icon" href="https://oltdaniel.eu/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<meta name="generator" content="Hugo 0.91.2" />
+<link rel="alternate" hreflang="en" href="https://oltdaniel.eu/2022/minimal-golang-docker-image/" />
+<meta name="msvalidate.01" content="C0FC5820A59ECFDDEEC55CBFBCB401DB" />
+<meta name="google-site-verification" content="4hixKd4l51-2c06aXIohe8qNvSTziYGFQpDiwC7ciCg" />
+<meta property="og:title" content="Minimal Golang Docker image" />
 <meta property="og:description" content="As golang is a compiled programming language, we don&rsquo;t need to store all the unecessary build environments in our final image. So lets see, if we get rid of everything, what we need to importat again to not break anything.
-In order to solve everything in a single Dockerfile, we will use multi-stage builds. 1 Our first stage will be focused on the actual compiling of our application. In order to cover as many features on our application as possible, I&rsquo;ll create an API that uses timezone information, calls an external service via https and uses the lua shared library.">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://oltdaniel.eu/2022/minimal-golang-docker-image/"><meta property="article:section" content="posts">
-<meta property="article:published_time" content="2022-01-04T00:00:00+00:00">
-<meta property="article:modified_time" content="2022-01-04T00:00:00+00:00">
-<meta name=twitter:card content="summary">
-<meta name=twitter:title content="Minimal Golang Docker image">
-<meta name=twitter:description content="As golang is a compiled programming language, we don&rsquo;t need to store all the unecessary build environments in our final image. So lets see, if we get rid of everything, what we need to importat again to not break anything.
-In order to solve everything in a single Dockerfile, we will use multi-stage builds. 1 Our first stage will be focused on the actual compiling of our application. In order to cover as many features on our application as possible, I&rsquo;ll create an API that uses timezone information, calls an external service via https and uses the lua shared library.">
-<script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":2,"name":"Posts","item":"https://oltdaniel.eu/posts/"},{"@type":"ListItem","position":3,"name":"Minimal Golang Docker image","item":"https://oltdaniel.eu/2022/minimal-golang-docker-image/"}]}</script>
-<script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"Minimal Golang Docker image","name":"Minimal Golang Docker image","description":"As golang is a compiled programming language, we don\u0026rsquo;t need to store all the unecessary build environments in our final image. So lets see, if we get rid of everything, what we need to importat again to not break anything.\nIn order to solve everything in a single Dockerfile, we will use multi-stage builds. 1 Our first stage will be focused on the actual compiling of our application. In order to cover as many features on our application as possible, I\u0026rsquo;ll create an API that uses timezone information, calls an external service via https and uses the lua shared library.","keywords":["golang","docker"],"articleBody":"As golang is a compiled programming language, we don’t need to store all the unecessary build environments in our final image. So lets see, if we get rid of everything, what we need to importat again to not break anything.\nIn order to solve everything in a single Dockerfile, we will use multi-stage builds. 1 Our first stage will be focused on the actual compiling of our application. In order to cover as many features on our application as possible, I’ll create an API that uses timezone information, calls an external service via https and uses the lua shared library.\nProject setup First we create a new folder and initialize our dependecy manager and load some dependencies.\ngo mod init github.com/oltdaniel/golang-minimal-docker # we will use gin as our webserver go get github.com/gin-gonic/gin # and a lua binding go get github.com/aarzilli/golua/lua package main import ( \"io\" \"log\" \"net/http\" \"time\" \"github.com/aarzilli/golua/lua\" \"github.com/gin-gonic/gin\" ) func main() { s := gin.Default() // call another api via https \t// this will require ca-certificates \t// for veriying the ssl certificate \ts.GET(\"/ip\", func(c *gin.Context) { resp, err := http.Get(\"https://api.ipify.org\") if err != nil { log.Fatal(err) } c.Status(resp.StatusCode) io.Copy(c.Writer, resp.Body) }) // convert some stuff within the timezones \t// this will require the timezone data \ts.GET(\"/time\", func(c *gin.Context) { wantedTimeLocation, err := time.LoadLocation(\"Asia/Tokyo\") if err != nil { log.Fatal(err) } c.String( 200, \"server time in japan would be %v\", time.Now().In(wantedTimeLocation).String()) }) // here we create a lua machine \t// register a custom response function \t// and execute the response directly from within the lua machine \t// this will require the use of the lua library \ts.GET(\"/lua\", func(c *gin.Context) { lmachine := lua.NewState() defer lmachine.Close() lmachine.Register(\"response\", func(ls *lua.State) int { resp := ls.ToString(1) c.String(200, resp) return 1 }) err := lmachine.DoString(\"response 'hello world'\") if err != nil { log.Fatal(err) } }) s.Run(\":3001\") } First stage # use a fully featured golang build environmentFROMgolang:latest AS builder# install project dependenciesRUN apt update \u0026\u0026 apt install -y liblua5.1# select a space for our workWORKDIR/app# copy dependency filesCOPY go.mod .COPY go.sum .# install dependenciesRUN go mod download# copy everything elseCOPY . .# compile our golang projectRUN GOOS=linux go build -a main.go# expose e.g. a API portEXPOSE3001# start our application if no exec command givenCMD [\"/app/main\"]At this point, we don’t really care about the image size at all. We can utilize all tools we require in our build environment due to the default debian system. The order of the build steps are essential at this point, if you want to reduce the number of total steps that need to be execute during a new build of the image.\n Install any system wide packages that are required via apt. Specify your work environment and install only the project related dependencies. Copy the actual source code of you application. Compile everything.  It is important to note here, that the use of .dockerignore will also help to reduce the build steps, as the COPY . . step will be executed again, if anything in the project folder changed, that is not marked to be ignored in the .dockerignore file.\nThe image we have here is a total of 1.19GB.\nSecond stage The second stage can be split into to different approaches, which will both result in changes of our first stage. You need to ask yourself now, whether your project has any direct usage of non-go libraries. An example for this can be the use of the shared lua library for some embedded scripting functionalities. In general, if you don’t really known how your libraries work under the hood or just have too many to check them manually, you can simply try to compile them with both approaches and test it. The scratch image with not dependencies at all will however be smaller.\nSecond stage: For system libraries Compiling everything into a static library or even into the executable itself can be really difficult and heavily depends on the implementation of dependecy owner. For a better developer experience I would suggest to make use of the alpine linux image. It is very minimal, but still comes with a huge selection of packages that can be installed. As the Golang docker image also supports and alpine image, I suggest we use that, as especially the libraries we may require, will be exactly the same between the first and second stage, which reduces the number of bugs we may run into, like different package names.\nSo lets rebuild the first stage and add the second one. In my example I’ll use the golua2 package which requires the shared library of lua.\n# first stage for our compiling environmentFROMgolang:alpine AS builder# install build toolsRUN apk add --no-cache build-base# install librariesRUN apk add --no-cache lua5.1-dev# select a space for our workWORKDIR/app# copy dependency filesCOPY go.mod .COPY go.sum .# install dependenciesRUN go mod download# copy everything elseCOPY . .# compile our golang projectRUN GOOS=linux go build -a main.go# second stage that will actually be published/deployedFROMalpine# install timezone and certificate filesRUN apk add --no-cache tzdata ca-certificates# install librariesRUN apk add --no-cache lua5.1-dev# copy our binaryCOPY --from=builder /app/main /# expose e.g. a API portEXPOSE3001# start our application if no exec command givenCMD [\"/main\"]This results in an 18MB docker image.\nSecond stage: Just the basics If your project is focused on only in go written depencies and doesn’t cause any problems if you strip away everything from the OS itself.\n As an example I use the same project, but removed the lua functionality due to the bindings.\n For this, we don’t care about the first stage as we did before. It can be as big as you like, as nothing will be deployed later on and we don’t need to worry about any system libraries. In order to ensure that we don’t run into any issues with out compiled binary, we need to make sure, the go compiler knows that the binary won’t have any access to the current libraries later on. For this we can utilize the compiler flags use in the multistage example of the docker documentation. 1\n CGO_ENABLED=0 will tell the go compiler, it doesn’t have access to any system libraries. however, the -installsuffix cgo argument is not required anymore as stated in the original GitHub issue about static linking issues. 3  # use a fully featured golang build environmentFROMgolang:latest AS builder# change directory of projectWORKDIR/app# copy everything elseCOPY . .# compile our golang projectRUN CGO_ENABLED=0 GOOS=linux go build -o main .FROMscratch# copy ca certificates to verify other ssl certificatesCOPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt# copy timezone informationCOPY --from=builder /usr/share/zoneinfo /usr/share/zoneinfo# copy actual compiled binaryCOPY --from=builder /app/main /# expose portEXPOSE3001# start binaryCMD [\"/main\"]This results in an 11.7MB docker image. But we got rid of the shared lua library which was a essential function of our project.\nHowever, there are a lot of projects out there, that port shared library projects to a pure golang version. However, finding bindings for a package you want to you, is way easier. Additionally, many projects like simple APIs don’t actually require any bindings at all, especially if you require new versions of certain projects.\nResult full image 1.19GB - extremly large size - lot of overhead for running this container + easy dependency management + similar to many developer environments alpine image 18MB - package names can be different - more initial work to find all missing dependencies + well supported and documented + very small image and overhead scratch image 11.7MB - no usage of complex dependencies - no system commands (ls, chmod, ...) + perfect for small projects + runs only what you want Final word Again, the choice is up to you. Every option I listed has nearly equal pros and cons and what speaks most to you or to your project can be different. I personally always suggest to take a look at alpine images and maybe your project can be up and running in a much smaller image with just a few lines of changes.\nHowever, even though scratch images look like a nice thing, it breaks things more often than it actually improves it. So I only suggest this type of image, if you really just have a minimal static binary that needs to be honest and doesn’t have any complex dependencies into the system libraries.\n  docker docs “multistage build”: docs.docker.com/develop/develop-images/multistage-build ↩︎\n GitHub golua: github.com/aarzilli/golua ↩︎\n GitHub comment about newer golang versions and static linking: github.com/golang/go/issues/9344#issuecomment-69944514 ↩︎\n   ","wordCount":"1392","inLanguage":"en","datePublished":"2022-01-04T00:00:00Z","dateModified":"2022-01-04T00:00:00Z","mainEntityOfPage":{"@type":"WebPage","@id":"https://oltdaniel.eu/2022/minimal-golang-docker-image/"},"publisher":{"@type":"Organization","name":"oltdaniel","logo":{"@type":"ImageObject","url":"https://oltdaniel.eu/favicon.ico"}}}</script>
+In order to solve everything in a single Dockerfile, we will use multi-stage builds. 1 Our first stage will be focused on the actual compiling of our application. In order to cover as many features on our application as possible, I&rsquo;ll create an API that uses timezone information, calls an external service via https and uses the lua shared library." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oltdaniel.eu/2022/minimal-golang-docker-image/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-01-04T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2022-01-04T00:00:00&#43;00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Minimal Golang Docker image"/>
+<meta name="twitter:description" content="As golang is a compiled programming language, we don&rsquo;t need to store all the unecessary build environments in our final image. So lets see, if we get rid of everything, what we need to importat again to not break anything.
+In order to solve everything in a single Dockerfile, we will use multi-stage builds. 1 Our first stage will be focused on the actual compiling of our application. In order to cover as many features on our application as possible, I&rsquo;ll create an API that uses timezone information, calls an external service via https and uses the lua shared library."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Posts",
+      "item": "https://oltdaniel.eu/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "Minimal Golang Docker image",
+      "item": "https://oltdaniel.eu/2022/minimal-golang-docker-image/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Minimal Golang Docker image",
+  "name": "Minimal Golang Docker image",
+  "description": "As golang is a compiled programming language, we don\u0026rsquo;t need to store all the unecessary build environments in our final image. So lets see, if we get rid of everything, what we need to importat again to not break anything.\nIn order to solve everything in a single Dockerfile, we will use multi-stage builds. 1 Our first stage will be focused on the actual compiling of our application. In order to cover as many features on our application as possible, I\u0026rsquo;ll create an API that uses timezone information, calls an external service via https and uses the lua shared library.",
+  "keywords": [
+    "golang", "docker"
+  ],
+  "articleBody": "As golang is a compiled programming language, we don’t need to store all the unecessary build environments in our final image. So lets see, if we get rid of everything, what we need to importat again to not break anything.\nIn order to solve everything in a single Dockerfile, we will use multi-stage builds. 1 Our first stage will be focused on the actual compiling of our application. In order to cover as many features on our application as possible, I’ll create an API that uses timezone information, calls an external service via https and uses the lua shared library.\nProject setup First we create a new folder and initialize our dependecy manager and load some dependencies.\ngo mod init github.com/oltdaniel/golang-minimal-docker # we will use gin as our webserver go get github.com/gin-gonic/gin # and a lua binding go get github.com/aarzilli/golua/lua package main import ( \"io\" \"log\" \"net/http\" \"time\" \"github.com/aarzilli/golua/lua\" \"github.com/gin-gonic/gin\" ) func main() { s := gin.Default() // call another api via https \t// this will require ca-certificates \t// for veriying the ssl certificate \ts.GET(\"/ip\", func(c *gin.Context) { resp, err := http.Get(\"https://api.ipify.org\") if err != nil { log.Fatal(err) } c.Status(resp.StatusCode) io.Copy(c.Writer, resp.Body) }) // convert some stuff within the timezones \t// this will require the timezone data \ts.GET(\"/time\", func(c *gin.Context) { wantedTimeLocation, err := time.LoadLocation(\"Asia/Tokyo\") if err != nil { log.Fatal(err) } c.String( 200, \"server time in japan would be %v\", time.Now().In(wantedTimeLocation).String()) }) // here we create a lua machine \t// register a custom response function \t// and execute the response directly from within the lua machine \t// this will require the use of the lua library \ts.GET(\"/lua\", func(c *gin.Context) { lmachine := lua.NewState() defer lmachine.Close() lmachine.Register(\"response\", func(ls *lua.State) int { resp := ls.ToString(1) c.String(200, resp) return 1 }) err := lmachine.DoString(\"response 'hello world'\") if err != nil { log.Fatal(err) } }) s.Run(\":3001\") } First stage # use a fully featured golang build environmentFROMgolang:latest AS builder# install project dependenciesRUN apt update \u0026\u0026 apt install -y liblua5.1# select a space for our workWORKDIR/app# copy dependency filesCOPY go.mod .COPY go.sum .# install dependenciesRUN go mod download# copy everything elseCOPY . .# compile our golang projectRUN GOOS=linux go build -a main.go# expose e.g. a API portEXPOSE3001# start our application if no exec command givenCMD [\"/app/main\"]At this point, we don’t really care about the image size at all. We can utilize all tools we require in our build environment due to the default debian system. The order of the build steps are essential at this point, if you want to reduce the number of total steps that need to be execute during a new build of the image.\n Install any system wide packages that are required via apt. Specify your work environment and install only the project related dependencies. Copy the actual source code of you application. Compile everything.  It is important to note here, that the use of .dockerignore will also help to reduce the build steps, as the COPY . . step will be executed again, if anything in the project folder changed, that is not marked to be ignored in the .dockerignore file.\nThe image we have here is a total of 1.19GB.\nSecond stage The second stage can be split into to different approaches, which will both result in changes of our first stage. You need to ask yourself now, whether your project has any direct usage of non-go libraries. An example for this can be the use of the shared lua library for some embedded scripting functionalities. In general, if you don’t really known how your libraries work under the hood or just have too many to check them manually, you can simply try to compile them with both approaches and test it. The scratch image with not dependencies at all will however be smaller.\nSecond stage: For system libraries Compiling everything into a static library or even into the executable itself can be really difficult and heavily depends on the implementation of dependecy owner. For a better developer experience I would suggest to make use of the alpine linux image. It is very minimal, but still comes with a huge selection of packages that can be installed. As the Golang docker image also supports and alpine image, I suggest we use that, as especially the libraries we may require, will be exactly the same between the first and second stage, which reduces the number of bugs we may run into, like different package names.\nSo lets rebuild the first stage and add the second one. In my example I’ll use the golua2 package which requires the shared library of lua.\n# first stage for our compiling environmentFROMgolang:alpine AS builder# install build toolsRUN apk add --no-cache build-base# install librariesRUN apk add --no-cache lua5.1-dev# select a space for our workWORKDIR/app# copy dependency filesCOPY go.mod .COPY go.sum .# install dependenciesRUN go mod download# copy everything elseCOPY . .# compile our golang projectRUN GOOS=linux go build -a main.go# second stage that will actually be published/deployedFROMalpine# install timezone and certificate filesRUN apk add --no-cache tzdata ca-certificates# install librariesRUN apk add --no-cache lua5.1-dev# copy our binaryCOPY --from=builder /app/main /# expose e.g. a API portEXPOSE3001# start our application if no exec command givenCMD [\"/main\"]This results in an 18MB docker image.\nSecond stage: Just the basics If your project is focused on only in go written depencies and doesn’t cause any problems if you strip away everything from the OS itself.\n As an example I use the same project, but removed the lua functionality due to the bindings.\n For this, we don’t care about the first stage as we did before. It can be as big as you like, as nothing will be deployed later on and we don’t need to worry about any system libraries. In order to ensure that we don’t run into any issues with out compiled binary, we need to make sure, the go compiler knows that the binary won’t have any access to the current libraries later on. For this we can utilize the compiler flags use in the multistage example of the docker documentation. 1\n CGO_ENABLED=0 will tell the go compiler, it doesn’t have access to any system libraries. however, the -installsuffix cgo argument is not required anymore as stated in the original GitHub issue about static linking issues. 3  # use a fully featured golang build environmentFROMgolang:latest AS builder# change directory of projectWORKDIR/app# copy everything elseCOPY . .# compile our golang projectRUN CGO_ENABLED=0 GOOS=linux go build -o main .FROMscratch# copy ca certificates to verify other ssl certificatesCOPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt# copy timezone informationCOPY --from=builder /usr/share/zoneinfo /usr/share/zoneinfo# copy actual compiled binaryCOPY --from=builder /app/main /# expose portEXPOSE3001# start binaryCMD [\"/main\"]This results in an 11.7MB docker image. But we got rid of the shared lua library which was a essential function of our project.\nHowever, there are a lot of projects out there, that port shared library projects to a pure golang version. However, finding bindings for a package you want to you, is way easier. Additionally, many projects like simple APIs don’t actually require any bindings at all, especially if you require new versions of certain projects.\nResult full image 1.19GB - extremly large size - lot of overhead for running this container + easy dependency management + similar to many developer environments alpine image 18MB - package names can be different - more initial work to find all missing dependencies + well supported and documented + very small image and overhead scratch image 11.7MB - no usage of complex dependencies - no system commands (ls, chmod, ...) + perfect for small projects + runs only what you want Final word Again, the choice is up to you. Every option I listed has nearly equal pros and cons and what speaks most to you or to your project can be different. I personally always suggest to take a look at alpine images and maybe your project can be up and running in a much smaller image with just a few lines of changes.\nHowever, even though scratch images look like a nice thing, it breaks things more often than it actually improves it. So I only suggest this type of image, if you really just have a minimal static binary that needs to be honest and doesn’t have any complex dependencies into the system libraries.\n  docker docs “multistage build”: docs.docker.com/develop/develop-images/multistage-build ↩︎\n GitHub golua: github.com/aarzilli/golua ↩︎\n GitHub comment about newer golang versions and static linking: github.com/golang/go/issues/9344#issuecomment-69944514 ↩︎\n   ",
+  "wordCount" : "1392",
+  "inLanguage": "en",
+  "datePublished": "2022-01-04T00:00:00Z",
+  "dateModified": "2022-01-04T00:00:00Z",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://oltdaniel.eu/2022/minimal-golang-docker-image/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "oltdaniel",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://oltdaniel.eu/favicon.ico"
+    }
+  }
+}
+</script>
+
+
+
+
+
 </head>
-<body id=top>
-<script>localStorage.getItem("pref-theme")==="dark"?document.body.classList.add('dark'):localStorage.getItem("pref-theme")==="light"?document.body.classList.remove('dark'):window.matchMedia('(prefers-color-scheme: dark)').matches&&document.body.classList.add('dark')</script>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
 <noscript>
-<style type=text/css>#theme-toggle,.top-link{display:none}</style>
-<style>@media(prefers-color-scheme:dark){:root{--theme:#1d1e20;--entry:#2e2e33;--primary:rgba(255, 255, 255, 0.84);--secondary:rgba(255, 255, 255, 0.56);--tertiary:rgba(255, 255, 255, 0.16);--content:rgba(255, 255, 255, 0.74);--hljs-bg:#2e2e33;--code-bg:#37383e;--border:#333}.list{background:var(--theme)}.list:not(.dark)::-webkit-scrollbar-track{background:0 0}.list:not(.dark)::-webkit-scrollbar-thumb{border-color:var(--theme)}}</style>
+    <style type="text/css">
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: #1d1e20;
+                --entry: #2e2e33;
+                --primary: rgba(255, 255, 255, 0.84);
+                --secondary: rgba(255, 255, 255, 0.56);
+                --tertiary: rgba(255, 255, 255, 0.16);
+                --content: rgba(255, 255, 255, 0.74);
+                --hljs-bg: #2e2e33;
+                --code-bg: #37383e;
+                --border: #333;
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+    </style>
+
 </noscript>
-<header class=header>
-<nav class=nav>
-<div class=logo>
-<a href=https://oltdaniel.eu accesskey=h title="oltdaniel (Alt + H)">oltdaniel</a>
-<span class=logo-switches>
-<button id=theme-toggle accesskey=t title="(Alt + T)"><svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg><svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-</button>
-<ul class=lang-switch><li>|</li>
-<li>
-<a href=https://oltdaniel.eu/de/ title=:de: aria-label=:de:>🇩🇪</a>
-</li>
-</ul>
-</span>
-</div>
-<ul id=menu onscroll=menu_on_scroll()>
-<li>
-<a href=https://oltdaniel.eu/tags title=Tags>
-<span>Tags</span>
-</a>
-</li></ul>
-</nav>
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://oltdaniel.eu" accesskey="h" title="oltdaniel (Alt + H)">oltdaniel</a>
+            <span class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+                
+                
+
+                <ul class="lang-switch"><li>|</li>
+                    <li>
+                        <a href="https://oltdaniel.eu/de/" title=":de:"
+                            aria-label=":de:">🇩🇪</a>
+                    </li>
+                </ul>
+            </span>
+        </div>
+        <ul id="menu" onscroll="menu_on_scroll()">
+            <li>
+                <a href="https://oltdaniel.eu/tags" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li></ul>
+    </nav>
 </header>
-<main class=main>
-<article class=post-single>
-<header class=post-header>
-<h1 class=post-title>
-Minimal Golang Docker image
-</h1>
-<div class=post-meta>2022-01-04
+
+    <main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+
+    <h1 class="post-title">
+      Minimal Golang Docker image
+    </h1>
+    <div class="post-meta">2022-01-04
+
+
 </div>
-</header>
-<div class=post-content>
+  </header> 
+
+  <div class="post-content">
 <p>As golang is a compiled programming language, we don&rsquo;t need to store all the unecessary build environments in our final image. So lets see, if we get rid of everything, what we need to importat again to not break anything.</p>
-<p>In order to solve everything in a single <code>Dockerfile</code>, we will use multi-stage builds. <sup id=fnref:1><a href=#fn:1 class=footnote-ref role=doc-noteref>1</a></sup> Our first stage will be focused on the actual compiling of our application. In order to cover as many features on our application as possible, I&rsquo;ll create an API that uses timezone information, calls an external service via https and uses the lua shared library.</p>
-<h2 id=project-setup>Project setup<a hidden class=anchor aria-hidden=true href=#project-setup>#</a></h2>
+<p>In order to solve everything in a single <code>Dockerfile</code>, we will use multi-stage builds. <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> Our first stage will be focused on the actual compiling of our application. In order to cover as many features on our application as possible, I&rsquo;ll create an API that uses timezone information, calls an external service via https and uses the lua shared library.</p>
+<h2 id="project-setup">Project setup<a hidden class="anchor" aria-hidden="true" href="#project-setup">#</a></h2>
 <p>First we create a new folder and initialize our dependecy manager and load some dependencies.</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>go mod init github.com/oltdaniel/golang-minimal-docker
-<span style=color:#75715e># we will use gin as our webserver</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">go mod init github.com/oltdaniel/golang-minimal-docker
+<span style="color:#75715e"># we will use gin as our webserver</span>
 go get github.com/gin-gonic/gin
-<span style=color:#75715e># and a lua binding</span>
+<span style="color:#75715e"># and a lua binding</span>
 go get github.com/aarzilli/golua/lua
-</code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-golang data-lang=golang><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
 
-<span style=color:#f92672>import</span> (
-	<span style=color:#e6db74>&#34;io&#34;</span>
-	<span style=color:#e6db74>&#34;log&#34;</span>
-	<span style=color:#e6db74>&#34;net/http&#34;</span>
-	<span style=color:#e6db74>&#34;time&#34;</span>
+<span style="color:#f92672">import</span> (
+	<span style="color:#e6db74">&#34;io&#34;</span>
+	<span style="color:#e6db74">&#34;log&#34;</span>
+	<span style="color:#e6db74">&#34;net/http&#34;</span>
+	<span style="color:#e6db74">&#34;time&#34;</span>
 
-	<span style=color:#e6db74>&#34;github.com/aarzilli/golua/lua&#34;</span>
-	<span style=color:#e6db74>&#34;github.com/gin-gonic/gin&#34;</span>
+	<span style="color:#e6db74">&#34;github.com/aarzilli/golua/lua&#34;</span>
+	<span style="color:#e6db74">&#34;github.com/gin-gonic/gin&#34;</span>
 )
 
-<span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
-	<span style=color:#a6e22e>s</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>gin</span>.<span style=color:#a6e22e>Default</span>()
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+	<span style="color:#a6e22e">s</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">gin</span>.<span style="color:#a6e22e">Default</span>()
 
-	<span style=color:#75715e>// call another api via https
-</span><span style=color:#75715e></span>	<span style=color:#75715e>// this will require ca-certificates
-</span><span style=color:#75715e></span>	<span style=color:#75715e>// for veriying the ssl certificate
-</span><span style=color:#75715e></span>	<span style=color:#a6e22e>s</span>.<span style=color:#a6e22e>GET</span>(<span style=color:#e6db74>&#34;/ip&#34;</span>, <span style=color:#66d9ef>func</span>(<span style=color:#a6e22e>c</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>gin</span>.<span style=color:#a6e22e>Context</span>) {
-		<span style=color:#a6e22e>resp</span>, <span style=color:#a6e22e>err</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>http</span>.<span style=color:#a6e22e>Get</span>(<span style=color:#e6db74>&#34;https://api.ipify.org&#34;</span>)
-		<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>err</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
-			<span style=color:#a6e22e>log</span>.<span style=color:#a6e22e>Fatal</span>(<span style=color:#a6e22e>err</span>)
+	<span style="color:#75715e">// call another api via https
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// this will require ca-certificates
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// for veriying the ssl certificate
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">GET</span>(<span style="color:#e6db74">&#34;/ip&#34;</span>, <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">gin</span>.<span style="color:#a6e22e">Context</span>) {
+		<span style="color:#a6e22e">resp</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Get</span>(<span style="color:#e6db74">&#34;https://api.ipify.org&#34;</span>)
+		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+			<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatal</span>(<span style="color:#a6e22e">err</span>)
 		}
 
-		<span style=color:#a6e22e>c</span>.<span style=color:#a6e22e>Status</span>(<span style=color:#a6e22e>resp</span>.<span style=color:#a6e22e>StatusCode</span>)
-		<span style=color:#a6e22e>io</span>.<span style=color:#a6e22e>Copy</span>(<span style=color:#a6e22e>c</span>.<span style=color:#a6e22e>Writer</span>, <span style=color:#a6e22e>resp</span>.<span style=color:#a6e22e>Body</span>)
+		<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Status</span>(<span style="color:#a6e22e">resp</span>.<span style="color:#a6e22e">StatusCode</span>)
+		<span style="color:#a6e22e">io</span>.<span style="color:#a6e22e">Copy</span>(<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Writer</span>, <span style="color:#a6e22e">resp</span>.<span style="color:#a6e22e">Body</span>)
 	})
 
-	<span style=color:#75715e>// convert some stuff within the timezones
-</span><span style=color:#75715e></span>	<span style=color:#75715e>// this will require the timezone data
-</span><span style=color:#75715e></span>	<span style=color:#a6e22e>s</span>.<span style=color:#a6e22e>GET</span>(<span style=color:#e6db74>&#34;/time&#34;</span>, <span style=color:#66d9ef>func</span>(<span style=color:#a6e22e>c</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>gin</span>.<span style=color:#a6e22e>Context</span>) {
-		<span style=color:#a6e22e>wantedTimeLocation</span>, <span style=color:#a6e22e>err</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>time</span>.<span style=color:#a6e22e>LoadLocation</span>(<span style=color:#e6db74>&#34;Asia/Tokyo&#34;</span>)
-		<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>err</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
-			<span style=color:#a6e22e>log</span>.<span style=color:#a6e22e>Fatal</span>(<span style=color:#a6e22e>err</span>)
+	<span style="color:#75715e">// convert some stuff within the timezones
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// this will require the timezone data
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">GET</span>(<span style="color:#e6db74">&#34;/time&#34;</span>, <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">gin</span>.<span style="color:#a6e22e">Context</span>) {
+		<span style="color:#a6e22e">wantedTimeLocation</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">LoadLocation</span>(<span style="color:#e6db74">&#34;Asia/Tokyo&#34;</span>)
+		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+			<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatal</span>(<span style="color:#a6e22e">err</span>)
 		}
-		<span style=color:#a6e22e>c</span>.<span style=color:#a6e22e>String</span>(
-      <span style=color:#ae81ff>200</span>,
-      <span style=color:#e6db74>&#34;server time in japan would be %v&#34;</span>,
-      <span style=color:#a6e22e>time</span>.<span style=color:#a6e22e>Now</span>().<span style=color:#a6e22e>In</span>(<span style=color:#a6e22e>wantedTimeLocation</span>).<span style=color:#a6e22e>String</span>())
+		<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">String</span>(
+      <span style="color:#ae81ff">200</span>,
+      <span style="color:#e6db74">&#34;server time in japan would be %v&#34;</span>,
+      <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>().<span style="color:#a6e22e">In</span>(<span style="color:#a6e22e">wantedTimeLocation</span>).<span style="color:#a6e22e">String</span>())
 	})
 
-	<span style=color:#75715e>// here we create a lua machine
-</span><span style=color:#75715e></span>	<span style=color:#75715e>// register a custom response function
-</span><span style=color:#75715e></span>	<span style=color:#75715e>// and execute the response directly from within the lua machine
-</span><span style=color:#75715e></span>	<span style=color:#75715e>// this will require the use of the lua library
-</span><span style=color:#75715e></span>	<span style=color:#a6e22e>s</span>.<span style=color:#a6e22e>GET</span>(<span style=color:#e6db74>&#34;/lua&#34;</span>, <span style=color:#66d9ef>func</span>(<span style=color:#a6e22e>c</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>gin</span>.<span style=color:#a6e22e>Context</span>) {
-		<span style=color:#a6e22e>lmachine</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>lua</span>.<span style=color:#a6e22e>NewState</span>()
-		<span style=color:#66d9ef>defer</span> <span style=color:#a6e22e>lmachine</span>.<span style=color:#a6e22e>Close</span>()
+	<span style="color:#75715e">// here we create a lua machine
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// register a custom response function
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// and execute the response directly from within the lua machine
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// this will require the use of the lua library
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">GET</span>(<span style="color:#e6db74">&#34;/lua&#34;</span>, <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">gin</span>.<span style="color:#a6e22e">Context</span>) {
+		<span style="color:#a6e22e">lmachine</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">lua</span>.<span style="color:#a6e22e">NewState</span>()
+		<span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">lmachine</span>.<span style="color:#a6e22e">Close</span>()
 
-		<span style=color:#a6e22e>lmachine</span>.<span style=color:#a6e22e>Register</span>(<span style=color:#e6db74>&#34;response&#34;</span>, <span style=color:#66d9ef>func</span>(<span style=color:#a6e22e>ls</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>lua</span>.<span style=color:#a6e22e>State</span>) <span style=color:#66d9ef>int</span> {
-			<span style=color:#a6e22e>resp</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>ls</span>.<span style=color:#a6e22e>ToString</span>(<span style=color:#ae81ff>1</span>)
-			<span style=color:#a6e22e>c</span>.<span style=color:#a6e22e>String</span>(<span style=color:#ae81ff>200</span>, <span style=color:#a6e22e>resp</span>)
-			<span style=color:#66d9ef>return</span> <span style=color:#ae81ff>1</span>
+		<span style="color:#a6e22e">lmachine</span>.<span style="color:#a6e22e">Register</span>(<span style="color:#e6db74">&#34;response&#34;</span>, <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">ls</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">lua</span>.<span style="color:#a6e22e">State</span>) <span style="color:#66d9ef">int</span> {
+			<span style="color:#a6e22e">resp</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">ls</span>.<span style="color:#a6e22e">ToString</span>(<span style="color:#ae81ff">1</span>)
+			<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">String</span>(<span style="color:#ae81ff">200</span>, <span style="color:#a6e22e">resp</span>)
+			<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>
 		})
 
-		<span style=color:#a6e22e>err</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>lmachine</span>.<span style=color:#a6e22e>DoString</span>(<span style=color:#e6db74>&#34;response &#39;hello world&#39;&#34;</span>)
-		<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>err</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
-			<span style=color:#a6e22e>log</span>.<span style=color:#a6e22e>Fatal</span>(<span style=color:#a6e22e>err</span>)
+		<span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">lmachine</span>.<span style="color:#a6e22e">DoString</span>(<span style="color:#e6db74">&#34;response &#39;hello world&#39;&#34;</span>)
+		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+			<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatal</span>(<span style="color:#a6e22e">err</span>)
 		}
 	})
 
-	<span style=color:#a6e22e>s</span>.<span style=color:#a6e22e>Run</span>(<span style=color:#e6db74>&#34;:3001&#34;</span>)
+	<span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">Run</span>(<span style="color:#e6db74">&#34;:3001&#34;</span>)
 }
-</code></pre></div><h2 id=first-stage>First stage<a hidden class=anchor aria-hidden=true href=#first-stage>#</a></h2>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-Dockerfile data-lang=Dockerfile><span style=color:#75715e># use a fully featured golang build environment</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>FROM</span><span style=color:#e6db74> golang:latest AS builder</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e># install project dependencies</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>RUN</span> apt update <span style=color:#f92672>&amp;&amp;</span> apt install -y liblua5.1<span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e># select a space for our work</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>WORKDIR</span><span style=color:#e6db74> /app</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e># copy dependency files</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>COPY</span> go.mod .<span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>COPY</span> go.sum .<span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e># install dependencies</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>RUN</span> go mod download<span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e># copy everything else</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>COPY</span> . .<span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e># compile our golang project</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>RUN</span> GOOS<span style=color:#f92672>=</span>linux go build -a main.go<span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e># expose e.g. a API port</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>EXPOSE</span><span style=color:#e6db74> 3001</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e># start our application if no exec command given</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>CMD</span> [<span style=color:#e6db74>&#34;/app/main&#34;</span>]<span style=color:#960050;background-color:#1e0010>
+</code></pre></div><h2 id="first-stage">First stage<a hidden class="anchor" aria-hidden="true" href="#first-stage">#</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Dockerfile" data-lang="Dockerfile"><span style="color:#75715e"># use a fully featured golang build environment</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">FROM</span><span style="color:#e6db74"> golang:latest AS builder</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># install project dependencies</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> apt update <span style="color:#f92672">&amp;&amp;</span> apt install -y liblua5.1<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># select a space for our work</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">WORKDIR</span><span style="color:#e6db74"> /app</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># copy dependency files</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">COPY</span> go.mod .<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">COPY</span> go.sum .<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># install dependencies</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> go mod download<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># copy everything else</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">COPY</span> . .<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># compile our golang project</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> GOOS<span style="color:#f92672">=</span>linux go build -a main.go<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># expose e.g. a API port</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">EXPOSE</span><span style="color:#e6db74"> 3001</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># start our application if no exec command given</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">CMD</span> [<span style="color:#e6db74">&#34;/app/main&#34;</span>]<span style="color:#960050;background-color:#1e0010">
 </span></code></pre></div><p>At this point, we don&rsquo;t really care about the image size at all. We can utilize all tools we require in our build environment due to the default debian system. The order of the build steps are essential at this point, if you want to reduce the number of total steps that need to be execute during a new build of the image.</p>
 <ol>
 <li>Install any system wide packages that are required via <code>apt</code>.</li>
@@ -174,129 +305,192 @@ go get github.com/aarzilli/golua/lua
 </ol>
 <p>It is important to note here, that the use of <code>.dockerignore</code> will also help to reduce the build steps, as the <code>COPY . .</code> step will be executed again, if anything in the project folder changed, that is not marked to be ignored in the <code>.dockerignore</code> file.</p>
 <p>The image we have here is a total of <code>1.19GB</code>.</p>
-<h2 id=second-stage>Second stage<a hidden class=anchor aria-hidden=true href=#second-stage>#</a></h2>
+<h2 id="second-stage">Second stage<a hidden class="anchor" aria-hidden="true" href="#second-stage">#</a></h2>
 <p>The second stage can be split into to different approaches, which will both result in changes of our first stage. You need to ask yourself now, whether your project has any direct usage of non-go libraries. An example for this can be the use of the shared lua library for some embedded scripting functionalities. In general, if you don&rsquo;t really known how your libraries work under the hood or just have too many to check them manually, you can simply try to compile them with both approaches and test it. The <code>scratch</code> image with not dependencies at all will however be smaller.</p>
-<h3 id=second-stage-for-system-libraries>Second stage: For system libraries<a hidden class=anchor aria-hidden=true href=#second-stage-for-system-libraries>#</a></h3>
+<h3 id="second-stage-for-system-libraries">Second stage: For system libraries<a hidden class="anchor" aria-hidden="true" href="#second-stage-for-system-libraries">#</a></h3>
 <p>Compiling everything into a static library or even into the executable itself can be really difficult and heavily depends on the implementation of dependecy owner. For a better developer experience I would suggest to make use of the <code>alpine</code> linux image. It is very minimal, but still comes with a huge selection of packages that can be installed. As the Golang docker image also supports and alpine image, I suggest we use that, as especially the libraries we may require, will be exactly the same between the first and second stage, which reduces the number of bugs we may run into, like different package names.</p>
-<p>So lets rebuild the first stage and add the second one. In my example I&rsquo;ll use the <code>golua</code><sup id=fnref:2><a href=#fn:2 class=footnote-ref role=doc-noteref>2</a></sup> package which requires the shared library of lua.</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-Dockerfile data-lang=Dockerfile><span style=color:#75715e># first stage for our compiling environment</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>FROM</span><span style=color:#e6db74> golang:alpine AS builder</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e># install build tools</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>RUN</span> apk add --no-cache build-base<span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e># install libraries</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>RUN</span> apk add --no-cache lua5.1-dev<span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e># select a space for our work</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>WORKDIR</span><span style=color:#e6db74> /app</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e># copy dependency files</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>COPY</span> go.mod .<span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>COPY</span> go.sum .<span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e># install dependencies</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>RUN</span> go mod download<span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e># copy everything else</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>COPY</span> . .<span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e># compile our golang project</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>RUN</span> GOOS<span style=color:#f92672>=</span>linux go build -a main.go<span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e># second stage that will actually be published/deployed</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>FROM</span><span style=color:#e6db74> alpine</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e># install timezone and certificate files</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>RUN</span> apk add --no-cache tzdata ca-certificates<span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e># install libraries</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>RUN</span> apk add --no-cache lua5.1-dev<span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e># copy our binary</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>COPY</span> --from<span style=color:#f92672>=</span>builder /app/main /<span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e># expose e.g. a API port</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>EXPOSE</span><span style=color:#e6db74> 3001</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e># start our application if no exec command given</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>CMD</span> [<span style=color:#e6db74>&#34;/main&#34;</span>]<span style=color:#960050;background-color:#1e0010>
+<p>So lets rebuild the first stage and add the second one. In my example I&rsquo;ll use the <code>golua</code><sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup> package which requires the shared library of lua.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Dockerfile" data-lang="Dockerfile"><span style="color:#75715e"># first stage for our compiling environment</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">FROM</span><span style="color:#e6db74"> golang:alpine AS builder</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># install build tools</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> apk add --no-cache build-base<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># install libraries</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> apk add --no-cache lua5.1-dev<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># select a space for our work</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">WORKDIR</span><span style="color:#e6db74"> /app</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># copy dependency files</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">COPY</span> go.mod .<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">COPY</span> go.sum .<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># install dependencies</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> go mod download<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># copy everything else</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">COPY</span> . .<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># compile our golang project</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> GOOS<span style="color:#f92672">=</span>linux go build -a main.go<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># second stage that will actually be published/deployed</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">FROM</span><span style="color:#e6db74"> alpine</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># install timezone and certificate files</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> apk add --no-cache tzdata ca-certificates<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># install libraries</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> apk add --no-cache lua5.1-dev<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># copy our binary</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">COPY</span> --from<span style="color:#f92672">=</span>builder /app/main /<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># expose e.g. a API port</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">EXPOSE</span><span style="color:#e6db74"> 3001</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># start our application if no exec command given</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">CMD</span> [<span style="color:#e6db74">&#34;/main&#34;</span>]<span style="color:#960050;background-color:#1e0010">
 </span></code></pre></div><p>This results in an <code>18MB</code> docker image.</p>
-<h3 id=second-stage-just-the-basics>Second stage: Just the basics<a hidden class=anchor aria-hidden=true href=#second-stage-just-the-basics>#</a></h3>
+<h3 id="second-stage-just-the-basics">Second stage: Just the basics<a hidden class="anchor" aria-hidden="true" href="#second-stage-just-the-basics">#</a></h3>
 <p>If your project is focused on only in go written depencies and doesn&rsquo;t cause any problems if you strip away everything from the OS itself.</p>
 <blockquote>
 <p>As an example I use the same project, but removed the lua functionality due to the bindings.</p>
 </blockquote>
-<p>For this, we don&rsquo;t care about the first stage as we did before. It can be as big as you like, as nothing will be deployed later on and we don&rsquo;t need to worry about any system libraries. In order to ensure that we don&rsquo;t run into any issues with out compiled binary, we need to make sure, the go compiler knows that the binary won&rsquo;t have any access to the current libraries later on. For this we can utilize the compiler flags use in the multistage example of the docker documentation. <sup id=fnref:1><a href=#fn:1 class=footnote-ref role=doc-noteref>1</a></sup></p>
+<p>For this, we don&rsquo;t care about the first stage as we did before. It can be as big as you like, as nothing will be deployed later on and we don&rsquo;t need to worry about any system libraries. In order to ensure that we don&rsquo;t run into any issues with out compiled binary, we need to make sure, the go compiler knows that the binary won&rsquo;t have any access to the current libraries later on. For this we can utilize the compiler flags use in the multistage example of the docker documentation. <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
 <ul>
 <li><code>CGO_ENABLED=0</code> will tell the go compiler, it doesn&rsquo;t have access to any system libraries.</li>
-<li>however, the <code>-installsuffix cgo</code> argument is <strong>not required anymore</strong> as stated in the original GitHub issue about static linking issues. <sup id=fnref:3><a href=#fn:3 class=footnote-ref role=doc-noteref>3</a></sup></li>
+<li>however, the <code>-installsuffix cgo</code> argument is <strong>not required anymore</strong> as stated in the original GitHub issue about static linking issues. <sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup></li>
 </ul>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-Dockerfile data-lang=Dockerfile><span style=color:#75715e># use a fully featured golang build environment</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>FROM</span><span style=color:#e6db74> golang:latest AS builder</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e># change directory of project</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>WORKDIR</span><span style=color:#e6db74> /app</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e># copy everything else</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>COPY</span> . .<span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e># compile our golang project</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>RUN</span> CGO_ENABLED<span style=color:#f92672>=</span><span style=color:#ae81ff>0</span> GOOS<span style=color:#f92672>=</span>linux go build -o main  .<span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>FROM</span><span style=color:#e6db74> scratch</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e># copy ca certificates to verify other ssl certificates</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>COPY</span> --from<span style=color:#f92672>=</span>builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt<span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e># copy timezone information</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>COPY</span> --from<span style=color:#f92672>=</span>builder /usr/share/zoneinfo /usr/share/zoneinfo<span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e># copy actual compiled binary</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>COPY</span> --from<span style=color:#f92672>=</span>builder /app/main /<span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e># expose port</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>EXPOSE</span><span style=color:#e6db74> 3001</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e># start binary</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#66d9ef>CMD</span> [<span style=color:#e6db74>&#34;/main&#34;</span>]<span style=color:#960050;background-color:#1e0010>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Dockerfile" data-lang="Dockerfile"><span style="color:#75715e"># use a fully featured golang build environment</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">FROM</span><span style="color:#e6db74"> golang:latest AS builder</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># change directory of project</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">WORKDIR</span><span style="color:#e6db74"> /app</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># copy everything else</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">COPY</span> . .<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># compile our golang project</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> CGO_ENABLED<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span> GOOS<span style="color:#f92672">=</span>linux go build -o main  .<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">FROM</span><span style="color:#e6db74"> scratch</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># copy ca certificates to verify other ssl certificates</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">COPY</span> --from<span style="color:#f92672">=</span>builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># copy timezone information</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">COPY</span> --from<span style="color:#f92672">=</span>builder /usr/share/zoneinfo /usr/share/zoneinfo<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># copy actual compiled binary</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">COPY</span> --from<span style="color:#f92672">=</span>builder /app/main /<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># expose port</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">EXPOSE</span><span style="color:#e6db74"> 3001</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># start binary</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">CMD</span> [<span style="color:#e6db74">&#34;/main&#34;</span>]<span style="color:#960050;background-color:#1e0010">
 </span></code></pre></div><p>This results in an <code>11.7MB</code> docker image. But we got rid of the shared lua library which was a essential function of our project.</p>
 <p>However, there are a lot of projects out there, that port shared library projects to a pure golang version. However, finding bindings for a package you want to you, is way easier. Additionally, many projects like simple APIs don&rsquo;t actually require any bindings at all, <strong>especially if you require new versions of certain projects</strong>.</p>
-<h2 id=result>Result<a hidden class=anchor aria-hidden=true href=#result>#</a></h2>
-<h3 id=full-image-119gb>full image <code>1.19GB</code><a hidden class=anchor aria-hidden=true href=#full-image-119gb>#</a></h3>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-diff data-lang=diff><span style=color:#f92672>- extremly large size
-</span><span style=color:#f92672>- lot of overhead for running this container
-</span><span style=color:#f92672></span><span style=color:#a6e22e>+ easy dependency management
-</span><span style=color:#a6e22e>+ similar to many developer environments
-</span></code></pre></div><h3 id=alpine-image-18mb>alpine image <code>18MB</code><a hidden class=anchor aria-hidden=true href=#alpine-image-18mb>#</a></h3>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-diff data-lang=diff><span style=color:#f92672>- package names can be different
-</span><span style=color:#f92672>- more initial work to find all missing dependencies
-</span><span style=color:#f92672></span><span style=color:#a6e22e>+ well supported and documented
-</span><span style=color:#a6e22e>+ very small image and overhead
-</span></code></pre></div><h3 id=scratch-image-117mb>scratch image <code>11.7MB</code><a hidden class=anchor aria-hidden=true href=#scratch-image-117mb>#</a></h3>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-diff data-lang=diff><span style=color:#f92672>- no usage of complex dependencies
-</span><span style=color:#f92672>- no system commands (ls, chmod, ...)
-</span><span style=color:#f92672></span><span style=color:#a6e22e>+ perfect for small projects
-</span><span style=color:#a6e22e>+ runs only what you want
-</span></code></pre></div><h2 id=final-word>Final word<a hidden class=anchor aria-hidden=true href=#final-word>#</a></h2>
+<h2 id="result">Result<a hidden class="anchor" aria-hidden="true" href="#result">#</a></h2>
+<h3 id="full-image-119gb">full image <code>1.19GB</code><a hidden class="anchor" aria-hidden="true" href="#full-image-119gb">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-diff" data-lang="diff"><span style="color:#f92672">- extremly large size
+</span><span style="color:#f92672">- lot of overhead for running this container
+</span><span style="color:#f92672"></span><span style="color:#a6e22e">+ easy dependency management
+</span><span style="color:#a6e22e">+ similar to many developer environments
+</span></code></pre></div><h3 id="alpine-image-18mb">alpine image <code>18MB</code><a hidden class="anchor" aria-hidden="true" href="#alpine-image-18mb">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-diff" data-lang="diff"><span style="color:#f92672">- package names can be different
+</span><span style="color:#f92672">- more initial work to find all missing dependencies
+</span><span style="color:#f92672"></span><span style="color:#a6e22e">+ well supported and documented
+</span><span style="color:#a6e22e">+ very small image and overhead
+</span></code></pre></div><h3 id="scratch-image-117mb">scratch image <code>11.7MB</code><a hidden class="anchor" aria-hidden="true" href="#scratch-image-117mb">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-diff" data-lang="diff"><span style="color:#f92672">- no usage of complex dependencies
+</span><span style="color:#f92672">- no system commands (ls, chmod, ...)
+</span><span style="color:#f92672"></span><span style="color:#a6e22e">+ perfect for small projects
+</span><span style="color:#a6e22e">+ runs only what you want
+</span></code></pre></div><h2 id="final-word">Final word<a hidden class="anchor" aria-hidden="true" href="#final-word">#</a></h2>
 <p>Again, the choice is up to you. Every option I listed has nearly equal pros and cons and what speaks most to you or to your project can be different. I personally always suggest to take a look at alpine images and maybe your project can be up and running in a much smaller image with just a few lines of changes.</p>
 <p>However, even though scratch images look like a nice thing, it breaks things more often than it actually improves it. So I only suggest this type of image, if you really just have a minimal static binary that needs to be honest and doesn&rsquo;t have any complex dependencies into the system libraries.</p>
-<section class=footnotes role=doc-endnotes>
+<section class="footnotes" role="doc-endnotes">
 <hr>
 <ol>
-<li id=fn:1 role=doc-endnote>
-<p>docker docs &ldquo;multistage build&rdquo;: <a href=https://docs.docker.com/develop/develop-images/multistage-build/><code>docs.docker.com/develop/develop-images/multistage-build</code></a>&#160;<a href=#fnref:1 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+<li id="fn:1" role="doc-endnote">
+<p>docker docs &ldquo;multistage build&rdquo;: <a href="https://docs.docker.com/develop/develop-images/multistage-build/"><code>docs.docker.com/develop/develop-images/multistage-build</code></a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
-<li id=fn:2 role=doc-endnote>
-<p>GitHub <code>golua</code>: <a href=https://github.com/aarzilli/golua><code>github.com/aarzilli/golua</code></a>&#160;<a href=#fnref:2 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+<li id="fn:2" role="doc-endnote">
+<p>GitHub <code>golua</code>: <a href="https://github.com/aarzilli/golua"><code>github.com/aarzilli/golua</code></a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
-<li id=fn:3 role=doc-endnote>
-<p>GitHub comment about newer golang versions and static linking: <a href=https://github.com/golang/go/issues/9344#issuecomment-69944514><code>github.com/golang/go/issues/9344#issuecomment-69944514</code></a>&#160;<a href=#fnref:3 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+<li id="fn:3" role="doc-endnote">
+<p>GitHub comment about newer golang versions and static linking: <a href="https://github.com/golang/go/issues/9344#issuecomment-69944514"><code>github.com/golang/go/issues/9344#issuecomment-69944514</code></a>&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
 </section>
+
 </div>
-<footer class=post-footer>
-<ul class=post-tags>
-<li><a href=https://oltdaniel.eu/tags/golang/>golang</a></li>
-<li><a href=https://oltdaniel.eu/tags/docker/>docker</a></li>
-</ul>
-</footer>
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://oltdaniel.eu/tags/golang/">golang</a></li>
+      <li><a href="https://oltdaniel.eu/tags/docker/">docker</a></li>
+    </ul>
+  </footer>
 </article>
-</main><footer class=footer>
-<span>&copy; 2022 <a href=https://oltdaniel.eu>oltdaniel</a></span>
-<span>&#183;</span>
-<span>Powered by <a href=https://gohugo.io/ rel="noopener noreferrer" target=_blank>Hugo</a></span>
-<span>&#183;</span>
-<span>Theme <a href=https://git.io/hugopapermod rel=noopener target=_blank>PaperMod</a></span>
+    </main><footer class="footer">
+    <span>&copy; 2022 <a href="https://oltdaniel.eu">oltdaniel</a></span>
+    <span>&middot;</span>
+    <span>Powered by <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a></span>
+    <span>&middot;</span>
+    <span>Theme <a href="https://git.io/hugopapermod" rel="noopener" target="_blank">PaperMod</a></span>
 </footer>
-<a href=#top aria-label="go to top" title="Go to Top (Alt + G)">
-<button class=top-link id=top-link type=button accesskey=g><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentcolor"><path d="M12 6H0l6-6z"/></svg>
-</button>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)">
+    <button class="top-link" id="top-link" type="button" accesskey="g">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+            <path d="M12 6H0l6-6z" />
+        </svg>
+    </button>
 </a>
-<script defer src=/assets/js/highlight.min.7680afc38aa6b15ddf158a4f3780b7b1f7dde7e91d26f073e6229bb7a0793c92.js integrity="sha256-doCvw4qmsV3fFYpPN4C3sffd5+kdJvBz5iKbt6B5PJI=" onload=hljs.initHighlightingOnLoad()></script>
-<script>window.onload=function(){localStorage.getItem("menu-scroll-position")&&(document.getElementById('menu').scrollLeft=localStorage.getItem("menu-scroll-position"))};function menu_on_scroll(){localStorage.setItem("menu-scroll-position",document.getElementById('menu').scrollLeft)}document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener("click",function(b){b.preventDefault();var a=this.getAttribute("href").substr(1);window.matchMedia('(prefers-reduced-motion: reduce)').matches?document.querySelector(`[id='${decodeURIComponent(a)}']`).scrollIntoView():document.querySelector(`[id='${decodeURIComponent(a)}']`).scrollIntoView({behavior:"smooth"}),a==="top"?history.replaceState(null,null," "):history.pushState(null,null,`#${a}`)})})</script>
-<script>var mybutton=document.getElementById("top-link");window.onscroll=function(){document.body.scrollTop>800||document.documentElement.scrollTop>800?(mybutton.style.visibility="visible",mybutton.style.opacity="1"):(mybutton.style.visibility="hidden",mybutton.style.opacity="0")}</script>
-<script>document.getElementById("theme-toggle").addEventListener("click",()=>{document.body.className.includes("dark")?(document.body.classList.remove('dark'),localStorage.setItem("pref-theme",'light')):(document.body.classList.add('dark'),localStorage.setItem("pref-theme",'dark'))})</script>
+
+
+
+<script defer src="/assets/js/highlight.min.7680afc38aa6b15ddf158a4f3780b7b1f7dde7e91d26f073e6229bb7a0793c92.js" integrity="sha256-doCvw4qmsV3fFYpPN4C3sffd5&#43;kdJvBz5iKbt6B5PJI="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<script>
+    window.onload = function () {
+        if (localStorage.getItem("menu-scroll-position")) {
+            document.getElementById('menu').scrollLeft = localStorage.getItem("menu-scroll-position");
+        }
+    }
+
+    function menu_on_scroll() {
+        localStorage.setItem("menu-scroll-position", document.getElementById('menu').scrollLeft);
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+
 </body>
+
 </html>

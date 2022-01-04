@@ -1,3 +1,40 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on oltdaniel</title><link>https://oltdaniel.eu/posts/</link><description>Recent content in Posts on oltdaniel</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 04 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://oltdaniel.eu/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Minimal Golang Docker image</title><link>https://oltdaniel.eu/2022/minimal-golang-docker-image/</link><pubDate>Tue, 04 Jan 2022 00:00:00 +0000</pubDate><guid>https://oltdaniel.eu/2022/minimal-golang-docker-image/</guid><description>As golang is a compiled programming language, we don&amp;rsquo;t need to store all the unecessary build environments in our final image. So lets see, if we get rid of everything, what we need to importat again to not break anything.
-In order to solve everything in a single Dockerfile, we will use multi-stage builds. 1 Our first stage will be focused on the actual compiling of our application. In order to cover as many features on our application as possible, I&amp;rsquo;ll create an API that uses timezone information, calls an external service via https and uses the lua shared library.</description></item><item><title>Cheap and stupid AWS URL shortener</title><link>https://oltdaniel.eu/2021/cheap-and-stupid-aws-url-shortener/</link><pubDate>Mon, 13 Dec 2021 00:00:00 +0000</pubDate><guid>https://oltdaniel.eu/2021/cheap-and-stupid-aws-url-shortener/</guid><description>How cheap and low-tech can we make an URL shortener?</description></item><item><title>Counting Instead of Tracking</title><link>https://oltdaniel.eu/2018/counting-instead-of-tracking/</link><pubDate>Thu, 15 Nov 2018 00:00:00 +0000</pubDate><guid>https://oltdaniel.eu/2018/counting-instead-of-tracking/</guid><description>Analyzing the traffic a website receives, is a key part in marketing to understand and highlight the group of consumers and their interests. However, the way how it has been implemented in the recent years has evolved from counting single requests to tracking the use across multiple websites.
-For a short moment I decided against this trend and went back to the old classics of website analysis. I start counting the unique requests, instead of tracking the user across our website.</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on oltdaniel</title>
+    <link>https://oltdaniel.eu/posts/</link>
+    <description>Recent content in Posts on oltdaniel</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 04 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://oltdaniel.eu/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Minimal Golang Docker image</title>
+      <link>https://oltdaniel.eu/2022/minimal-golang-docker-image/</link>
+      <pubDate>Tue, 04 Jan 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://oltdaniel.eu/2022/minimal-golang-docker-image/</guid>
+      <description>As golang is a compiled programming language, we don&amp;rsquo;t need to store all the unecessary build environments in our final image. So lets see, if we get rid of everything, what we need to importat again to not break anything.
+In order to solve everything in a single Dockerfile, we will use multi-stage builds. 1 Our first stage will be focused on the actual compiling of our application. In order to cover as many features on our application as possible, I&amp;rsquo;ll create an API that uses timezone information, calls an external service via https and uses the lua shared library.</description>
+    </item>
+    
+    <item>
+      <title>Cheap and stupid AWS URL shortener</title>
+      <link>https://oltdaniel.eu/2021/cheap-and-stupid-aws-url-shortener/</link>
+      <pubDate>Mon, 13 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://oltdaniel.eu/2021/cheap-and-stupid-aws-url-shortener/</guid>
+      <description>How cheap and low-tech can we make an URL shortener?</description>
+    </item>
+    
+    <item>
+      <title>Counting Instead of Tracking</title>
+      <link>https://oltdaniel.eu/2018/counting-instead-of-tracking/</link>
+      <pubDate>Thu, 15 Nov 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://oltdaniel.eu/2018/counting-instead-of-tracking/</guid>
+      <description>Analyzing the traffic a website receives, is a key part in marketing to understand and highlight the group of consumers and their interests. However, the way how it has been implemented in the recent years has evolved from counting single requests to tracking the use across multiple websites.
+For a short moment I decided against this trend and went back to the old classics of website analysis. I start counting the unique requests, instead of tracking the user across our website.</description>
+    </item>
+    
+  </channel>
+</rss>

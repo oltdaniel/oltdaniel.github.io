@@ -1,2 +1,21 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>analytics on oltdaniel</title><link>https://oltdaniel.eu/tags/analytics/</link><description>Recent content in analytics on oltdaniel</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 15 Nov 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://oltdaniel.eu/tags/analytics/index.xml" rel="self" type="application/rss+xml"/><item><title>Counting Instead of Tracking</title><link>https://oltdaniel.eu/2018/counting-instead-of-tracking/</link><pubDate>Thu, 15 Nov 2018 00:00:00 +0000</pubDate><guid>https://oltdaniel.eu/2018/counting-instead-of-tracking/</guid><description>Analyzing the traffic a website receives, is a key part in marketing to understand and highlight the group of consumers and their interests. However, the way how it has been implemented in the recent years has evolved from counting single requests to tracking the use across multiple websites.
-For a short moment I decided against this trend and went back to the old classics of website analysis. I start counting the unique requests, instead of tracking the user across our website.</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>analytics on oltdaniel</title>
+    <link>https://oltdaniel.eu/tags/analytics/</link>
+    <description>Recent content in analytics on oltdaniel</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 15 Nov 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://oltdaniel.eu/tags/analytics/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Counting Instead of Tracking</title>
+      <link>https://oltdaniel.eu/2018/counting-instead-of-tracking/</link>
+      <pubDate>Thu, 15 Nov 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://oltdaniel.eu/2018/counting-instead-of-tracking/</guid>
+      <description>Analyzing the traffic a website receives, is a key part in marketing to understand and highlight the group of consumers and their interests. However, the way how it has been implemented in the recent years has evolved from counting single requests to tracking the use across multiple websites.
+For a short moment I decided against this trend and went back to the old classics of website analysis. I start counting the unique requests, instead of tracking the user across our website.</description>
+    </item>
+    
+  </channel>
+</rss>
