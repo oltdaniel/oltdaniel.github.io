@@ -63,6 +63,20 @@
 <article class=post-entry>
 <header class=entry-header>
 <h2>
+Minimal Golang Docker image
+</h2>
+</header>
+<section class=entry-content>
+<p>As golang is a compiled programming language, we don’t need to store all the unecessary build environments in our final image. So lets see, if we get rid of everything, what we need to importat again to not break anything.
+In order to solve everything in a single Dockerfile, we will use multi-stage builds. 1 Our first stage will be focused on the actual compiling of our application. In order to cover as many features on our application as possible, I’ll create an API that uses timezone information, calls an external service via https and uses the lua shared library....</p>
+</section>
+<footer class=entry-footer>2022-01-04
+</footer>
+<a class=entry-link aria-label="post link to Minimal Golang Docker image" href=https://oltdaniel.eu/2022/minimal-golang-docker-image/></a>
+</article>
+<article class=post-entry>
+<header class=entry-header>
+<h2>
 Cheap and stupid AWS URL shortener
 </h2>
 </header>
