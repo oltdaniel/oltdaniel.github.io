@@ -10,6 +10,7 @@ unsafe = true
 
 [permalinks]
   posts = '/:year/:title/'
+  tips = '/tips/:title/'
 
 [params]
 DateFormat = "2006-01-02"
@@ -33,6 +34,7 @@ url = "index.xml"
 
 [taxonomies]
 tag = "tags"
+tip = "tips"
 
 [languages.en]
 weight = 1
@@ -42,6 +44,10 @@ languageAltTitle = "English"
 [[languages.en.menu.main]]
 name = "Tags"
 url = "tags"
+
+[[languages.en.menu.main]]
+name = "Tips"
+url = "tips"
 
 [languages.de]
 weight = 2
