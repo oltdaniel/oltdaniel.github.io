@@ -6,14 +6,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
 <title>golang | oltdaniel</title>
-
 <meta name="keywords" content="" />
 <meta name="description" content="homelab - low-level code - microcontrollers">
 <meta name="author" content="">
 <link rel="canonical" href="https://oltdaniel.eu/tags/golang/" />
-<link href="/assets/css/stylesheet.min.746a86b58bb2b052b5e4df8216510494f04f81e62c08d626150c26c69ca929da.css" integrity="sha256-dGqGtYuysFK15N&#43;CFlEElPBPgeYsCNYmFQwmxpypKdo=" rel="preload stylesheet"
-    as="style">
-
+<link crossorigin="anonymous" href="/assets/css/stylesheet.min.c88963fe2d79462000fd0fb1b3737783c32855d340583e4523343f8735c787f0.css" integrity="sha256-yIlj/i15RiAA/Q&#43;xs3N3g8MoVdNAWD5FIzQ/hzXHh/A=" rel="preload stylesheet" as="style">
 <link rel="icon" href="https://oltdaniel.eu/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="https://oltdaniel.eu/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="https://oltdaniel.eu/favicon-32x32.png">
@@ -21,37 +18,11 @@
 <link rel="mask-icon" href="https://oltdaniel.eu/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<meta name="generator" content="Hugo 0.91.2" />
-<link rel="alternate" type="application/rss&#43;xml" href="https://oltdaniel.eu/tags/golang/index.xml">
+<meta name="generator" content="Hugo 0.101.0" />
+<link rel="alternate" type="application/rss+xml" href="https://oltdaniel.eu/tags/golang/index.xml">
 <link rel="alternate" hreflang="en" href="https://oltdaniel.eu/tags/golang/" />
-<meta name="msvalidate.01" content="C0FC5820A59ECFDDEEC55CBFBCB401DB" />
-<meta name="google-site-verification" content="4hixKd4l51-2c06aXIohe8qNvSTziYGFQpDiwC7ciCg" />
-<meta property="og:title" content="golang" />
-<meta property="og:description" content="homelab - low-level code - microcontrollers" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://oltdaniel.eu/tags/golang/" />
-
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="golang"/>
-<meta name="twitter:description" content="homelab - low-level code - microcontrollers"/>
-
-
-
-</head>
-
-<body class="list" id="top">
-<script>
-    if (localStorage.getItem("pref-theme") === "dark") {
-        document.body.classList.add('dark');
-    } else if (localStorage.getItem("pref-theme") === "light") {
-        document.body.classList.remove('dark')
-    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        document.body.classList.add('dark');
-    }
-
-</script>
 <noscript>
-    <style type="text/css">
+    <style>
         #theme-toggle,
         .top-link {
             display: none;
@@ -61,15 +32,15 @@
     <style>
         @media (prefers-color-scheme: dark) {
             :root {
-                --theme: #1d1e20;
-                --entry: #2e2e33;
-                --primary: rgba(255, 255, 255, 0.84);
-                --secondary: rgba(255, 255, 255, 0.56);
-                --tertiary: rgba(255, 255, 255, 0.16);
-                --content: rgba(255, 255, 255, 0.74);
-                --hljs-bg: #2e2e33;
-                --code-bg: #37383e;
-                --border: #333;
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
             }
 
             .list {
@@ -84,9 +55,33 @@
                 border-color: var(--theme);
             }
         }
-    </style>
 
-</noscript>
+    </style>
+</noscript><meta name="msvalidate.01" content="C0FC5820A59ECFDDEEC55CBFBCB401DB" />
+<meta name="google-site-verification" content="4hixKd4l51-2c06aXIohe8qNvSTziYGFQpDiwC7ciCg" />
+<meta property="og:title" content="golang" />
+<meta property="og:description" content="homelab - low-level code - microcontrollers" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://oltdaniel.eu/tags/golang/" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="golang"/>
+<meta name="twitter:description" content="homelab - low-level code - microcontrollers"/>
+
+</head>
+
+<body class="list" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
 <header class="header">
     <nav class="nav">
         <div class="logo">
@@ -112,78 +107,68 @@
                         <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
                     </svg>
                 </button>
-                
-                
-
                 <ul class="lang-switch"><li>|</li>
                     <li>
-                        <a href="https://oltdaniel.eu/de/" title=":de:"
+                        <a href="https://oltdaniel.eu/de/" title="Deutsch"
                             aria-label=":de:">🇩🇪</a>
                     </li>
                 </ul>
             </span>
         </div>
-        <ul id="menu" onscroll="menu_on_scroll()">
+        <ul id="menu">
             <li>
                 <a href="https://oltdaniel.eu/tags" title="Tags">
                     <span>Tags</span>
                 </a>
-            </li></ul>
+            </li>
+            <li>
+                <a href="https://oltdaniel.eu/tips" title="Tips">
+                    <span>Tips</span>
+                </a>
+            </li>
+        </ul>
     </nav>
 </header>
-
-    <main class="main"> 
+<main class="main"> 
 <header class="page-header">
-
   <h1>golang</h1>
 </header>
 
-
-
-
-
 <article class="post-entry tag-entry"> 
-
   <header class="entry-header">
-    <h2>
-      Minimal Golang Docker image
+    <h2>Minimal Golang Docker image
     </h2>
   </header>
   <section class="entry-content">
     <p>As golang is a compiled programming language, we don’t need to store all the unecessary build environments in our final image. So lets see, if we get rid of everything, what we need to importat again to not break anything.
 In order to solve everything in a single Dockerfile, we will use multi-stage builds. 1 Our first stage will be focused on the actual compiling of our application. In order to cover as many features on our application as possible, I’ll create an API that uses timezone information, calls an external service via https and uses the lua shared library....</p>
   </section>
-  <footer class="entry-footer">2022-01-04
-</footer>
+  <footer class="entry-footer"><span title='2022-01-04 00:00:00 +0000 UTC'>2022-01-04</span></footer>
   <a class="entry-link" aria-label="post link to Minimal Golang Docker image" href="https://oltdaniel.eu/2022/minimal-golang-docker-image/"></a>
 </article>
-
-    </main><footer class="footer">
+    </main>
+    
+<footer class="footer">
     <span>&copy; 2022 <a href="https://oltdaniel.eu">oltdaniel</a></span>
-    <span>&middot;</span>
-    <span>Powered by <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a></span>
-    <span>&middot;</span>
-    <span>Theme <a href="https://git.io/hugopapermod" rel="noopener" target="_blank">PaperMod</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://git.io/hugopapermod" rel="noopener" target="_blank">PaperMod</a>
+    </span>
 </footer>
-<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)">
-    <button class="top-link" id="top-link" type="button" accesskey="g">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
-            <path d="M12 6H0l6-6z" />
-        </svg>
-    </button>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
 </a>
 
-
-
 <script>
-    window.onload = function () {
-        if (localStorage.getItem("menu-scroll-position")) {
-            document.getElementById('menu').scrollLeft = localStorage.getItem("menu-scroll-position");
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
         }
-    }
-
-    function menu_on_scroll() {
-        localStorage.setItem("menu-scroll-position", document.getElementById('menu').scrollLeft);
     }
 
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -231,7 +216,6 @@ In order to solve everything in a single Dockerfile, we will use multi-stage bui
     })
 
 </script>
-
 </body>
 
 </html>

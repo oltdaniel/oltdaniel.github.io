@@ -2,17 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://oltdaniel.eu/tags/docker/</loc>
-    <lastmod>2022-01-04T00:00:00+00:00</lastmod>
+    <loc>https://oltdaniel.eu/tags/chromium/</loc>
+    <lastmod>2022-08-05T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://oltdaniel.eu/tags/golang/</loc>
-    <lastmod>2022-01-04T00:00:00+00:00</lastmod>
+    <loc>https://oltdaniel.eu/tags/flatpak/</loc>
+    <lastmod>2022-08-05T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://oltdaniel.eu/2022/minimal-golang-docker-image/</loc>
-    <lastmod>2022-01-04T00:00:00+00:00</lastmod>
+    <loc>https://oltdaniel.eu/tips/flatpak-chromium-browser-gpu-acceleration/</loc>
+    <lastmod>2022-08-05T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://oltdaniel.eu/tags/linux/</loc>
+    <lastmod>2022-08-05T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://oltdaniel.eu/</loc>
-    <lastmod>2022-01-04T00:00:00+00:00</lastmod>
+    <lastmod>2022-08-05T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="de"
@@ -24,11 +27,8 @@
                 href="https://oltdaniel.eu/"
                 />
   </url><url>
-    <loc>https://oltdaniel.eu/posts/</loc>
-    <lastmod>2022-01-04T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://oltdaniel.eu/tags/</loc>
-    <lastmod>2022-01-04T00:00:00+00:00</lastmod>
+    <lastmod>2022-08-05T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="de"
@@ -39,6 +39,21 @@
                 hreflang="en"
                 href="https://oltdaniel.eu/tags/"
                 />
+  </url><url>
+    <loc>https://oltdaniel.eu/tips/</loc>
+    <lastmod>2022-08-05T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://oltdaniel.eu/tags/docker/</loc>
+    <lastmod>2022-01-04T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://oltdaniel.eu/tags/golang/</loc>
+    <lastmod>2022-01-04T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://oltdaniel.eu/2022/minimal-golang-docker-image/</loc>
+    <lastmod>2022-01-04T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://oltdaniel.eu/posts/</loc>
+    <lastmod>2022-01-04T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://oltdaniel.eu/tags/aws/</loc>
     <lastmod>2021-12-13T00:00:00+00:00</lastmod>
@@ -51,5 +66,17 @@
   </url><url>
     <loc>https://oltdaniel.eu/2018/counting-instead-of-tracking/</loc>
     <lastmod>2018-11-15T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://oltdaniel.eu/tips/</loc>
+    <xhtml:link
+                rel="alternate"
+                hreflang="de"
+                href="https://oltdaniel.eu/de/tips/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://oltdaniel.eu/tips/"
+                />
   </url>
 </urlset>

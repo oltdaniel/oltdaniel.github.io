@@ -25,5 +25,17 @@
                 hreflang="de"
                 href="https://oltdaniel.eu/de/tags/"
                 />
+  </url><url>
+    <loc>https://oltdaniel.eu/de/tips/</loc>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://oltdaniel.eu/tips/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="de"
+                href="https://oltdaniel.eu/de/tips/"
+                />
   </url>
 </urlset>

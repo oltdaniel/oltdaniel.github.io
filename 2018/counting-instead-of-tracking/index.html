@@ -6,15 +6,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
 <title>Counting Instead of Tracking | oltdaniel</title>
-
 <meta name="keywords" content="analytics" />
 <meta name="description" content="Analyzing the traffic a website receives, is a key part in marketing to understand and highlight the group of consumers and their interests. However, the way how it has been implemented in the recent years has evolved from counting single requests to tracking the use across multiple websites.
 For a short moment I decided against this trend and went back to the old classics of website analysis. I start counting the unique requests, instead of tracking the user across our website.">
 <meta name="author" content="">
 <link rel="canonical" href="https://oltdaniel.eu/2018/counting-instead-of-tracking/" />
-<link href="/assets/css/stylesheet.min.746a86b58bb2b052b5e4df8216510494f04f81e62c08d626150c26c69ca929da.css" integrity="sha256-dGqGtYuysFK15N&#43;CFlEElPBPgeYsCNYmFQwmxpypKdo=" rel="preload stylesheet"
-    as="style">
-
+<link crossorigin="anonymous" href="/assets/css/stylesheet.min.c88963fe2d79462000fd0fb1b3737783c32855d340583e4523343f8735c787f0.css" integrity="sha256-yIlj/i15RiAA/Q&#43;xs3N3g8MoVdNAWD5FIzQ/hzXHh/A=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.min.e85ad0406048e8176e1c7661b25d5c69297ddfe41dc4124cf75ecb99a4f7b3d1.js" integrity="sha256-6FrQQGBI6BduHHZhsl1caSl93&#43;QdxBJM917LmaT3s9E="
+    onload="hljs.initHighlightingOnLoad();"></script>
 <link rel="icon" href="https://oltdaniel.eu/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="https://oltdaniel.eu/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="https://oltdaniel.eu/favicon-32x32.png">
@@ -22,9 +21,45 @@ For a short moment I decided against this trend and went back to the old classic
 <link rel="mask-icon" href="https://oltdaniel.eu/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<meta name="generator" content="Hugo 0.91.2" />
+<meta name="generator" content="Hugo 0.101.0" />
 <link rel="alternate" hreflang="en" href="https://oltdaniel.eu/2018/counting-instead-of-tracking/" />
-<meta name="msvalidate.01" content="C0FC5820A59ECFDDEEC55CBFBCB401DB" />
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta name="msvalidate.01" content="C0FC5820A59ECFDDEEC55CBFBCB401DB" />
 <meta name="google-site-verification" content="4hixKd4l51-2c06aXIohe8qNvSTziYGFQpDiwC7ciCg" />
 <meta property="og:title" content="Counting Instead of Tracking" />
 <meta property="og:description" content="Analyzing the traffic a website receives, is a key part in marketing to understand and highlight the group of consumers and their interests. However, the way how it has been implemented in the recent years has evolved from counting single requests to tracking the use across multiple websites.
@@ -70,7 +105,7 @@ For a short moment I decided against this trend and went back to the old classic
   "keywords": [
     "analytics"
   ],
-  "articleBody": "Analyzing the traffic a website receives, is a key part in marketing to understand and highlight the group of consumers and their interests. However, the way how it has been implemented in the recent years has evolved from counting single requests to tracking the use across multiple websites.\nFor a short moment I decided against this trend and went back to the old classics of website analysis. I start counting the unique requests, instead of tracking the user across our website. You may ask yourself now, what the motivation behind this solution is. First, I hate cookie banners. Every site we will request, will have an huge cookie banner explaining how our data will be used on the current site I am viewing. Secondly, I love minimalistic solutions that will solve our problem in just a view lines of code.\nTherefore, I will follow certain rules in our solution in order to deliver a minimalistic, and privacy protective solution to the user devices with a low bandwidth usage. How I will receive the visitors data is limited to a simple resource loading procedure by the browser, which means, I will not use JavaScript in order to collect and send the data that is required on the server side. Additionally, our solution is not allowed to store data on the client device, e.g. cookies, as I do not want to have any kind of cookie banner on our website.\n No JavaScript is allowed, the data needs to be sent by the browser itself. As of 1., I am not able to extract any extra information from the client device and are limited to the HTTP request only. A low bandwidth will be automatically achieved, as I do not need to send any return body, nor is the server required to send any scripts to the client that are responsible for the data collection and sending procedure.  Meta-data The way of making the request is now done. But I need to decided on the information I will extract from the HTTP headers or can be extracted from the raw TCP request behind the HTTP protocol. This can be classified as meta-data. As I specified in the goal before, I do not want to store that kind of data as raw data on our server. However, I need some visitor specific data, that I can use in order to identify a unique user.\nStoring an random unique id on the user device as an cookie would have many advantages at this point, as it will allow us to be completely independent from the user meta-data and count unique page views as long as the cookie is not expired. However, I hate cookie banners, so on this kind of solution violates the rule of our solution.\n Referer: The Referer HTTP header will be delivered with the root url the user requested, of which the received request on our server is a subordinate request. IP address: Each request will be started by a visitors device having an IP address. I will use this, in order to identify the users device with an unique value. User-Agent: Multiple browsers are available on the market with different versions and browser engines. As this setting is not totally unique, it needs to be combined with another information.  Storing data Having specified the data I am able to extract from the HTTP request, I need to combine this data, in order to be privacy protective and unique. Another aspect I need to add at this point, is the fact I do not want to store these informations in raw format on our server.\nLets start with the privacy protective part, that I want in our solution. The data that is privacy relevant in the meta-data I have collect within the HTTP request is the IP address. A way of partly anonymizing it is removing the last part of the IP address, e.g. 1.1.1.1 will become 1.1.1.1 This procedure is also known as IP masking. This will merge 256 different IP addresses to the same id, but 256 of 2^32 isn’t that much. However doing this will rise the privacy level.\nMore privacy means less uniqueness in the most cases, if nothing will be stored on the client device in order to represent an identity. This is a common problem with using a single value as an identifier. So let us try merging multiple values together.\nLooking back into the list of meta-data I have collected from the HTTP request, we can use the User-Agent header in order to rise the level of uniqueness we slightly shrank in the last step. By merging the reaming IP address and the user agent of the specific user, I assigned a specific browser to a specific client. A partly unique IP address and a partly unique browser user agent give us way more combinations, and so on, an higher level of uniqueness.\nSo far, so good. I assigned a unique id to a specific user. However, I need the root url, in order to identify the page that has been originally requested. This can be easily done, as a resource request of the browser - in this case for an image tag - adds a Referer HTTP header, which contains the url of the page that has been originally visited. As I have only a single domain, I can reduce this url to the path only, instead of the full url. I do not care about the query a user can choose, as this will allow him to generate an infinite amount of page views and unique request ids. Each request id belongs to one specific path and one specific user.\nAdding the path to the hash allows the user to be even more anonymous, as the server can only identify whether he has called the same url twice (matching request ids) or not. Without the request hash, tracking across the paths is possible and the privacy shrinks.\nThe solution to the last step, hiding the actual information behind the unique data, is hashing it. The id is then only reversible by brute-forcing every possible input, which would be useless at this point, as the IP address it not stored in full length in the unique data and who cares about the user agent.\nSummarized, our request id will be a hash of a partially IP address, the user agent and the path that has been originally requested.\nCode The solution is now defined. A possible implementation can be found below written in Ruby. Please note, that the provided solution is not production ready and has no persistent storage. If this kind of concept should be moved to production, it is suggested to add a database server, taking care of the unique request ids. However, a cuckoo filter - or other filters - as this will filter out same requests in order to lower the database server usage.\nIf this functionality will be abused by other websites, the code will automatically reject those requests by checking the domain of the Referer header.\nrequire 'sinatra' require 'cuckoo_filter' require 'uri' require 'digest' set :port, 3001 # In order to identify unique requests filter = CuckooFilter.make(size: 10_000) # Final statistics counts = Hash.new(0) get '/image.jpg' do content_type 'image/jpg' # Referer must be given return if request.referer.nil? url = URI(request.referer) # Root referer host is required return unless url.host == 'fcused.at' # Remove last ip address block ip = request.ip[0...request.ip.rindex('.')] # Convert meta-data into non-meta-data identifier hash = Digest::SHA256.hexdigest \"#{ip}#{request.user_agent}#{url.path}\" # Check if request already exists unless filter.lookup hash # Add request if to filter filter.insert hash # Increment counts counts[url.path] += 1 end end get '/stats' do # Return the current statistics counts end In order to count specific requests on some pages, the following HTML need to be added.\nimg src=\"http://localhost:3001/image.jpg\" style=\"display: none;\" This kind of implementation can be applied to any content type. The request since can be reduced to under 100bytes, meaning there is no time and bandwidth consumed in web analytics. An example implementation in golang can be found here https://github.com/oltdaniel/door.\nConclusion As an final statement I can say, that the statistics I collect from the requests and store in our database, deliver enough information to elaborate facts I can reuse for marketing purposes. Besides, I can say, due to the low amount of information, I will have a low bandwidth usage and deliver a minimalistic solution. The privacy aspect I described in the beginning is simply covered by the hashing of the user id and removing the last block of the IP address.\n  IP Anonymization in Analytics by Google https://support.google.com/analytics/answer/2763052 ↩︎\n   ",
+  "articleBody": "Analyzing the traffic a website receives, is a key part in marketing to understand and highlight the group of consumers and their interests. However, the way how it has been implemented in the recent years has evolved from counting single requests to tracking the use across multiple websites.\nFor a short moment I decided against this trend and went back to the old classics of website analysis. I start counting the unique requests, instead of tracking the user across our website. You may ask yourself now, what the motivation behind this solution is. First, I hate cookie banners. Every site we will request, will have an huge cookie banner explaining how our data will be used on the current site I am viewing. Secondly, I love minimalistic solutions that will solve our problem in just a view lines of code.\nTherefore, I will follow certain rules in our solution in order to deliver a minimalistic, and privacy protective solution to the user devices with a low bandwidth usage. How I will receive the visitors data is limited to a simple resource loading procedure by the browser, which means, I will not use JavaScript in order to collect and send the data that is required on the server side. Additionally, our solution is not allowed to store data on the client device, e.g. cookies, as I do not want to have any kind of cookie banner on our website.\nNo JavaScript is allowed, the data needs to be sent by the browser itself. As of 1., I am not able to extract any extra information from the client device and are limited to the HTTP request only. A low bandwidth will be automatically achieved, as I do not need to send any return body, nor is the server required to send any scripts to the client that are responsible for the data collection and sending procedure. Meta-data The way of making the request is now done. But I need to decided on the information I will extract from the HTTP headers or can be extracted from the raw TCP request behind the HTTP protocol. This can be classified as meta-data. As I specified in the goal before, I do not want to store that kind of data as raw data on our server. However, I need some visitor specific data, that I can use in order to identify a unique user.\nStoring an random unique id on the user device as an cookie would have many advantages at this point, as it will allow us to be completely independent from the user meta-data and count unique page views as long as the cookie is not expired. However, I hate cookie banners, so on this kind of solution violates the rule of our solution.\nReferer: The Referer HTTP header will be delivered with the root url the user requested, of which the received request on our server is a subordinate request. IP address: Each request will be started by a visitors device having an IP address. I will use this, in order to identify the users device with an unique value. User-Agent: Multiple browsers are available on the market with different versions and browser engines. As this setting is not totally unique, it needs to be combined with another information. Storing data Having specified the data I am able to extract from the HTTP request, I need to combine this data, in order to be privacy protective and unique. Another aspect I need to add at this point, is the fact I do not want to store these informations in raw format on our server.\nLets start with the privacy protective part, that I want in our solution. The data that is privacy relevant in the meta-data I have collect within the HTTP request is the IP address. A way of partly anonymizing it is removing the last part of the IP address, e.g. 1.1.1.1 will become 1.1.1.1 This procedure is also known as IP masking. This will merge 256 different IP addresses to the same id, but 256 of 2^32 isn’t that much. However doing this will rise the privacy level.\nMore privacy means less uniqueness in the most cases, if nothing will be stored on the client device in order to represent an identity. This is a common problem with using a single value as an identifier. So let us try merging multiple values together.\nLooking back into the list of meta-data I have collected from the HTTP request, we can use the User-Agent header in order to rise the level of uniqueness we slightly shrank in the last step. By merging the reaming IP address and the user agent of the specific user, I assigned a specific browser to a specific client. A partly unique IP address and a partly unique browser user agent give us way more combinations, and so on, an higher level of uniqueness.\nSo far, so good. I assigned a unique id to a specific user. However, I need the root url, in order to identify the page that has been originally requested. This can be easily done, as a resource request of the browser - in this case for an image tag - adds a Referer HTTP header, which contains the url of the page that has been originally visited. As I have only a single domain, I can reduce this url to the path only, instead of the full url. I do not care about the query a user can choose, as this will allow him to generate an infinite amount of page views and unique request ids. Each request id belongs to one specific path and one specific user.\nAdding the path to the hash allows the user to be even more anonymous, as the server can only identify whether he has called the same url twice (matching request ids) or not. Without the request hash, tracking across the paths is possible and the privacy shrinks.\nThe solution to the last step, hiding the actual information behind the unique data, is hashing it. The id is then only reversible by brute-forcing every possible input, which would be useless at this point, as the IP address it not stored in full length in the unique data and who cares about the user agent.\nSummarized, our request id will be a hash of a partially IP address, the user agent and the path that has been originally requested.\nCode The solution is now defined. A possible implementation can be found below written in Ruby. Please note, that the provided solution is not production ready and has no persistent storage. If this kind of concept should be moved to production, it is suggested to add a database server, taking care of the unique request ids. However, a cuckoo filter - or other filters - as this will filter out same requests in order to lower the database server usage.\nIf this functionality will be abused by other websites, the code will automatically reject those requests by checking the domain of the Referer header.\nrequire 'sinatra' require 'cuckoo_filter' require 'uri' require 'digest' set :port, 3001 # In order to identify unique requests filter = CuckooFilter.make(size: 10_000) # Final statistics counts = Hash.new(0) get '/image.jpg' do content_type 'image/jpg' # Referer must be given return if request.referer.nil? url = URI(request.referer) # Root referer host is required return unless url.host == 'fcused.at' # Remove last ip address block ip = request.ip[0...request.ip.rindex('.')] # Convert meta-data into non-meta-data identifier hash = Digest::SHA256.hexdigest \"#{ip}#{request.user_agent}#{url.path}\" # Check if request already exists unless filter.lookup hash # Add request if to filter filter.insert hash # Increment counts counts[url.path] += 1 end end get '/stats' do # Return the current statistics counts end In order to count specific requests on some pages, the following HTML need to be added.\n\u003cimg src=\"http://localhost:3001/image.jpg\" style=\"display: none;\"\u003e This kind of implementation can be applied to any content type. The request since can be reduced to under 100bytes, meaning there is no time and bandwidth consumed in web analytics. An example implementation in golang can be found here https://github.com/oltdaniel/door.\nConclusion As an final statement I can say, that the statistics I collect from the requests and store in our database, deliver enough information to elaborate facts I can reuse for marketing purposes. Besides, I can say, due to the low amount of information, I will have a low bandwidth usage and deliver a minimalistic solution. The privacy aspect I described in the beginning is simply covered by the hashing of the user id and removing the last block of the IP address.\nIP Anonymization in Analytics by Google https://support.google.com/analytics/answer/2763052 ↩︎\n",
   "wordCount" : "1438",
   "inLanguage": "en",
   "datePublished": "2018-11-15T00:00:00Z",
@@ -89,11 +124,6 @@ For a short moment I decided against this trend and went back to the old classic
   }
 }
 </script>
-
-
-
-
-
 </head>
 
 <body class="" id="top">
@@ -107,43 +137,7 @@ For a short moment I decided against this trend and went back to the old classic
     }
 
 </script>
-<noscript>
-    <style type="text/css">
-        #theme-toggle,
-        .top-link {
-            display: none;
-        }
 
-    </style>
-    <style>
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --theme: #1d1e20;
-                --entry: #2e2e33;
-                --primary: rgba(255, 255, 255, 0.84);
-                --secondary: rgba(255, 255, 255, 0.56);
-                --tertiary: rgba(255, 255, 255, 0.16);
-                --content: rgba(255, 255, 255, 0.74);
-                --hljs-bg: #2e2e33;
-                --code-bg: #37383e;
-                --border: #333;
-            }
-
-            .list {
-                background: var(--theme);
-            }
-
-            .list:not(.dark)::-webkit-scrollbar-track {
-                background: 0 0;
-            }
-
-            .list:not(.dark)::-webkit-scrollbar-thumb {
-                border-color: var(--theme);
-            }
-        }
-    </style>
-
-</noscript>
 <header class="header">
     <nav class="nav">
         <div class="logo">
@@ -169,42 +163,41 @@ For a short moment I decided against this trend and went back to the old classic
                         <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
                     </svg>
                 </button>
-                
-                
-
                 <ul class="lang-switch"><li>|</li>
                     <li>
-                        <a href="https://oltdaniel.eu/de/" title=":de:"
+                        <a href="https://oltdaniel.eu/de/" title="Deutsch"
                             aria-label=":de:">🇩🇪</a>
                     </li>
                 </ul>
             </span>
         </div>
-        <ul id="menu" onscroll="menu_on_scroll()">
+        <ul id="menu">
             <li>
                 <a href="https://oltdaniel.eu/tags" title="Tags">
                     <span>Tags</span>
                 </a>
-            </li></ul>
+            </li>
+            <li>
+                <a href="https://oltdaniel.eu/tips" title="Tips">
+                    <span>Tips</span>
+                </a>
+            </li>
+        </ul>
     </nav>
 </header>
-
-    <main class="main">
+<main class="main">
 
 <article class="post-single">
   <header class="post-header">
-
+    
     <h1 class="post-title">
       Counting Instead of Tracking
     </h1>
-    <div class="post-meta">2018-11-15
-
+    <div class="post-meta"><span title='2018-11-15 00:00:00 +0000 UTC'>2018-11-15</span>
 
 </div>
   </header> 
-
-  <div class="post-content">
-<p>Analyzing the traffic a website receives, is a key part in marketing to
+  <div class="post-content"><p>Analyzing the traffic a website receives, is a key part in marketing to
 understand and highlight the group of consumers and their interests. However,
 the way how it has been implemented in the recent years has evolved from
 counting single requests to tracking the use across multiple websites.</p>
@@ -304,44 +297,44 @@ out same requests in order to lower the database server usage.</p>
 <p>If this functionality will be abused by other websites, the code will
 automatically reject those requests by checking the domain of the <code>Referer</code>
 header.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">require <span style="color:#e6db74">&#39;sinatra&#39;</span>
-require <span style="color:#e6db74">&#39;cuckoo_filter&#39;</span>
-
-require <span style="color:#e6db74">&#39;uri&#39;</span>
-require <span style="color:#e6db74">&#39;digest&#39;</span>
-
-set <span style="color:#e6db74">:port</span>, <span style="color:#ae81ff">3001</span>
-
-<span style="color:#75715e"># In order to identify unique requests</span>
-filter <span style="color:#f92672">=</span> <span style="color:#66d9ef">CuckooFilter</span><span style="color:#f92672">.</span>make(<span style="color:#e6db74">size</span>: <span style="color:#ae81ff">10_000</span>)
-<span style="color:#75715e"># Final statistics</span>
-counts <span style="color:#f92672">=</span> <span style="color:#66d9ef">Hash</span><span style="color:#f92672">.</span>new(<span style="color:#ae81ff">0</span>)
-
-get <span style="color:#e6db74">&#39;/image.jpg&#39;</span> <span style="color:#66d9ef">do</span>
-  content_type <span style="color:#e6db74">&#39;image/jpg&#39;</span>
-  <span style="color:#75715e"># Referer must be given</span>
-  <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">if</span> request<span style="color:#f92672">.</span>referer<span style="color:#f92672">.</span>nil?
-  url <span style="color:#f92672">=</span> <span style="color:#66d9ef">URI</span>(request<span style="color:#f92672">.</span>referer)
-  <span style="color:#75715e"># Root referer host is required</span>
-  <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">unless</span> url<span style="color:#f92672">.</span>host <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;fcused.at&#39;</span>
-  <span style="color:#75715e"># Remove last ip address block</span>
-  ip <span style="color:#f92672">=</span> request<span style="color:#f92672">.</span>ip<span style="color:#f92672">[</span><span style="color:#ae81ff">0</span><span style="color:#f92672">...</span>request<span style="color:#f92672">.</span>ip<span style="color:#f92672">.</span>rindex(<span style="color:#e6db74">&#39;.&#39;</span>)<span style="color:#f92672">]</span>
-  <span style="color:#75715e"># Convert meta-data into non-meta-data identifier</span>
-  hash <span style="color:#f92672">=</span> <span style="color:#66d9ef">Digest</span><span style="color:#f92672">::</span><span style="color:#66d9ef">SHA256</span><span style="color:#f92672">.</span>hexdigest <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">#{</span>ip<span style="color:#e6db74">}#{</span>request<span style="color:#f92672">.</span>user_agent<span style="color:#e6db74">}#{</span>url<span style="color:#f92672">.</span>path<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
-  <span style="color:#75715e"># Check if request already exists</span>
-  <span style="color:#66d9ef">unless</span> filter<span style="color:#f92672">.</span>lookup hash
-    <span style="color:#75715e"># Add request if to filter</span>
-    filter<span style="color:#f92672">.</span>insert hash
-    <span style="color:#75715e"># Increment counts</span>
-    counts<span style="color:#f92672">[</span>url<span style="color:#f92672">.</span>path<span style="color:#f92672">]</span> <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
-  <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span>
-
-get <span style="color:#e6db74">&#39;/stats&#39;</span> <span style="color:#66d9ef">do</span>
-  <span style="color:#75715e"># Return the current statistics</span>
-  counts
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>In order to count specific requests on some pages, the following HTML need to be
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>require <span style="color:#e6db74">&#39;sinatra&#39;</span>
+</span></span><span style="display:flex;"><span>require <span style="color:#e6db74">&#39;cuckoo_filter&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>require <span style="color:#e6db74">&#39;uri&#39;</span>
+</span></span><span style="display:flex;"><span>require <span style="color:#e6db74">&#39;digest&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>set <span style="color:#e6db74">:port</span>, <span style="color:#ae81ff">3001</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># In order to identify unique requests</span>
+</span></span><span style="display:flex;"><span>filter <span style="color:#f92672">=</span> <span style="color:#66d9ef">CuckooFilter</span><span style="color:#f92672">.</span>make(<span style="color:#e6db74">size</span>: <span style="color:#ae81ff">10_000</span>)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Final statistics</span>
+</span></span><span style="display:flex;"><span>counts <span style="color:#f92672">=</span> <span style="color:#66d9ef">Hash</span><span style="color:#f92672">.</span>new(<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>get <span style="color:#e6db74">&#39;/image.jpg&#39;</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>  content_type <span style="color:#e6db74">&#39;image/jpg&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># Referer must be given</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">if</span> request<span style="color:#f92672">.</span>referer<span style="color:#f92672">.</span>nil?
+</span></span><span style="display:flex;"><span>  url <span style="color:#f92672">=</span> <span style="color:#66d9ef">URI</span>(request<span style="color:#f92672">.</span>referer)
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># Root referer host is required</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">unless</span> url<span style="color:#f92672">.</span>host <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;fcused.at&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># Remove last ip address block</span>
+</span></span><span style="display:flex;"><span>  ip <span style="color:#f92672">=</span> request<span style="color:#f92672">.</span>ip<span style="color:#f92672">[</span><span style="color:#ae81ff">0</span><span style="color:#f92672">...</span>request<span style="color:#f92672">.</span>ip<span style="color:#f92672">.</span>rindex(<span style="color:#e6db74">&#39;.&#39;</span>)<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># Convert meta-data into non-meta-data identifier</span>
+</span></span><span style="display:flex;"><span>  hash <span style="color:#f92672">=</span> <span style="color:#66d9ef">Digest</span><span style="color:#f92672">::</span><span style="color:#66d9ef">SHA256</span><span style="color:#f92672">.</span>hexdigest <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">#{</span>ip<span style="color:#e6db74">}#{</span>request<span style="color:#f92672">.</span>user_agent<span style="color:#e6db74">}#{</span>url<span style="color:#f92672">.</span>path<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># Check if request already exists</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">unless</span> filter<span style="color:#f92672">.</span>lookup hash
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Add request if to filter</span>
+</span></span><span style="display:flex;"><span>    filter<span style="color:#f92672">.</span>insert hash
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Increment counts</span>
+</span></span><span style="display:flex;"><span>    counts<span style="color:#f92672">[</span>url<span style="color:#f92672">.</span>path<span style="color:#f92672">]</span> <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>get <span style="color:#e6db74">&#39;/stats&#39;</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># Return the current statistics</span>
+</span></span><span style="display:flex;"><span>  counts
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>In order to count specific requests on some pages, the following HTML need to be
 added.</p>
 <pre><code>&lt;<b>img</b> src="<u>http://localhost:3001/image.jpg</u>" style="display: none;"&gt;</code></pre>
 <p>This kind of implementation can be applied to any content type. The request
@@ -357,50 +350,47 @@ minimalistic solution. The privacy aspect I described in the beginning is
 simply covered by the hashing of the user id and removing the last block of the
 IP address.</p>
 <!-- References -->
-<section class="footnotes" role="doc-endnotes">
+<div class="footnotes" role="doc-endnotes">
 <hr>
 <ol>
-<li id="fn:1" role="doc-endnote">
+<li id="fn:1">
 <p>IP Anonymization in Analytics by Google <a href="https://support.google.com/analytics/answer/2763052"><code>https://support.google.com/analytics/answer/2763052</code></a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
-</section>
-
 </div>
+
+
+  </div>
+
   <footer class="post-footer">
     <ul class="post-tags">
       <li><a href="https://oltdaniel.eu/tags/analytics/">analytics</a></li>
     </ul>
   </footer>
 </article>
-    </main><footer class="footer">
+    </main>
+    
+<footer class="footer">
     <span>&copy; 2022 <a href="https://oltdaniel.eu">oltdaniel</a></span>
-    <span>&middot;</span>
-    <span>Powered by <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a></span>
-    <span>&middot;</span>
-    <span>Theme <a href="https://git.io/hugopapermod" rel="noopener" target="_blank">PaperMod</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://git.io/hugopapermod" rel="noopener" target="_blank">PaperMod</a>
+    </span>
 </footer>
-<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)">
-    <button class="top-link" id="top-link" type="button" accesskey="g">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
-            <path d="M12 6H0l6-6z" />
-        </svg>
-    </button>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
 </a>
 
-
-
-<script defer src="/assets/js/highlight.min.7680afc38aa6b15ddf158a4f3780b7b1f7dde7e91d26f073e6229bb7a0793c92.js" integrity="sha256-doCvw4qmsV3fFYpPN4C3sffd5&#43;kdJvBz5iKbt6B5PJI="
-    onload="hljs.initHighlightingOnLoad();"></script>
 <script>
-    window.onload = function () {
-        if (localStorage.getItem("menu-scroll-position")) {
-            document.getElementById('menu').scrollLeft = localStorage.getItem("menu-scroll-position");
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
         }
-    }
-
-    function menu_on_scroll() {
-        localStorage.setItem("menu-scroll-position", document.getElementById('menu').scrollLeft);
     }
 
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -448,7 +438,6 @@ IP address.</p>
     })
 
 </script>
-
 </body>
 
 </html>

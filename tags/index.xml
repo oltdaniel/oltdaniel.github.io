@@ -1,12 +1,39 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Tags on oltdaniel</title>
     <link>https://oltdaniel.eu/tags/</link>
     <description>Recent content in Tags on oltdaniel</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 04 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://oltdaniel.eu/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 05 Aug 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://oltdaniel.eu/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>chromium</title>
+      <link>https://oltdaniel.eu/tags/chromium/</link>
+      <pubDate>Fri, 05 Aug 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://oltdaniel.eu/tags/chromium/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>flatpak</title>
+      <link>https://oltdaniel.eu/tags/flatpak/</link>
+      <pubDate>Fri, 05 Aug 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://oltdaniel.eu/tags/flatpak/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>linux</title>
+      <link>https://oltdaniel.eu/tags/linux/</link>
+      <pubDate>Fri, 05 Aug 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://oltdaniel.eu/tags/linux/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>docker</title>
       <link>https://oltdaniel.eu/tags/docker/</link>

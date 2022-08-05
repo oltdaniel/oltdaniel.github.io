@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>flatpak on oltdaniel</title>
+    <link>https://oltdaniel.eu/tags/flatpak/</link>
+    <description>Recent content in flatpak on oltdaniel</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 05 Aug 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://oltdaniel.eu/tags/flatpak/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Flatpak chromium browser gpu acceleration</title>
+      <link>https://oltdaniel.eu/tips/flatpak-chromium-browser-gpu-acceleration/</link>
+      <pubDate>Fri, 05 Aug 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://oltdaniel.eu/tips/flatpak-chromium-browser-gpu-acceleration/</guid>
+      <description>This is a small tip on how to ensure your browser has gpu acceleration enabled on your linux machine, especially in the case of chromium based browsers installed via flatpak. Other installation methods are often already well documented via the Arch Wiki or similar.
+Check GPU status First, we check the browser gpu info. First, open the browser settings. In the URL you should see something like BROWSER://settings. In my case, running Brave, I have brave://settings.</description>
+    </item>
+    
+  </channel>
+</rss>
