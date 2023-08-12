@@ -1,0 +1,32 @@
+# SIte settings
+title: Daniel Oltmanns
+subtitle: personal blog and collection of tips
+email: hi@oltdaniel.eu
+socials:
+  - name: GitHub
+    url: https://github.com/oltdaniel
+  - name: Codeberg
+    url: https://codeberg.org/oltdaniel
+navigation:
+  - name: About
+    url: /
+  - name: Blog
+    url: /blog
+  - name: Tips
+    url: /tips
+collections:
+  tips:
+    output: true
+    permalink: /tips/:year/:title:output_ext
+
+
+# Build Settings
+baseurl: ""
+url: "https://oltdaniel.eu"
+permalink: /blog/:year/:title:output_ext
+timezone: Europe/Berlin
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+sass:
+  style: compressed

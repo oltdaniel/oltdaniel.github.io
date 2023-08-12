@@ -1,0 +1,13 @@
+---
+layout: page
+permalink: /blog
+---
+
+<div class="article-list">
+    {% for post in site.posts %}
+    <a href="{{ post.url }}">
+        <time>{{ post.date | date: "%Y-%m-%d" }}</time>
+        <h3>{{ post.title }}</h3>
+    </a>
+    {% endfor %}
+</div>

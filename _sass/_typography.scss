@@ -1,0 +1,30 @@
+/* CSS */
+:root { font-family: 'Inter', sans-serif; }
+@supports (font-variation-settings: normal) {
+  :root { font-family: 'Inter var', sans-serif; }
+}
+
+a {
+    color: var(--text);
+    text-decoration: none;
+    border-bottom: solid 2px var(--accent);
+
+    &:hover {
+        color: var(--accent-dark);
+    }
+
+    &.active {
+        font-weight: bold;
+    }
+}
+
+time {
+    color: var(--text-muted);
+}
+
+blockquote {
+    color: var(--text-muted);
+    border-left: 4px solid var(--text-muted);
+    padding-left: 10px;
+    margin: 0;
+}

@@ -1,0 +1,13 @@
+<header>
+    <h1>{{ site.title }}</h1>
+
+    {% if site.subtitle %}
+    <p>{{ site.subtitle }}</p>
+    {% endif %}
+
+    <nav>
+        {% for nav in site.navigation %}
+        <a href="{{ nav.url }}" {% if page.url == nav.url %}class="active"{% endif %}>{{ nav.name }}</a>
+        {% endfor %}
+    </nav>
+</header>

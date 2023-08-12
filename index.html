@@ -1,0 +1,31 @@
+---
+layout: page
+---
+
+<div class="about-me">
+    <picture>
+        <source type="image/webp" srcset="{{ "/assets/me_125.webp" | absolute_url }} 125w, {{ "/assets/me_512.webp" | absolute_url }} 512w, {{ "/assets/me_1024.webp" | absolute_url }} 1024w">
+        <source type="image/png" srcset="{{ "/assets/me_125.png" | absolute_url }} 125w, {{ "/assets/me_512.png" | absolute_url }} 512w, {{ "/assets/me_1024.png" | absolute_url }} 1024w">
+        <img src="{{ "/assets/me_512.png" | absolute_url }}" alt="Daniel Oltmanns" width="125px" height="125px" />
+    </picture>
+
+    <div>
+        <p style="margin-top: 0;">Moin! I'm <b>{{ site.title }}</b>.</p>
+        <p>I'm a computer science student and work in Hamburg, Germany. My interests range from electronics and programming to data analytics.</p>
+        {% if site.socials %}
+        <p>You can find me on {% for social in site.socials %}{% if forloop.first %}{% elsif forloop.last %} and {% else %},{% endif %}<a href="{{ social.url }}" target="_blank" rel=”noopener noreferrer”>{{ social.name }}</a>{% endfor %}.</p>
+        {% endif %}
+    </div>
+</div>
+
+<section>
+    <h2>Contact</h2>
+
+    <p>Anything you'd like to ask me or chat about? Just write me at <a href="mailto:{{ site.email }}">{{ site.email }}</a>.</p>
+</section>
+
+<!-- <section>
+    <h2>Status</h2>
+
+    <p>I play around with golang and IoT data processing. To pratice my skills I'm currently playing around with different datasets and databases. My latest playground project was importing weather datasets into clickhouse to pratice writing queries manually: <a href="https://github.com/oltdaniel/meteostat-clickhouse-playground" target="_blank">Meteostat Clickhouse Playground</a>.</p>
+</section> -->

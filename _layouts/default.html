@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: "en" }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ page.title }}</title>
+
+    {% seo %}
+
+    <link media="all" rel="stylesheet" href="{{ "/assets/fonts/inter.css" | absolute_path }}">
+    <link media="all" rel="stylesheet" href="{{ "/assets/style.css" | absolute_path }}">
+</head>
+<body>
+    {{ content }}
+</body>
+</html>

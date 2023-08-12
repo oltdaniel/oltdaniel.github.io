@@ -1,0 +1,15 @@
+---
+layout: page
+permalink: /tips
+---
+
+{% for tip in site.tips %}
+<a href="{{ tip.url }}">
+    <article>
+        <header>
+            <time>{{ tip.date | date: "%Y-%m-%d" }}</time>
+            <h3>{{ tip.title }}</h3>
+        </header>
+    </article>
+</a>
+{% endfor %}
