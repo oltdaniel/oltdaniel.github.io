@@ -12,7 +12,7 @@ title: About
 
     <div>
         <p style="margin-top: 0;">Moin! I'm <b>{{ site.title }}</b>.</p>
-        <p>I'm a computer science student and work in Hamburg, Germany. My interests range from electronics and programming to data analytics.</p>
+        <p>I do stuff like programming, pcb design and security.</p>
         {% if site.socials %}
         <p>You can find me on {% for social in site.socials %}{% if forloop.first %}{% elsif forloop.last %} and {% else %},{% endif %}<a href="{{ social.url }}" target="_blank" rel=”noopener noreferrer”>{{ social.name }}</a>{% endfor %}.</p>
         {% endif %}
