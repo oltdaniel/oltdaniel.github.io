@@ -6,8 +6,12 @@
     {% endif %}
 
     <nav>
-        {% for nav in site.navigation %}
-        <a href="{{ nav.url }}" {% if page.url == nav.url %}class="active"{% endif %}>{{ nav.name }}</a>
-        {% endfor %}
+        <menu class="width">
+            {% assign url_elements = page.url | split: "/" %}
+            {% for nav in site.navigation %}
+            {% assign nav_elements = nav.url | split: "/" %}
+            <li {% if url_elements[1] == nav_elements[1] %}class="selected"{% endif %}><a href="{{ nav.url }}">{{ nav.name }}</a></li>
+            {% endfor %}
+        </menu>
     </nav>
 </header>

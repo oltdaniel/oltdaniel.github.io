@@ -2,9 +2,16 @@
 layout: page
 ---
 
-<article>
-    <h2>{{ page.title }}</h2>
-    <time>{{ page.date | date: "%Y-%m-%d" }}</time>
+<section>
+    <header>
+        <hgroup>
+            <h1>{{ page.title }}</h1>
+            <div class="flex row space-between wrap muted">
+                <span>Posted on {{ page.date | date: "%Y-%m-%d" }}{% if page.last_modified %} (Last modified on {{ page.last_modified | date: "%Y-%m-%d" }}){% endif %}</span>
+                {%if page.tags %}<span>{% for tag in page.tags %}<span class="variant">#</span>{{ tag }}{% endfor %}</span>{% endif %}
+            </div>
+        </hgroup>
+    </header>
 
     {{ content }}
-</article>
+</section>

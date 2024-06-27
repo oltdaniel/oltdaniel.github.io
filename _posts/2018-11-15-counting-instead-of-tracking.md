@@ -184,5 +184,6 @@ minimalistic solution. The privacy aspect I described in the beginning is
 simply covered by the hashing of the user id and removing the last block of the
 IP address.
 
-<!-- References -->
-[^1]: IP Anonymization in Analytics by Google [https://support.google.com/analytics/answer/2763052](https://support.google.com/analytics/answer/2763052)
+## References
+
+[^1]: [https://support.google.com/analytics/answer/2763052](https://support.google.com/analytics/answer/2763052)

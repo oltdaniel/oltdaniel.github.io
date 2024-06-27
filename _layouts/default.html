@@ -8,8 +8,30 @@
 
     {% seo %}
 
-    <link media="all" rel="stylesheet" href="{{ "/assets/fonts/inter.css" | absolute_path }}">
-    <link media="all" rel="stylesheet" href="{{ "/assets/style.css" | absolute_path }}">
+    <link rel="stylesheet" href="{{ "/assets/matcha.css" | absolute_path }}">
+
+    <style>
+        /* slight modifications for a more personal style */
+        body > header:first-of-type {
+            padding-top: 2rem;
+            margin: 0 0 1rem;
+        }
+
+        footer {
+            text-align: center;
+        }
+
+        pre>code {
+            /* make large code blocks scrollable for mobile devices */
+            overflow-x: auto;
+            white-space: unset;
+        }
+    </style>
+
+    <script src="{{ "/assets/highlight.min.js" | absolute_path }}"></script>
+    <script src="{{ "/assets/dockerfile.min.js" | absolute_path }}"></script>
+
+    <script>hljs.highlightAll();</script>
 </head>
 <body>
     {{ content }}

@@ -4,13 +4,11 @@ permalink: /tips
 title: Tips
 ---
 
+<div>
 {% for tip in site.tips %}
-<a href="{{ tip.url }}">
-    <article>
-        <header>
-            <time>{{ tip.date | date: "%Y-%m-%d" }}</time>
-            <h3>{{ tip.title }}</h3>
-        </header>
-    </article>
-</a>
+    <a href="{{ tip.url }}" class="flex wrap mb-1">
+        <time class="column mr-1 muted">{{ tip.date | date: "%Y-%m-%d" }}</time>
+        <h3 class="column">{{ tip.title }}</h3>
+    </a>
 {% endfor %}
+</div>

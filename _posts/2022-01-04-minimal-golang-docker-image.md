@@ -58,9 +58,9 @@ func main() {
 			log.Fatal(err)
 		}
 		c.String(
-      200,
-      "server time in japan would be %v",
-      time.Now().In(wantedTimeLocation).String())
+			200,
+			"server time in japan would be %v",
+			time.Now().In(wantedTimeLocation).String())
 	})
 
 	// here we create a lua machine
@@ -89,7 +89,7 @@ func main() {
 
 ## First stage
 
-```Dockerfile
+```dockerfile
 # use a fully featured golang build environment
 FROM golang:latest AS builder
 # install project dependencies
@@ -131,7 +131,7 @@ Compiling everything into a static library or even into the executable itself ca
 
 So lets rebuild the first stage and add the second one. In my example I'll use the `golua`[^2] package which requires the shared library of lua.
 
-```Dockerfile
+```dockerfile
 # first stage for our compiling environment
 FROM golang:alpine AS builder
 # install build tools
@@ -177,7 +177,7 @@ For this, we don't care about the first stage as we did before. It can be as big
 - `CGO_ENABLED=0` will tell the go compiler, it doesn't have access to any system libraries. 
 - however, the `-installsuffix cgo` argument is **not required anymore** as stated in the original GitHub issue about static linking issues. [^3]
 
-```Dockerfile
+```dockerfile
 # use a fully featured golang build environment
 FROM golang:latest AS builder
 # change directory of project
@@ -239,6 +239,9 @@ Again, the choice is up to you. Every option I listed has nearly equal pros and 
 
 However, even though scratch images look like a nice thing, it breaks things more often than it actually improves it. So I only suggest this type of image, if you really just have a minimal static binary that needs to be honest and doesn't have any complex dependencies into the system libraries.
 
-[^1]: docker docs "multistage build": [`docs.docker.com/develop/develop-images/multistage-build`](https://docs.docker.com/develop/develop-images/multistage-build/)
-[^2]: GitHub `golua`: [`github.com/aarzilli/golua`](https://github.com/aarzilli/golua)
-[^3]: GitHub comment about newer golang versions and static linking: [`github.com/golang/go/issues/9344#issuecomment-69944514`](https://github.com/golang/go/issues/9344#issuecomment-69944514)
+
+## References
+
+[^1]: [`docs.docker.com/develop/develop-images/multistage-build`](https://docs.docker.com/develop/develop-images/multistage-build/)
+[^2]: [`github.com/aarzilli/golua`](https://github.com/aarzilli/golua)
+[^3]: [`github.com/golang/go/issues/9344#issuecomment-69944514`](https://github.com/golang/go/issues/9344#issuecomment-69944514)

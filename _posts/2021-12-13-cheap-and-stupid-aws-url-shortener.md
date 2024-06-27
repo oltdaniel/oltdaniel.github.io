@@ -277,11 +277,12 @@ Which means, we have a monthly total of `12.18USD` **if we don't use the free ti
 
 *Should you do this?* ... **Definitely not.** Search for an existing service that also includes an fancy web interface and don't waste hours trying to make something fit, it wasn't designed for. But this is a great way of learning how you can combine Lambda@Edge with Cloudfront to create something new.
 
-<!-- Footnotes -->
-[^1]: AWS products page: [https://aws.amazon.com/products](https://aws.amazon.com/products)
-[^2]: "The 17 Ways to Run Containers on AWS" by Corey Quinn at LastWeekInAWS: [https://www.lastweekinaws.com/blog/the-17-ways-to-run-containers-on-aws](https://www.lastweekinaws.com/blog/the-17-ways-to-run-containers-on-aws/)
-[^3]: Amazon S3 Product Page: [https://aws.amazon.com/s3](https://aws.amazon.com/s3)
-[^4]: Amazon Cloudfront Product Page: [https://aws.amazon.com/cloudfront](https://aws.amazon.com/cloudfront)
-[^5]: AWS Documentation "Using custom URLs by adding alternate domain names (CNAMEs)": [https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/CNAMEs.html](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/CNAMEs.html)
-[^6]: AWS Documentation: "Invalidating Files": [https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Invalidation.html](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Invalidation.html)
-[^7]: AWS Calculator: [https://calculator.aws](https://calculator.aws/)
+## References
+
+[^1]: [https://aws.amazon.com/products](https://aws.amazon.com/products)
+[^2]: [https://www.lastweekinaws.com/blog/the-17-ways-to-run-containers-on-aws](https://www.lastweekinaws.com/blog/the-17-ways-to-run-containers-on-aws/)
+[^3]: [https://aws.amazon.com/s3](https://aws.amazon.com/s3)
+[^4]: [https://aws.amazon.com/cloudfront](https://aws.amazon.com/cloudfront)
+[^5]: [https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/CNAMEs.html](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/CNAMEs.html)
+[^6]: [https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Invalidation.html](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Invalidation.html)
+[^7]: [https://calculator.aws](https://calculator.aws/)
