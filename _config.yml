@@ -17,6 +17,7 @@ navigation:
 collections:
   tips:
     output: true
+    sort_by: date
     permalink: /tips/:year/:title:output_ext
 
 
