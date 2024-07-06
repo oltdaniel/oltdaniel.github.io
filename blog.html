@@ -4,11 +4,27 @@ permalink: /blog
 title: Blog
 ---
 
-<div>
+<section>
+    <h2>By date</h2>
     {% for post in site.posts %}
     <a href="{{ post.url }}" class="flex wrap mb-1">
         <time class="column mr-1 muted">{{ post.date | date: "%Y-%m-%d" }}</time>
         <h3 class="column">{{ post.title }}</h3>
     </a>
     {% endfor %}
-</div>
+</section>
+
+<section>
+    <h2>By tags</h2>
+
+    {% assign tags = site.tags | sort %}
+    {% for tag in tags %}
+    <h4><span class="variant">#</span>{{ tag[0] }}</span></h4>
+    {% for post in tag[1] %}
+    <a href="{{ post.url }}" class="flex wrap mb-1">
+        <time class="column mr-1 muted">{{ post.date | date: "%Y-%m-%d" }}</time>
+        <h3 class="column">{{ post.title }}</h3>
+    </a>
+    {% endfor %}
+    {% endfor %}
+</section>

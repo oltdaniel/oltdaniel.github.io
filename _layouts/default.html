@@ -4,35 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' sa.oltdaniel.eu">
+
     <title>{{ page.title | default: "Blog" }} - {{ site.title }}</title>
 
     {% seo %}
 
     <link rel="stylesheet" href="{{ "/assets/matcha.css" | absolute_path }}">
 
-    <style>
-        /* slight modifications for a more personal style */
-        body > header:first-of-type {
-            padding-top: 2rem;
-            margin: 0 0 1rem;
-        }
-
-        footer {
-            text-align: center;
-        }
-
-        pre>code {
-            /* make large code blocks scrollable for mobile devices */
-            overflow-x: auto;
-            white-space: unset;
-        }
-    </style>
-
-    <script src="{{ "/assets/highlight.min.js" | absolute_path }}"></script>
-    <script src="{{ "/assets/dockerfile.min.js" | absolute_path }}"></script>
-    <script src="{{ "/assets/zig.min.js" | absolute_path }}"></script>
-
-    <script>hljs.highlightAll();</script>
+    <script src="{{ "/assets/highlight.js" | absolute_path }}" defer></script>
 </head>
 <body>
     {{ content }}

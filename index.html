@@ -1,18 +1,19 @@
 ---
 layout: page
 title: About
+description: personal blog and collection of tips
 ---
 
 <section>
     <header>
         <picture>
-            <source type="image/webp" srcset="{{ "/assets/me_125.webp" | absolute_url }} 125w, {{ "/assets/me_512.webp" | absolute_url }} 512w, {{ "/assets/me_1024.webp" | absolute_url }} 1024w">
-            <source type="image/png" srcset="{{ "/assets/me_125.png" | absolute_url }} 125w, {{ "/assets/me_512.png" | absolute_url }} 512w, {{ "/assets/me_1024.png" | absolute_url }} 1024w">
-            <img src="{{ "/assets/me_512.png" | absolute_url }}" alt="Daniel Oltmanns" width="125px" height="125px" />
+            <source type="image/webp" srcset="{{ "/assets/me_125.webp" | absolute_path }} 125w, {{ "/assets/me_512.webp" | absolute_path }} 512w, {{ "/assets/me_1024.webp" | absolute_path }} 1024w">
+            <source type="image/png" srcset="{{ "/assets/me_125.png" | absolute_path }} 125w, {{ "/assets/me_512.png" | absolute_path }} 512w, {{ "/assets/me_1024.png" | absolute_path }} 1024w">
+            <img src="{{ "/assets/me_512.png" | absolute_path }}" alt="Daniel Oltmanns" width="125px" height="125px" />
         </picture>
     </header>
     <div>
-        <p style="margin-top: 0;">Moin! I'm <b>{{ site.title }}</b>.</p>
+        <p class="mt-0">Moin! I'm <b>{{ site.title }}</b>.</p>
         <p>I do stuff like programming, pcb design and security.</p>
         {% if site.socials %}
         <p>You can find me on {% for social in site.socials %}{% if forloop.first %}{% elsif forloop.last %} and {% else %},{% endif %}<a href="{{ social.url }}" target="_blank" rel=”noopener noreferrer”>{{ social.name }}</a>{% endfor %}.</p>
@@ -20,7 +21,7 @@ title: About
     </div>
 </section>
 
-<section style="clear: both">
+<section>
     <h2>Contact</h2>
 
     <p>Anything you'd like to ask me or chat about? Just write me at <a href="mailto:{{ site.email }}">{{ site.email }}</a>.</p>
