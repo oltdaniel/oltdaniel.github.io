@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+<article>
+    <hgroup>
+        <h2>{{ title }}</h2>
+        {{ date }}
+        <div class="flex row space-between wrap muted">
+            <span>Posted on {{ item.date | format_date("%Y-%m-%d") }}{% if item.last_modified %} (Last modified on {{item.last_modified | format_date("%Y-%m-%d") }}){% endif %}</span>
+        </div>
+    </hgroup>
+    <div>{{ content | safe }}</div>
+</article>
+{% endblock %}

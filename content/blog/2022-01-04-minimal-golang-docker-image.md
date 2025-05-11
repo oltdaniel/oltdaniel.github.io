@@ -1,17 +1,16 @@
 ---
 layout: post
 title: "Minimal Golang Docker image"
-date: 2022-01-04
-tags: ["golang", "docker"]
+description: As golang is a compiled programming language, we don't need to store all the unnecessary build environments in our final image. So lets see, if we get rid of everything, what we need to important again to not break anything.
 ---
 
-As golang is a compiled programming language, we don't need to store all the unecessary build environments in our final image. So lets see, if we get rid of everything, what we need to importat again to not break anything.
+As golang is a compiled programming language, we don't need to store all the unnecessary build environments in our final image. So lets see, if we get rid of everything, what we need to important again to not break anything.
 
 In order to solve everything in a single `Dockerfile`, we will use multi-stage builds. [^1] Our first stage will be focused on the actual compiling of our application. In order to cover as many features on our application as possible, I'll create an API that uses timezone information, calls an external service via https and uses the lua shared library.
 
 ## Project setup
 
-First we create a new folder and initialize our dependecy manager and load some dependencies.
+First we create a new folder and initialize our dependency manager and load some dependencies.
 
 ```bash
 go mod init github.com/oltdaniel/golang-minimal-docker
@@ -39,7 +38,7 @@ func main() {
 
 	// call another api via https
 	// this will require ca-certificates
-	// for veriying the ssl certificate
+	// for verifying the ssl certificate
 	s.GET("/ip", func(c *gin.Context) {
 		resp, err := http.Get("https://api.ipify.org")
 		if err != nil {

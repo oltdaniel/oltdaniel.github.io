@@ -1,7 +1,6 @@
 ---
 layout: post
 title:  "NVIDIA on EndeavourOS"
-date:   2024-07-05
 ---
 
 As mentioned in my previous post, I run linux and windows in dual boot. Currently EndeavourOS and Windows 11. Lately, I somehow messed up my Linux installation and had more and more graphics issue with unstable output and just a blackscreen instead of my systemd-boot menu.

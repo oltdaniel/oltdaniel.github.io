@@ -1,16 +1,14 @@
 ---
 layout: post
-date: "2021-12-13"
 title: "Cheap and stupid AWS URL shortener"
 description: "How cheap and low-tech can we make an URL shortener?"
-tags: ["aws"]
 ---
 
 AWS is known to be not the cheapest option when it comes to cloud services. But the options it will give you, are endless due to its massive product selection.So the challenge is, *how low-tech or stupid and especially how cheap can you make an URL shortener?*
 
-> **NOTE**: There are some drawbacks that we were willing to accept during the impelemntation of this functionality.
+> **NOTE**: There are some drawbacks that we were willing to accept during the implementation of this functionality.
 > 1. Redirects will only work in browsers.
-> 2. No quick changes to registered shortned urls.
+> 2. No quick changes to registered shortened urls.
 > 3. No interface to register new urls.
 > 
 > Keep this in mind.
@@ -19,11 +17,11 @@ AWS is known to be not the cheapest option when it comes to cloud services. But 
 
 As I was challenged with this project in the end of 2020, where I was new to AWS, so my first approach was a bit naive. Before I focused on creating custom REST APIs running on their own servers and containers. Therefore, I decided to checkout the massive AWS product page.[^1]
 
-Quickly I relaized, hosting containers or allocating custom a server isn't easy nor cheap. Especially hosting containers has dozens of options, as pointed out by Corey Quinn in his article "The 17 Ways to Run Containers on AWS".[^2] So this is not the way to go.
+Quickly I realized, hosting containers or allocating custom a server isn't easy nor cheap. Especially hosting containers has dozens of options, as pointed out by Corey Quinn in his article "The 17 Ways to Run Containers on AWS".[^2] So this is not the way to go.
 
 ## Rethinking
 
-Let us just throw everythong over board and start with an empty sheet of paper and focus on the different parts our URL shortener exists of.
+Let us just throw everything over board and start with an empty sheet of paper and focus on the different parts our URL shortener exists of.
 
 > 1. Accepting requests and responding to them.
 > 2. A central entity which looks up the requested url for an redirection target.

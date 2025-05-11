@@ -1,8 +1,7 @@
 ---
 layout: post
 title: "Playing with zig and wasm"
-date: 2024-07-05
-tags: ["zig", "wasm"]
+description: Recently I started to play around with wasm for a project of mine and I wanted to explore how zig would do compared to other low-level options.
 ---
 
 I always wanted to do something with zig, but never really had the time or project in mind for it. Recently I started to play around with wasm for a project of mine and I wanted to explore how zig would do compared to other low-level options.

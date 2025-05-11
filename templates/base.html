@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta http-equiv="Content-Security-Policy" content="default-src 'self' sa.oltdaniel.eu">
+
+        <title>{{ title }} - {{ site.title }}</title>
+
+        {% if item.description %}
+        <meta name="description" content="{{ item.description }}">
+        {% elif site.description %}
+        <meta name="description" content="{{ site.description }}">
+        {% endif %}
+
+        <link rel="canonical" href="{{ site.url }}{{ item.url }}">
+
+        <!-- Open Graph -->
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="{{ title or site.title }}">
+        <meta property="og:description" content="{{ item.description or site.description }}">
+        <meta property="og:url" content="{{ site.url }}{{ item.url }}">
+        <meta property="og:site_name" content="{{ site.title }}">
+        
+        {% if item.image %}
+            <meta property="og:image" content="{{ site.url }}{{ item.image }}">
+        {% endif %}
+
+        <link rel="stylesheet" href="/assets/matcha.css">
+        <script src="/assets/highlight.js" defer></script>
+    </head>
+    <body>
+        <header>
+            <h1>{{ site.title }}</h1>
+
+            {% if site.subtitle %}
+            <p>{{ site.subtitle }}</p>
+            {% endif %}
+
+            <nav>
+                <menu class="width">
+                    {% set url_elements = item.url.split("/") %}
+                    {% for nav in config.navigation %}
+                    {% set nav_elements = nav.url.split("/") %}
+                    <li {% if url_elements[1] == nav_elements[1] %}class="selected"{% endif %}><a href="{{ nav.url }}" class="block">{{ nav.title }}</a></li>
+                    {% endfor %}
+                </menu>
+            </nav>
+        </header>
+
+        <main>{% block content %}{{ content }}{% endblock %}</main>
+
+        <footer class="muted mb-2">
+            <p>Copyright &copy; {{ now() | format_date("%Y") }} {{ site.title }}.</p>
+            <p>All Rights Reserved.</p>
+        </footer>
+
+        <script async defer src="https://sa.oltdaniel.eu/latest.js"></script>
+        <noscript><img src="https://sa.oltdaniel.eu/noscript.gif" alt="" referrerpolicy="no-referrer-when-downgrade" /></noscript>
+    </body>
+</html>

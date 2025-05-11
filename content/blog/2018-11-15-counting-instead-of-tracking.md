@@ -1,8 +1,11 @@
 ---
 layout: post
 title: "Counting Instead of Tracking"
-date: 2018-11-15
-tags: ["analytics", "ruby"]
+description: >
+  Analyzing the traffic a website receives, is a key part in marketing to
+  understand and highlight the group of consumers and their interests. However,
+  the way how it has been implemented in the recent years has evolved from
+  counting single requests to tracking the use across multiple websites.
 ---
 
 Analyzing the traffic a website receives, is a key part in marketing to

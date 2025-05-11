@@ -1,7 +1,6 @@
 ---
 layout: post
 title:  "AdGuard Home DNS redundancy"
-date:   2024-10-08
 ---
 
 I like to make my most essential network services redudant, so in case I need to do some maintenance on one server or software, I still use my network without workarounds. DNS is one of those services, which I chose to host myself due to monitoring, blocking and privacy reasons. My main server for this due to the hardware and connectivity will be my Unraid Server and my Raspberry PI 4 running HomeAssistant will be the secondary fallback system.

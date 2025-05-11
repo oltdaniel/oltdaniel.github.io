@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+  <section>
+    {% for post in items %}
+    <a href="{{ post.url }}" class="flex wrap mb-1">
+        <time class="column mr-1 muted">{{ post.date | format_date("%Y-%m-%d") }}</time>
+        <h3 class="column">{{ post.title }}</h3>
+    </a>
+    {% endfor %}
+</section>
+{% endblock %}

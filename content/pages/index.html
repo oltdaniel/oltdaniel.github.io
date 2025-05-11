@@ -1,0 +1,39 @@
+---
+title: About
+flat_output: true
+template: base.html
+is_template: true
+---
+
+<section>
+    <header>
+        <picture>
+            <source type="image/webp" srcset="/assets/me_125.webp 125w, /assets/me_512.webp 512w, /assets/me_1024.webp 1024w">
+            <source type="image/png" srcset="/assets/me_125.png 125w, /assets/me_512.png 512w, /assets/me_1024.png 1024w">
+            <img src="/assets/me_512.png" alt="Daniel Oltmanns" width="125px" height="125px" />
+        </picture>
+    </header>
+    <div>
+        <p class="mt-0">Moin! I'm <b>{{ site.title }}</b>.</p>
+        <p>I do stuff like programming, pcb design and security.</p>
+        {% if site.socials %}
+        <p>You can find me on {% for social in site.socials %}{% if loop.first %}{% elif loop.last %} and {% else %},{% endif %}<a href="{{ social.url }}" target="_blank" rel=”noopener noreferrer”>{{ social.name }}</a>{% endfor %}.</p>
+        {% endif %}
+    </div>
+</section>
+
+<section>
+    <h2>Projects</h2>
+
+    <ul>
+        <li>
+            <b><a href="https://labdn.de" target="_blank">labdn.de</a></b>: Currently, it hosts only Arch Linux and EndeavourOS mirrors, along with the domain's own nameservers.
+        </li>
+    </ul>
+</section>
+
+<section>
+    <h2>Contact</h2>
+
+    <p>Anything you'd like to ask me or chat about? Just write me at <a href="mailto:{{ site.email }}">{{ site.email }}</a>.</p>
+</section>

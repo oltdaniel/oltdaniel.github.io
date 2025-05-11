@@ -1,7 +1,6 @@
 ---
 layout: post
 title:  "Windows Boot Manager recovery"
-date:   2023-08-12
 ---
 
 I'm currently running a dual-boot setup and I use linux as my main drive. Thus, Windows puts itself into the UEFI partition of that drive. If I switch to a new distro and wipe this drive for a new installation, the windows boot manager will be removed (because I don't do manual partitions).
