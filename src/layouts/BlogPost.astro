@@ -1,0 +1,43 @@
+---
+import type { CollectionEntry } from "astro:content";
+import BaseHead from "@/src/components/BaseHead.astro";
+import Footer from "@/src/components/Footer.astro";
+import Header from "@/src/components/Header.astro";
+import PrevNextPost from "@/src/components/PrevNextPost.astro";
+
+type Props = CollectionEntry<"blog">["data"];
+
+const { title, description, date, tags } = Astro.props;
+
+const isoDate = date.toISOString().split('T')[0]
+---
+
+<html lang="en">
+	<head>
+		<BaseHead title={title} description={description} image={`${Astro.url.pathname}og.png`} type="article" />
+	</head>
+
+	<body>
+		<div class="actual-content">
+			<Header />
+			<main id="main">
+				<article>
+					<h1>{ title }</h1>
+
+					<ul class="post-metadata">
+						<li><time datetime={isoDate}>{isoDate}</time></li>
+
+						{ tags.map((tag, i) => (
+							<li><a href={`/tags/${tag}`} class="post-tag">{tag}</a>{ (i < tags.length - 1) ? ', ' : ''}</li>
+						)) }
+					</ul>
+
+					<slot />
+
+					<PrevNextPost  />
+				</article>
+			</main>
+		</div>
+		<Footer />
+	</body>
+</html>

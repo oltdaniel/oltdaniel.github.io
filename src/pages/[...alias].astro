@@ -1,0 +1,45 @@
+---
+// src/pages/[...alias].astro
+import { getCollection } from "astro:content";
+// No need to import Astro from 'astro:env/server' for static client-side redirects
+// However, if you *do* import it and use Astro.redirect(), Astro will generate
+// a client-side meta refresh for static builds if no SSR adapter is active.
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog");
+  const notes = await getCollection("notes");
+
+  const allContent = [...posts, ...notes];
+
+  const paths = [];
+  for (const element of allContent) {
+    if (element.collection === "notes") {
+      paths.push({
+        params: { alias: `/tips/${element.id}/` }, // Remove leading slash for params
+        props: { redirectTo: `/notes/${element.id}/` }, // Target URL
+      });
+    }
+  }
+  return paths;
+}
+
+const { redirectTo } = Astro.props; // This will be available from getStaticPaths props
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Redirecting...</title>
+    {
+      redirectTo && (
+        <meta http-equiv="refresh" content={`0; url=${redirectTo}`} />
+      )
+    }
+  </head>
+  <body>
+    <p>
+      You are being redirected to: <a href={redirectTo}>{redirectTo}</a>
+    </p>
+  </body>
+</html>

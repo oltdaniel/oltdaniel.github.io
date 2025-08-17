@@ -1,0 +1,32 @@
+---
+import type { DataEntryMap } from "astro:content";
+import type { FormattedCollectionEntry } from "@/src/utils";
+
+interface Props<
+    T extends keyof DataEntryMap,
+    C extends FormattedCollectionEntry<T>[],
+> {
+    posts: C;
+    totalLength?: Number;
+}
+
+const { posts, totalLength } = Astro.props;
+---
+
+<ol reversed class="postlist" style=`--postlist-index: ${(totalLength ?? posts.length) + 1}`>
+    {
+        posts.map((post: any) => {
+            const isoDate = post.data.date.toISOString().split("T")[0];
+            return (
+                <li class="postlist-item">
+                    <a href={post.permalink} class="postlist-link">
+                        {post.data.title}
+                    </a>
+                    <time class="postlist-date" datetime={isoDate}>
+                        {isoDate}
+                    </time>
+                </li>
+            );
+        })
+    }
+</ol>

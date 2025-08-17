@@ -1,0 +1,22 @@
+---
+import { SITE_TITLE } from "@/src/consts";
+import childProcess from "child_process";
+import packageInfo from '@/package.json'
+
+const hash = childProcess
+  .execSync("git rev-parse --short HEAD")
+  .toString()
+  .trim();
+
+const today = new Date();
+---
+
+<footer>
+	<p>&copy; Copyright 2018 - {today.getFullYear()} { SITE_TITLE }.</p>
+	
+	<p><em>
+		<a href="/rss.xml" target="_blank">RSS Feed</a>,
+		Built with <a href="https://www.11ty.dev/" target="_blank">{ Astro.generator }</a>,
+		Commit: <a href={`${packageInfo.repository.url}/commit/${hash}`} target="_blank">{ hash }</a>
+	</em></p>
+</footer>

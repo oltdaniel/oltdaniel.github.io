@@ -1,0 +1,70 @@
+---
+import { Picture } from "astro:assets";
+import BaseHead from "@/src/components/BaseHead.astro";
+import Footer from "@/src/components/Footer.astro";
+import Header from "@/src/components/Header.astro";
+import { SITE_DESCRIPTION, SITE_TITLE } from "@/src/consts";
+import profileImage from "@/src/assets/me.jpg";
+import PostsList from "@/src/components/PostsList.astro";
+import { loadBlogCollection, loadNotesCollection } from "@/src/content.config";
+
+const posts = await loadBlogCollection();
+const notes = await loadNotesCollection();
+
+const maxPostsToShow = 3;
+
+const numHiddenPosts = posts.length - maxPostsToShow;
+const numHiddenNotes = notes.length - maxPostsToShow;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} type="website" />
+	</head>
+	<body>
+		<div class="actual-content">
+			<Header />
+			<main id="main">
+				<div class="profile">
+					<Picture
+						src={profileImage}
+						alt="Daniel Oltmanns"
+						width={150} height={150}
+					/>
+					<div class="profile-description">
+						<h2>Moin, I'm Daniel -</h2>
+						<p>
+							and this is my personal blog where I post stuff
+							about my projects and things that cross my path that
+							I think might be worth sharing.
+						</p>
+					</div>
+				</div>
+
+				<h1>Projects</h1>
+
+				<ul>
+					<li>
+						<a href="https://labdn.de" target="_blank">labdn.de</a>:
+						Currently, it hosts only Arch Linux and EndeavourOS
+						mirrors, along with the domain's own nameservers.
+					</li>
+				</ul>
+
+				<h1>Latest Posts</h1>
+				<PostsList posts={posts.slice(0, maxPostsToShow)} totalLength={posts.length} />
+				{ (numHiddenPosts > 0) && (
+					<p>{numHiddenPosts} more post{ numHiddenPosts > 1 ? 's' : '' } can be found in <a href="/blog">the archive</a>.</p>
+				) }
+
+				<h1>Latest Notes</h1>
+				<PostsList posts={notes.slice(0, 3)} totalLength={notes.length} />
+				{ (numHiddenNotes > 0) && (
+					<p>{numHiddenNotes} more note{ numHiddenNotes > 1 ? 's' : '' } can be found in <a href="/notes">the archive</a>.</p>
+				) }
+			</main>
+		</div>
+		<Footer />
+	</body>
+</html>

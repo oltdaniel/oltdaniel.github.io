@@ -1,0 +1,32 @@
+---
+// Source: https://lwkchan.com/blog/2025-05-24-heading-links-in-astro/
+export interface Props {
+  level: 1 | 2 | 3 | 4 | 5 | 6;
+  id?: string;
+  class?: string;
+}
+
+type Heading = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+
+const { level, class: className, id, ...rest } = Astro.props;
+const Tag = `h${level}` as Heading;
+---
+
+<Tag
+  tabindex={id ? -1 : null}
+  class={className}
+  id={id}
+  {...rest}
+>
+  <slot />
+  {
+    id && (
+      <a
+        href={`#${id}`}
+        class="tagged-heading"
+      >
+        #
+      </a>
+    )
+  }
+</Tag>

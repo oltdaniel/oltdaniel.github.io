@@ -1,0 +1,38 @@
+---
+import BaseHead from "@/src/components/BaseHead.astro";
+import Footer from "@/src/components/Footer.astro";
+import Header from "@/src/components/Header.astro";
+import { SITE_DESCRIPTION, SITE_TITLE } from "@/src/consts";
+import { loadBlogCollection, loadNotesCollection } from "@/src/content.config";
+
+const posts = await loadBlogCollection();
+const notes = await loadNotesCollection();
+
+const allTags = Array.from(new Set(
+    [...posts, ...notes]
+        .map((e) => e.data.tags)
+        .flat()
+        .filter((e) => e),
+));
+---
+<!doctype html>
+<html lang="en">
+    <head>
+        <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} type="website" />
+    </head>
+    <body>
+        <div class="actual-content">
+            <Header />
+            <main id="main">
+                <h1>Tags</h1>
+
+                <ul>
+                    { allTags.map(tag => (
+                        <li><a href={`/tags/${tag}`}>{tag}</a></li>
+                    )) }
+                </ul>
+            </main>
+        </div>
+        <Footer />
+    </body>
+</html>

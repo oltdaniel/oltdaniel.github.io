@@ -1,0 +1,23 @@
+---
+import { render } from "astro:content";
+import BlogPost from "@/src/layouts/BlogPost.astro";
+import PrevNextPost from "@/src/components/PrevNextPost.astro";
+import { prepareContentPosts } from '@/src/utils'
+import { loadBlogCollection } from "@/src/content.config";
+import { TaggedHeadingComponents } from "@/src/components/TaggedHeadings";
+
+export async function getStaticPaths() {
+	const posts = await loadBlogCollection()
+
+	return prepareContentPosts(posts)
+}
+
+const { post, prevPost, nextPost } = Astro.props;
+const { Content } = await render(post);
+---
+
+<BlogPost {...post.data}>
+	<Content components={TaggedHeadingComponents} />
+
+	<PrevNextPost {prevPost} {nextPost} />
+</BlogPost>

@@ -1,0 +1,472 @@
+/* Defaults */
+:root {
+	--font-family: -apple-system, system-ui, sans-serif;
+	--font-family-monospace: Consolas, Menlo, Monaco, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New, Courier, monospace;
+}
+
+/* Theme colors and variables */
+:root {
+	--text-color: #2e2e2e;
+	--text-color-link: #005ea2;
+	--text-color-link-visited: #54278f;
+
+	--background-color: #f0f0f0;
+	--body-background-color: #fff;
+
+	--syntax-tab-size: 2;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--text-color: #cccccc;
+		--text-color-link: #58b4ff;
+		--text-color-link-visited: #c39deb;
+
+		--background-color: #2e2e2e;
+		--body-background-color: #1b1b1b;
+	}
+
+	html {
+		/* Tell the browser that our page has a dark mode */
+		color-scheme: dark;
+	}
+}
+
+
+/* Global stylesheet */
+* {
+	box-sizing: border-box;
+}
+
+@view-transition {
+	navigation: auto;
+}
+
+html,
+body {
+	padding: 0;
+	margin: 0 auto;
+	font-family: var(--font-family);
+	color: var(--text-color);
+	background-color: var(--background-color);
+}
+
+html {
+	overflow-y: scroll;
+}
+
+header,
+main {
+	max-width: 720px;
+	margin: 0 auto;
+}
+
+footer {
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+.actual-content {
+	background-color: var(--body-background-color);
+	padding-bottom: 1em;
+}
+
+/* https://www.a11yproject.com/posts/how-to-hide-content/ */
+.visually-hidden:not(:focus):not(:active) {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+/* Fluid images via https://www.zachleat.com/web/fluid-images/ */
+img {
+	max-width: 100%;
+}
+
+img[width][height] {
+	height: auto;
+}
+
+img[src$=".svg"] {
+	width: 100%;
+	height: auto;
+	max-width: none;
+}
+
+video,
+iframe {
+	width: 100%;
+	height: auto;
+}
+
+iframe {
+	aspect-ratio: 16/9;
+}
+
+p:last-child {
+	margin-bottom: 0;
+}
+
+p {
+	line-height: 1.5;
+}
+
+li {
+	line-height: 1.5;
+}
+
+a[href] {
+	color: var(--text-color-link);
+}
+
+a[href]:visited {
+	color: var(--text-color-link-visited);
+}
+
+a[target=_blank]:after {
+	content: "↗";
+	font-size: 0.8rem;
+	margin-left: 0.25rem;
+	vertical-align: super;
+	text-decoration: none;
+}
+
+main,
+footer {
+	padding: 1rem;
+}
+
+main :first-child {
+	margin-top: 0;
+}
+
+.notfound-page {
+	text-align: center;
+	padding: 50px 0;
+}
+
+.notfound-page h1 {
+	font-size: 4rem;
+	padding: 0;
+	margin: 0;
+}
+
+#skip-link {
+	text-decoration: none;
+	background: var(--background-color);
+	color: var(--text-color);
+	padding: 0.5rem 1rem;
+	border: 1px solid var(--text-color);
+	/* border-radius: 2px; */
+}
+
+/* Prevent visually-hidden skip link fom pushing content around when focused */
+#skip-link.visually-hidden:focus {
+	position: absolute;
+	top: 1rem;
+	left: 1rem;
+	/* Ensure it is positioned on top of everything else when it is shown */
+	z-index: 999;
+}
+
+.links-nextprev {
+	display: flex;
+	justify-content: space-between;
+	gap: .5rem 1rem;
+	list-style: "";
+	border-top: 1px dashed var(--text-color);
+	padding: 1rem 0;
+}
+
+.links-nextprev>* {
+	flex-grow: 1;
+}
+
+.links-nextprev-next {
+	text-align: right;
+}
+
+@media (max-width: 767.98px) {
+	.links-nextprev {
+		flex-direction: column;
+	}
+}
+
+/* Header */
+header {
+	display: flex;
+	gap: 1rem;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1rem;
+}
+
+.home-link {
+	flex-grow: 1;
+	font-size: 1rem;
+	/* 16px /16 */
+	font-weight: 700;
+}
+
+.home-link:link:not(:hover) {
+	text-decoration: none;
+}
+
+.home-link:visited {
+	color: var(--text-color-link) !important;
+}
+
+/* Nav */
+.nav {
+	display: flex;
+	gap: .5rem 1rem;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+
+.nav-item {
+	display: inline-block;
+}
+
+.nav a[href][aria-current="page"] {
+	text-decoration: underline;
+	font-weight: bolder;
+}
+
+/* Profile */
+.profile {
+	display: flex;
+	gap: 20px;
+}
+
+@media (max-width: 767.98px) {
+	.profile {
+		flex-direction: column;
+	}
+}
+
+.profile img {
+	/* border-radius: 8px; */
+}
+
+/* Posts list */
+.postlist {
+	counter-reset: start-from var(--postlist-index);
+	list-style: none;
+	padding: 0;
+	padding-left: 1.5rem;
+}
+
+.postlist-item {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	counter-increment: start-from -1;
+	margin-bottom: 1rem;
+}
+
+.postlist-item:before {
+	display: inline-block;
+	pointer-events: none;
+	content: "" counter(start-from, decimal-leading-zero) ". ";
+	line-height: 100%;
+	text-align: right;
+	margin-left: -1.5rem;
+}
+
+.postlist-date,
+.postlist-item:before {
+	font-size: 0.8125rem;
+	/* 13px /16 */
+	color: var(--text-color);
+}
+
+.postlist-date {
+	word-spacing: -0.5px;
+}
+
+.postlist-link {
+	font-size: 1.1875rem;
+	/* 19px /16 */
+	font-weight: 700;
+	flex-basis: calc(100% - 1.5rem);
+	padding-left: .25rem;
+	padding-right: .5rem;
+	text-underline-position: from-font;
+	text-underline-offset: 0;
+	text-decoration-thickness: 1px;
+}
+
+.postlist-item-active .postlist-link {
+	font-weight: bold;
+}
+
+/* Tags */
+.post-tag {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	font-style: italic;
+}
+
+.postlist-item>.post-tag {
+	align-self: center;
+}
+
+/* Tags list */
+.post-metadata {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: .5rem;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.post-metadata time {
+	margin-right: 1rem;
+}
+
+blockquote {
+	padding: 15px 10px;
+	margin: 20px auto;
+	border-left: 5px solid var(--text-color-link);
+}
+
+/* See https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/Heading_Elements#specifying_a_uniform_font_size_for_h1 */
+article h1 {
+	margin-block: 0.67rem;
+	font-size: 2rem;
+}
+
+/* Code stuff */
+
+@media (prefers-color-scheme: dark) {
+
+	.astro-code,
+	.shiki,
+	.astro-code span,
+	.shiki span,
+	:not(pre)>code {
+		color: var(--shiki-dark) !important;
+		background-color: var(--shiki-dark-bg) !important;
+		/* Optional, if you also want font styles */
+		font-style: var(--shiki-dark-font-style) !important;
+		font-weight: var(--shiki-dark-font-weight) !important;
+		text-decoration: var(--shiki-dark-text-decoration) !important;
+	}
+}
+
+pre.astro-code,
+pre.shiki {
+	color: var(--text-color);
+	background-color: var(--background-color);
+	font-family: var(--font-family-monospace);
+	font-size: 1rem;
+	margin: .5rem 0;
+	line-height: 1.375;
+	/* 22px /16 */
+	-moz-tab-size: var(--syntax-tab-size);
+	-o-tab-size: var(--syntax-tab-size);
+	tab-size: var(--syntax-tab-size);
+	-webkit-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+	direction: ltr;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	overflow-x: auto;
+
+	border: 1px solid var(--text-color);
+}
+
+/* Pre tag */
+pre.astro-code,
+pre.shiki {
+	padding: 1rem;
+	margin: .5rem 0;
+	overflow: auto;
+	/* border-radius: 0.3rem; */
+}
+
+/* Inline code */
+:not(pre)>code {
+	padding: .1rem .3rem;
+	white-space: normal;
+
+	color: var(--text-color);
+	background-color: var(--background-color);
+	font-family: var(--font-family-monospace);
+
+	background-color: #ffffff;
+	--shiki-dark-bg: #0a0c10;
+	color: #0e1116;
+	--shiki-dark: #f0f3f6;
+	overflow-x: auto;
+
+	border: 1px solid var(--text-color);
+}
+
+/* Astro specific stuff */
+.sr-only {
+	border: 0;
+	padding: 0;
+	margin: 0;
+	position: absolute !important;
+	height: 1px;
+	width: 1px;
+	overflow: hidden;
+	/* IE6, IE7 - a 0 height clip, off to the bottom right of the visible 1px box */
+	clip: rect(1px 1px 1px 1px);
+	/* maybe deprecated but we need to support legacy browsers */
+	clip: rect(1px, 1px, 1px, 1px);
+	/* modern browsers, clip-path works inwards from each corner */
+	clip-path: inset(50%);
+	/* added line to stop words getting smushed together (as they go onto separate lines and some screen readers do not understand line feeds as a space */
+	white-space: nowrap;
+}
+
+.footnotes a {
+	word-break: break-all;
+}
+
+/* Minimal Modern Responsive CSS Table */
+table {
+	width: 100%;
+	border-collapse: collapse;
+	border-spacing: 0;
+	text-indent: 0;
+	margin: 1rem 0;
+
+	overflow-x: scroll;
+	border: 1px solid var(--text-color);
+	/* border-radius: 0.3rem; */
+}
+
+table th,
+table td {
+	padding: 0.75rem 1rem;
+	text-align: left;
+}
+
+table thead {
+	background: var(--text-color);
+	color: var(--background-color);
+	font-weight: bolder;
+}
+
+table tr {
+	border-bottom: 1px solid #eee;
+}
+
+table tr:last-child {
+	border-bottom: none;
+}

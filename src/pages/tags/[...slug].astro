@@ -1,0 +1,55 @@
+---
+import BaseHead from "@/src/components/BaseHead.astro";
+import Footer from "@/src/components/Footer.astro";
+import Header from "@/src/components/Header.astro";
+import PostsList from "@/src/components/PostsList.astro";
+import { SITE_DESCRIPTION, SITE_TITLE } from "@/src/consts";
+import { loadBlogCollection, loadNotesCollection } from "@/src/content.config";
+
+export async function getStaticPaths() {
+    const posts = await loadBlogCollection();
+    const notes = await loadNotesCollection();
+
+    const allTags = new Set(
+        [...posts, ...notes]
+            .map((e) => e.data.tags)
+            .flat()
+            .filter((e) => e),
+    );
+
+    return Array.from(allTags).map((e) => ({
+        params: { slug: e },
+        props: {
+            tag: e,
+            posts: posts.filter((p) => p.data.tags.includes(e)),
+            notes: notes.filter((p) => p.data.tags.includes(e)),
+        },
+    }));
+}
+
+const { tag, posts, notes } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} type="website" />
+    </head>
+    <body>
+        <div class="actual-content">
+            <Header />
+            <main id="main">
+                <h1>Tag <code>{tag}</code></h1>
+
+                <h2>Posts</h2>
+                <PostsList posts={posts} />
+                { posts.length == 0 && <p>No notes with this tag.</p> }
+
+                <h2>Notes</h2>
+                <PostsList posts={notes} />
+                { notes.length == 0 && <p>No notes with this tag.</p> }
+            </main>
+        </div>
+        <Footer />
+    </body>
+</html>

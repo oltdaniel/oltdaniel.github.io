@@ -1,0 +1,27 @@
+{
+  "name": "oltdaniel.eu",
+  "version": "0.0.1",
+  "repository": {
+    "url": "https://github.com/oltdaniel/oltdaniel.github.io"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^4.3.1",
+    "@astrojs/rss": "^4.0.12",
+    "@astrojs/sitemap": "^3.4.1",
+    "@shikijs/rehype": "^3.9.1",
+    "astro": "^5.12.3",
+    "satori": "^0.16.1",
+    "satori-html": "^0.3.2",
+    "sharp": "^0.34.3"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "^1.2.19"
+  }
+}

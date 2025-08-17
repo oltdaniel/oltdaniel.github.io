@@ -1,0 +1,35 @@
+---
+import { SITE_TITLE } from "@/src/consts";
+---
+
+<a href="#main" id="skip-link" class="visually-hidden">Skip to main content</a>
+
+<header>
+	<a href="/" class="home-link">{SITE_TITLE}</a>
+
+	<nav>
+		<h2 class="visually-hidden">Top level navigation menu</h2>
+				<ul class="nav">
+			{
+				[
+					{ name: "Blog", link: "/blog" },
+					{ name: "Notes", link: "/notes" },
+					{ name: "Tags", link: "/tags" },
+				].map((item) => (
+					<li
+						class={`nav-item${Astro.url.pathname.startsWith(item.link) ? " selected" : ""}`}
+					>
+						<a
+							href={item.link}
+							{...(Astro.url.pathname.startsWith(item.link)
+								? { "aria-current": "page" }
+								: {})}
+						>
+							{item.name}
+						</a>
+					</li>
+				))
+			}
+		</ul>
+	</nav>
+</header>
