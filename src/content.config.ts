@@ -36,7 +36,7 @@ const notes = defineCollection({
 		generateId: ({ entry, data }) => {
 			const id = entry.substring(5)
 
-			return id.replace(/\.mdx?$/, '')
+			return id.replace(/(\/index)?\.mdx?$/, '')
 		},
 	}),
 	// Type-check frontmatter using a schema
