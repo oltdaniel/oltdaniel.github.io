@@ -27,7 +27,7 @@ Currently the majority of browsers support WASM in 32bit with some basics WASM f
 
 > Source: [codeberg.org/andrewrk/player](https://codeberg.org/andrewrk/player/src/commit/3e84496958dd75654cec915c4f6feddf30e772b7/build.zig#L7)
 
-```zig
+```zig filename="build.zig"
 const wasm_target = b.resolveTargetQuery(.{
     .cpu_arch = .wasm32,
     .os_tag = .freestanding,
@@ -53,7 +53,7 @@ const wasm_target = b.resolveTargetQuery(.{
 
 This one is mainly the default `b.addExecutable` from the initilization. However, note the change to our previosly written `wasm_target` and the hardcoded `.ReleaseSmall` for optimizations. Personally, I will always choose `.ReleaseSmall`  due to the huge size increases when using `.ReleaseFast` or even a considerable increase when using `.ReleaseFast`, something you don't really want when loading the WASM on a website.
 
-```zig
+```zig filename="build.zig"
 // ...
 const wasm = b.addExecutable(.{
     .name = "main",

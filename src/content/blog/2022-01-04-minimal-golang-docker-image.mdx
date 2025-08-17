@@ -22,7 +22,7 @@ go get github.com/gin-gonic/gin
 go get github.com/aarzilli/golua/lua
 ```
 
-```go
+```go filename="main.go"
 package main
 
 import (
@@ -90,7 +90,7 @@ func main() {
 
 ## First stage
 
-```dockerfile
+```dockerfile filename="Dockerfile"
 # use a fully featured golang build environment
 FROM golang:latest AS builder
 # install project dependencies
@@ -132,7 +132,7 @@ Compiling everything into a static library or even into the executable itself ca
 
 So lets rebuild the first stage and add the second one. In my example I'll use the `golua`[^2] package which requires the shared library of lua.
 
-```dockerfile
+```dockerfile filename="Dockerfile"
 # first stage for our compiling environment
 FROM golang:alpine AS builder
 # install build tools
@@ -178,7 +178,7 @@ For this, we don't care about the first stage as we did before. It can be as big
 - `CGO_ENABLED=0` will tell the go compiler, it doesn't have access to any system libraries. 
 - however, the `-installsuffix cgo` argument is **not required anymore** as stated in the original GitHub issue about static linking issues. [^3]
 
-```dockerfile
+```dockerfile filename="Dockerfile"
 # use a fully featured golang build environment
 FROM golang:latest AS builder
 # change directory of project
