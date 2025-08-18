@@ -68,10 +68,10 @@ We have now resolved the question on how to redirect, but we also need to decide
 
 *Which encoding?* The encoding everybody uses to encode anything on the web into a safe string. **Base64**. This means, we can map our requests like this:
 
-| Requested URL | Filename |
-|-|-|
-| `example.org/abc123/welt` | `ZXhhbXBsZS5vcmcvYWJjMTIzL3dlbHQK.html` |
-| `something.example.org` | `c29tZXRoaW5nLmV4YW1wbGUub3JnCg==.html` |
+```md filename="request_url->filename"
+example.org/abc123/welt -> ZXhhbXBsZS5vcmcvYWJjMTIzL3dlbHQK.html
+something.example.org -> c29tZXRoaW5nLmV4YW1wbGUub3JnCg==.html
+```
 
 ### Handling traffic
 

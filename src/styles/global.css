@@ -38,11 +38,49 @@
 	}
 }
 
+/* Modern reset, source: https://www.joshwcomeau.com/css/custom-css-reset/ */
+/* 1. Use a more-intuitive box-sizing model */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+/* 2. Remove default margin */
+* {
+  /*margin: 0;*/
+}
+/* 3. Enable keyword animations */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    interpolate-size: allow-keywords;
+  }
+}
+body {
+  /* 4. Add accessible line-height */
+  line-height: 1.5;
+  /* 5. Improve text rendering */
+  -webkit-font-smoothing: antialiased;
+}
+/* 6. Improve media defaults */
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+/* 7. Inherit fonts for form controls */
+input, button, textarea, select {
+  font: inherit;
+}
+/* 8. Avoid text overflows */
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+/* 9. Improve line wrapping */
+p {
+  text-wrap: pretty;
+}
+h1, h2, h3, h4, h5, h6 {
+  text-wrap: balance;
+}
 
 /* Global stylesheet */
-* {
-	box-sizing: border-box;
-}
 
 @view-transition {
 	navigation: auto;
@@ -339,6 +377,7 @@ blockquote {
 	padding: 15px 10px;
 	margin: 20px auto;
 	border-left: 5px solid var(--text-color-link);
+	background-color: var(--background-color);
 }
 
 /* See https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/Heading_Elements#specifying_a_uniform_font_size_for_h1 */
@@ -350,7 +389,7 @@ article h1 {
 /* Code stuff */
 .astro-code {
 	font-family: var(--font-family-monospace);
-	font-size: 1rem;
+	font-size: 0.85rem;
 	margin: 20px 0;
 	overflow-x: hidden;
 	padding: 0;
@@ -358,7 +397,7 @@ article h1 {
 }
 
 .astro-code pre {
-	overflow-x: scroll;
+	overflow-x: auto;
 	padding: .75rem;
 	margin: 0;
 }
@@ -367,7 +406,7 @@ code:not(pre code) {
     white-space: pre-wrap !important;
     word-break: break-all !important;
 
-	padding: 0.5em 0.5em .3em 0.5em;
+	padding: .2em .5em;
     color: var(--shiki);
     border: 1px solid var(--background-color);
     border-radius: 4px;
@@ -375,8 +414,9 @@ code:not(pre code) {
 
 	hyphens: none;
 	tab-size: var(--syntax-tab-size);
-	vertical-align:bottom;
-	font-size: inherit;
+	vertical-align:baseline;
+	font-family: var(--font-family-monospace);
+	font-size: 0.85rem;
 	line-height: inherit;
 }
 
@@ -424,37 +464,4 @@ code:not(pre code) {
 
 .footnotes a {
 	word-break: break-all;
-}
-
-/* Minimal Modern Responsive CSS Table */
-table {
-	width: 100%;
-	border-collapse: collapse;
-	border-spacing: 0;
-	text-indent: 0;
-	margin: 1rem 0;
-
-	overflow-x: scroll;
-	border: 1px solid var(--text-color);
-	/* border-radius: 0.3rem; */
-}
-
-table th,
-table td {
-	padding: 0.75rem 1rem;
-	text-align: left;
-}
-
-table thead {
-	background: var(--text-color);
-	color: var(--background-color);
-	font-weight: bolder;
-}
-
-table tr {
-	border-bottom: 1px solid #eee;
-}
-
-table tr:last-child {
-	border-bottom: none;
 }

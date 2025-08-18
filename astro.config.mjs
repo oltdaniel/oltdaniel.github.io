@@ -14,6 +14,7 @@ export default defineConfig({
 	markdown: {
 		shikiConfig: {
 			themes: {
+				// NOTE: The base colors of these are additionally hardcoded in the global css
 				light: 'github-light-high-contrast',
 				dark: 'github-dark-high-contrast'
 			},
