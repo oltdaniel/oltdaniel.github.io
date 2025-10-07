@@ -12,14 +12,40 @@ const allTags = Array.from(new Set(
         .flat()
         .filter((e) => e),
 ));
+
+// Calculate counts for each tag
+const tagCounts = allTags.map(tag => {
+    const postCount = posts.filter(p => p.data.tags.includes(tag)).length;
+    const noteCount = notes.filter(n => n.data.tags.includes(tag)).length;
+    const totalCount = postCount + noteCount;
+    
+    return {
+        tag,
+        postCount,
+        noteCount,
+        totalCount
+    };
+}).sort((a, b) => b.totalCount - a.totalCount); // Sort by total count descending
 ---
 
 <BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION} type="website">
     <h1>Tags</h1>
 
-    <ul>
-        { allTags.map(tag => (
-            <li><a href={`/tags/${tag}`}>{tag}</a></li>
+    <ul class="tag-list-page">
+        { tagCounts.map(({ tag, postCount, noteCount, totalCount }) => (
+            <li class="tag-item">
+                <a href={`/tags/${tag}`} class="tag-display">#{tag}</a>
+                <span class="tag-count">
+                    <span class="total-count">{totalCount} total</span>
+                    (
+                    <span class="count-breakdown">
+                        {postCount > 0 && <span class="post-count">{postCount} post{postCount !== 1 ? 's' : ''}</span>}
+                        {postCount > 0 && noteCount > 0 && <span class="separator">+</span>}
+                        {noteCount > 0 && <span class="note-count">{noteCount} note{noteCount !== 1 ? 's' : ''}</span>}
+                    </span>
+                    )
+                </span>
+            </li>
         )) }
     </ul>
 </BaseLayout>

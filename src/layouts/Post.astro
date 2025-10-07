@@ -8,7 +8,7 @@ type BlogProps = CollectionEntry<"blog">["data"];
 type NotesProps = CollectionEntry<"notes">["data"];
 type Props = BlogProps | NotesProps;
 
-const { title, date, tags } = Astro.props;
+const { title, date, updated, tags } = Astro.props;
 
 // Type guard to check if this is a blog post (has description)
 const isBlogPost = (props: Props): props is BlogProps => {
@@ -18,20 +18,38 @@ const isBlogPost = (props: Props): props is BlogProps => {
 const description = isBlogPost(Astro.props) ? Astro.props.description : SITE_DESCRIPTION;
 const image = isBlogPost(Astro.props) ? `${Astro.url.pathname}og.png` : undefined;
 
-const isoDate = date.toISOString().split('T')[0]
+const isoDate = date.toISOString().split('T')[0];
+const isoUpdated = updated?.toISOString().split('T')[0];
 ---
 
 <BaseLayout title={title} description={description} image={image} type="article">
 	<article>
 		<h1>{ title }</h1>
 
-		<ul class="post-metadata">
-			<li><time datetime={isoDate}>{isoDate}</time></li>
-
-			{ tags.map((tag, i) => (
-				<li><a href={`/tags/${tag}`} class="post-tag">{tag}</a>{ (i < tags.length - 1) ? ', ' : ''}</li>
-			)) }
-		</ul>
+		<div class="post-metadata">
+			<div class="post-date">
+				<span class="meta-label">Published at:</span>
+				<time datetime={isoDate}>{isoDate}</time>
+			</div>
+			
+			{ updated && (
+				<div class="post-updated">
+					<span class="meta-label">Updated at:</span>
+					<time datetime={isoUpdated}>{isoUpdated}</time>
+				</div>
+			) }
+			
+			{ tags.length > 0 && (
+				<div class="post-tags">
+					<span class="meta-label">Tags:</span>
+					<div class="tag-list">
+						{ tags.map((tag) => (
+							<a href={`/tags/${tag}`} class="post-tag">#{tag}</a>
+						)) }
+					</div>
+				</div>
+			) }
+		</div>
 
 		<slot />
 

@@ -35,6 +35,7 @@ const blog = defineCollection({
 			title: z.string(),
 			description: z.string(),
 			date: z.coerce.date(),
+			updated: z.coerce.date().optional(),
 			tags: z.array(z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/)).default(["others"])
 		}),
 });
@@ -55,6 +56,7 @@ const notes = defineCollection({
 		z.object({
 			title: z.string(),
 			date: z.coerce.date(),
+			updated: z.coerce.date().optional(),
 			tags: z.array(z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/)).default(["others"])
 		}),
 });

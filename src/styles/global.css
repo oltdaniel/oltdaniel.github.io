@@ -15,10 +15,27 @@
 
 	--syntax-tab-size: 2;
 
-    --shiki-bg: #ffffff;
-    --shiki: #0e1116;
+	--shiki-bg: #ffffff;
+	--shiki: #0e1116;
 
-    color-scheme: light;
+	/* Common spacing values */
+	--space-xs: 0.25rem;
+	--space-sm: 0.5rem;
+	--space-md: 1rem;
+	--space-lg: 1.5rem;
+	--space-xl: 2rem;
+
+	/* Common font sizes */
+	--font-size-sm: 0.75rem;
+	--font-size-md: 0.875rem;
+	--font-size-lg: 1.1875rem;
+
+	/* Border values */
+	--border-width: 2px;
+	--border-style: solid;
+	--border-color: var(--background-color);
+
+	color-scheme: light;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -37,48 +54,27 @@
 	}
 }
 
-/* Modern reset, source: https://www.joshwcomeau.com/css/custom-css-reset/ */
-/* 1. Use a more-intuitive box-sizing model */
+/* Simplified reset */
 *, *::before, *::after {
-  box-sizing: border-box;
+	box-sizing: border-box;
 }
-/* 2. Remove default margin (commented out for this design) */
-/*
-* {
-  margin: 0;
-}
-*/
-/* 3. Enable keyword animations */
-@media (prefers-reduced-motion: no-preference) {
-  html {
-    interpolate-size: allow-keywords;
-  }
-}
+
 body {
-  /* 4. Add accessible line-height */
-  line-height: 1.5;
-  /* 5. Improve text rendering */
-  -webkit-font-smoothing: antialiased;
+	line-height: 1.5;
+	-webkit-font-smoothing: antialiased;
 }
-/* 6. Improve media defaults */
+
 img, picture, video, canvas, svg {
-  display: block;
-  max-width: 100%;
+	display: block;
+	max-width: 100%;
 }
-/* 7. Inherit fonts for form controls */
+
 input, button, textarea, select {
-  font: inherit;
+	font: inherit;
 }
-/* 8. Avoid text overflows */
-p, h1, h2, h3, h4, h5, h6 {
-  overflow-wrap: break-word;
-}
-/* 9. Improve line wrapping */
-p {
-  text-wrap: pretty;
-}
+
 h1, h2, h3, h4, h5, h6 {
-  text-wrap: balance;
+	overflow-wrap: break-word;
 }
 
 /* Global stylesheet */
@@ -127,7 +123,7 @@ footer {
 	width: 1px;
 }
 
-/* Fluid images via https://www.zachleat.com/web/fluid-images/ */
+/* Fluid images */
 img {
 	max-width: 100%;
 }
@@ -142,8 +138,7 @@ img[src$=".svg"] {
 	max-width: none;
 }
 
-video,
-iframe {
+video, iframe {
 	width: 100%;
 	height: auto;
 }
@@ -152,16 +147,12 @@ iframe {
 	aspect-ratio: 16/9;
 }
 
+p, li {
+	line-height: 1.5;
+}
+
 p:last-child {
 	margin-bottom: 0;
-}
-
-p {
-	line-height: 1.5;
-}
-
-li {
-	line-height: 1.5;
 }
 
 a[href] {
@@ -182,7 +173,7 @@ a[target=_blank]:after {
 
 main,
 footer {
-	padding: 1rem;
+	padding: var(--space-md);
 }
 
 main :first-child {
@@ -204,9 +195,8 @@ main :first-child {
 	text-decoration: none;
 	background: var(--background-color);
 	color: var(--text-color);
-	padding: 0.5rem 1rem;
+	padding: var(--space-sm) var(--space-md);
 	border: 1px solid var(--text-color);
-	/* border-radius: 2px; */
 }
 
 /* Prevent visually-hidden skip link fom pushing content around when focused */
@@ -221,10 +211,10 @@ main :first-child {
 .links-nextprev {
 	display: flex;
 	justify-content: space-between;
-	gap: .5rem 1rem;
+	gap: var(--space-xs) var(--space-md);
 	list-style: "";
 	border-top: 1px dashed var(--text-color);
-	padding: 1rem 0;
+	padding: var(--space-md) 0;
 }
 
 .links-nextprev>* {
@@ -235,20 +225,14 @@ main :first-child {
 	text-align: right;
 }
 
-@media (max-width: 767.98px) {
-	.links-nextprev {
-		flex-direction: column;
-	}
-}
-
 /* Header */
 header {
 	display: flex;
-	gap: 1rem;
+	gap: var(--space-md);
 	flex-wrap: wrap;
 	justify-content: space-between;
 	align-items: center;
-	padding: 1rem;
+	padding: var(--space-md);
 }
 
 .home-link {
@@ -269,7 +253,7 @@ header {
 /* Nav */
 .nav {
 	display: flex;
-	gap: .5rem 1rem;
+	gap: var(--space-sm) var(--space-md);
 	padding: 0;
 	margin: 0;
 	list-style: none;
@@ -290,18 +274,12 @@ header {
 	gap: 20px;
 }
 
-@media (max-width: 767.98px) {
-	.profile {
-		flex-direction: column;
-	}
-}
-
 /* Posts list */
 .postlist {
 	counter-reset: start-from var(--postlist-index);
 	list-style: none;
 	padding: 0;
-	padding-left: 1.5rem;
+	padding-left: var(--space-lg);
 }
 
 .postlist-item {
@@ -309,7 +287,7 @@ header {
 	flex-wrap: wrap;
 	align-items: baseline;
 	counter-increment: start-from -1;
-	margin-bottom: 1rem;
+	margin-bottom: var(--space-md);
 }
 
 .postlist-item:before {
@@ -318,13 +296,12 @@ header {
 	content: "" counter(start-from, decimal-leading-zero) ". ";
 	line-height: 100%;
 	text-align: right;
-	margin-left: -1.5rem;
+	margin-left: calc(-1 * var(--space-lg));
 }
 
 .postlist-date,
 .postlist-item:before {
 	font-size: 0.8125rem;
-	/* 13px /16 */
 	color: var(--text-color);
 }
 
@@ -333,12 +310,11 @@ header {
 }
 
 .postlist-link {
-	font-size: 1.1875rem;
-	/* 19px /16 */
+	font-size: var(--font-size-lg);
 	font-weight: 700;
-	flex-basis: calc(100% - 1.5rem);
-	padding-left: .25rem;
-	padding-right: .5rem;
+	flex-basis: calc(100% - var(--space-lg));
+	padding-left: var(--space-xs);
+	padding-right: var(--space-sm);
 	text-underline-position: from-font;
 	text-underline-offset: 0;
 	text-decoration-thickness: 1px;
@@ -353,25 +329,114 @@ header {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	font-style: italic;
+	font-style: normal;
+	font-size: var(--font-size-sm);
+	padding: 0.15rem 0.4rem;
+	background-color: transparent;
+	color: var(--text-color-link);
+	text-decoration: none;
+	transition: all 0.15s ease;
+}
+
+.post-tag:hover {
+	background-color: var(--background-color);
+	text-decoration: none;
+}
+
+.post-tag:visited {
+	color: var(--text-color-link);
+}
+
+.post-tag:visited:hover {
+	color: var(--text-color-link);
 }
 
 .postlist-item>.post-tag {
 	align-self: center;
 }
 
-/* Tags list */
-.post-metadata {
-	display: inline-flex;
-	flex-wrap: wrap;
-	gap: .5rem;
-	list-style: none;
+/* Tag display in headings */
+.tag-display {
+	color: var(--text-color-link);
+	font-weight: 500;
+	border-radius: 4px;
+}
+
+/* Tag list page with counts */
+.tag-list-page {
+	list-style: noen;
 	padding: 0;
 	margin: 0;
+	display: grid;
+	grid-template-columns: max-content 1fr;
+	gap: 0.75em 2rem;
+	align-items: center;
+}
+
+.tag-item {
+	display: contents;
+}
+
+.tag-item .tag-display {
+	white-space: nowrap;
+}
+
+.tag-item .tag-count {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.tag-item:last-child .tag-display,
+.tag-item:last-child .tag-count {
+	border-bottom: none;
+}
+
+.total-count {
+	font-weight: 600;
+	min-width: 2em;
+	text-align: right;
+}
+
+/* Post metadata */
+.post-metadata {
+	border-top: var(--border-width) var(--border-style) var(--border-color);
+	border-bottom: var(--border-width) var(--border-style) var(--border-color);
+	padding: 0.75rem 0;
+	margin: var(--space-md) 0;
+	font-size: 0.8rem;
+	line-height: 1.5;
+	color: var(--text-color);
+	display: grid;
+	grid-template-columns: 1fr auto;
+	gap: var(--space-sm);
+}
+
+.post-metadata .post-date,
+.post-metadata .post-updated {
+	display: flex;
+	align-items: center;
+	gap: var(--space-sm);
+}
+
+.post-metadata .meta-label {
+	color: var(--text-color);
+	margin-right: var(--space-sm);
+}
+
+.post-metadata .meta-label:after {
+	content: "";
+	margin-left: var(--space-xs);
 }
 
 .post-metadata time {
-	margin-right: 1rem;
+	color: var(--text-color);
+}
+
+.post-metadata .tag-list {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: 0.4rem;
 }
 
 blockquote {
@@ -387,15 +452,15 @@ article h1 {
 	font-size: 2rem;
 }
 
-/* Code stuff */
+/* Code styling */
 .astro-code {
 	font-family: var(--font-family-monospace);
-	font-size: 0.875rem;
+	font-size: var(--font-size-md);
 	line-height: 1.5;
 	margin: 20px 0;
 	overflow-x: hidden;
 	padding: 0;
-	border: 2px solid var(--background-color);
+	border: var(--border-width) var(--border-style) var(--border-color);
 	-webkit-font-smoothing: auto;
 	-moz-osx-font-smoothing: auto;
 	position: relative;
@@ -407,9 +472,8 @@ article h1 {
 	right: 0;
 	background: var(--background-color);
 	border: 1px solid var(--text-color);
-	/* border-radius: 0 0 0 4px; */
-	padding: 0.25rem 0.5rem;
-	font-size: 0.75rem;
+	padding: var(--space-xs) var(--space-sm);
+	font-size: var(--font-size-sm);
 	cursor: pointer;
 	opacity: 0;
 	transition: opacity 0.2s ease;
@@ -432,13 +496,6 @@ article h1 {
 	opacity: 1;
 }
 
-/* Always show on touch devices */
-@media (hover: none) and (pointer: coarse) {
-	.astro-code .copy-button {
-		opacity: 0.5;
-	}
-}
-
 .astro-code .copy-button:hover {
 	background: var(--text-color);
 	color: var(--background-color);
@@ -449,7 +506,6 @@ article h1 {
 	color: white;
 }
 
-/* Position copy button in meta-head if it exists */
 .astro-code .meta-head .copy-button {
 	position: absolute;
 	top: 0;
@@ -458,11 +514,10 @@ article h1 {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	padding: 0.5rem;
-	/* border-radius: 4px; */
+	padding: var(--space-sm);
 	opacity: 1;
 	margin: 0;
-	border-left: 2px solid var(--text-color);
+	border-left: var(--border-width) var(--border-style) var(--text-color);
 	border-top: none;
 	border-right: none;
 	border-bottom: none;
@@ -470,7 +525,7 @@ article h1 {
 
 .astro-code pre {
 	overflow-x: auto;
-	padding: .75rem;
+	padding: 0.75rem;
 	margin: 0;
 	font-family: inherit;
 	font-size: inherit;
@@ -480,35 +535,33 @@ article h1 {
 }
 
 code:not(pre code) {
-    white-space: pre-wrap !important;
-    word-break: break-all !important;
-
-	padding: .2em .5em;
-    color: var(--shiki);
-    border: 1px solid var(--background-color);
-    border-radius: 4px;
-    background-color: var(--shiki-bg);
-
+	white-space: pre-wrap !important;
+	word-break: break-all !important;
+	padding: 0.2em 0.5em;
+	color: var(--shiki);
+	border: 1px solid var(--background-color);
+	border-radius: 4px;
+	background-color: var(--shiki-bg);
 	hyphens: none;
 	tab-size: var(--syntax-tab-size);
 	vertical-align: baseline;
 	font-family: var(--font-family-monospace);
-	font-size: 0.875rem;
+	font-size: var(--font-size-md);
 	line-height: 1.4;
 	-webkit-font-smoothing: auto;
 	-moz-osx-font-smoothing: auto;
 }
 
 @media (prefers-color-scheme: dark) {
-  .astro-code,
-  .astro-code code span {
-    color: var(--shiki-dark) !important;
-    background-color: var(--shiki-dark-bg) !important;
-    /* Optional, if you also want font styles */
-    font-style: var(--shiki-dark-font-style) !important;
-    font-weight: var(--shiki-dark-font-weight) !important;
-    text-decoration: var(--shiki-dark-text-decoration) !important;
-  }
+	.astro-code,
+	.astro-code code span {
+		color: var(--shiki-dark) !important;
+		background-color: var(--shiki-dark-bg) !important;
+		/* Optional, if you also want font styles */
+		font-style: var(--shiki-dark-font-style) !important;
+		font-weight: var(--shiki-dark-font-weight) !important;
+		text-decoration: var(--shiki-dark-text-decoration) !important;
+	}
 }
 
 .astro-code .meta-head {
@@ -521,6 +574,7 @@ code:not(pre code) {
 .astro-code .meta-head .filename {
 	padding: 0.5rem;
 	font-size: 0.75rem;
+	font-weight: bold;
 }
 
 /* Astro specific stuff */
@@ -544,4 +598,40 @@ code:not(pre code) {
 
 .footnotes a {
 	word-break: break-all;
+}
+
+/* Mobile devices (max-width: 767.98px) */
+@media (max-width: 767.98px) {
+	.links-nextprev {
+		flex-direction: column;
+	}
+	
+	.profile {
+		flex-direction: column;
+	}
+
+	.post-metadata {
+		grid-template-columns: 1fr;
+	}
+
+	.tag-list-page {
+		grid-template-columns: 1fr;
+		gap: 0;
+	}
+	
+	.tag-item .tag-display,
+	.tag-item .tag-count {
+		padding: 0.5rem 0;
+	}
+	
+	.tag-item .tag-count {
+		padding-left: 1rem;
+	}
+}
+
+/* Touch devices */
+@media (hover: none) and (pointer: coarse) {
+	.astro-code .copy-button {
+		opacity: 0.5;
+	}
 }
