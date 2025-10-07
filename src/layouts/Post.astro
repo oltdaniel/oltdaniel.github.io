@@ -1,0 +1,40 @@
+---
+import type { CollectionEntry } from "astro:content";
+import BaseLayout from "@/src/layouts/BaseLayout.astro";
+import PrevNextPost from "@/src/components/PrevNextPost.astro";
+import { SITE_DESCRIPTION } from "@/src/consts";
+
+type BlogProps = CollectionEntry<"blog">["data"];
+type NotesProps = CollectionEntry<"notes">["data"];
+type Props = BlogProps | NotesProps;
+
+const { title, date, tags } = Astro.props;
+
+// Type guard to check if this is a blog post (has description)
+const isBlogPost = (props: Props): props is BlogProps => {
+	return 'description' in props;
+};
+
+const description = isBlogPost(Astro.props) ? Astro.props.description : SITE_DESCRIPTION;
+const image = isBlogPost(Astro.props) ? `${Astro.url.pathname}og.png` : undefined;
+
+const isoDate = date.toISOString().split('T')[0]
+---
+
+<BaseLayout title={title} description={description} image={image} type="article">
+	<article>
+		<h1>{ title }</h1>
+
+		<ul class="post-metadata">
+			<li><time datetime={isoDate}>{isoDate}</time></li>
+
+			{ tags.map((tag, i) => (
+				<li><a href={`/tags/${tag}`} class="post-tag">{tag}</a>{ (i < tags.length - 1) ? ', ' : ''}</li>
+			)) }
+		</ul>
+
+		<slot />
+
+		<PrevNextPost  />
+	</article>
+</BaseLayout>

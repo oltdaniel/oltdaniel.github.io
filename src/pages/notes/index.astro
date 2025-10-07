@@ -1,28 +1,14 @@
 ---
-import BaseHead from "../../components/BaseHead.astro";
-import Footer from "../../components/Footer.astro";
-import Header from "../../components/Header.astro";
-import PostsList from "../../components/PostsList.astro";
-import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
-import { loadNotesCollection } from "../../content.config";
+import BaseLayout from "@/src/layouts/BaseLayout.astro";
+import PostsList from "@/src/components/PostsList.astro";
+import { SITE_DESCRIPTION, SITE_TITLE } from "@/src/consts";
+import { loadNotesCollection } from "@/src/content.config";
 
 const notes = await loadNotesCollection()
 ---
 
-<!doctype html>
-<html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} type="website" />
-	</head>
-	<body>
-		<div class="actual-content">
-			<Header />
-			<main id="main">
-				<h1 id="notes-archive">Notes Archive</h1>
+<BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION} type="website">
+	<h1 id="notes-archive">Notes Archive</h1>
 
-				<PostsList posts={notes} />
-			</main>
-		</div>
-		<Footer />
-	</body>
-</html>
+	<PostsList posts={notes} />
+</BaseLayout>

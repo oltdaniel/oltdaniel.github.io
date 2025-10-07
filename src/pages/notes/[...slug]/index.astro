@@ -2,7 +2,7 @@
 import { render } from "astro:content";
 import PrevNextPost from "@/src/components/PrevNextPost.astro";
 import { prepareContentPosts} from '@/src/utils'
-import NotesPost from "@/src/layouts/NotesPost.astro";
+import Post from "@/src/layouts/Post.astro";
 import { loadNotesCollection } from "@/src/content.config";
 import { TaggedHeadingComponents } from "@/src/components/TaggedHeadings";
 
@@ -16,8 +16,8 @@ const { post, prevPost, nextPost } = Astro.props;
 const { Content } = await render(post);
 ---
 
-<NotesPost {...post.data}>
+<Post {...post.data}>
 	<Content components={{...TaggedHeadingComponents}} />
 
 	<PrevNextPost {prevPost} {nextPost} />
-</NotesPost>
+</Post>

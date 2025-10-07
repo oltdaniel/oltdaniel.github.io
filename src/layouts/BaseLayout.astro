@@ -1,0 +1,127 @@
+---
+import BaseHead from "@/src/components/BaseHead.astro";
+import Footer from "@/src/components/Footer.astro";
+import Header from "@/src/components/Header.astro";
+
+export interface Props {
+	title: string;
+	description: string;
+	image?: string;
+	type?: "website" | "article";
+	includeActualContentWrapper?: boolean;
+}
+
+const { 
+	title, 
+	description, 
+	image, 
+	type = "website",
+	includeActualContentWrapper = true 
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={title} description={description} image={image} type={type} />
+	</head>
+	<body>
+		{includeActualContentWrapper ? (
+			<div class="actual-content">
+				<Header />
+				<main id="main">
+					<slot />
+				</main>
+			</div>
+		) : (
+			<>
+				<Header />
+				<main id="main">
+					<slot />
+				</main>
+			</>
+		)}
+		<Footer />
+		
+		<script is:inline>
+			// Add copy buttons to code blocks
+			document.addEventListener('DOMContentLoaded', function() {
+				const codeBlocks = document.querySelectorAll('.astro-code');
+				
+				codeBlocks.forEach(function(codeBlock) {
+					// Create copy button
+					const copyButton = document.createElement('button');
+					copyButton.className = 'copy-button';
+					copyButton.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
+					copyButton.setAttribute('aria-label', 'Copy code to clipboard');
+					copyButton.setAttribute('title', 'Copy code to clipboard');
+					
+					// Check if meta-head exists and add button there, otherwise add to code block
+					const metaHead = codeBlock.querySelector('.meta-head');
+					if (metaHead) {
+						metaHead.appendChild(copyButton);
+					} else {
+						codeBlock.appendChild(copyButton);
+					}
+					
+					// Add click handler
+					copyButton.addEventListener('click', function() {
+						const pre = codeBlock.querySelector('pre');
+						if (pre) {
+							const text = pre.textContent || '';
+							
+							// Use modern clipboard API
+							if (navigator.clipboard && window.isSecureContext) {
+								navigator.clipboard.writeText(text).then(function() {
+									showCopySuccess(copyButton);
+								}).catch(function(err) {
+									console.error('Failed to copy text: ', err);
+									showCopyError(copyButton);
+								});
+							} else {
+                                // Try legacy way
+                                try {
+                                    let input = document.createElement("input");
+                                    input.style.opacity = "0";
+                                    input.style.position = "fixed";
+                                    input.value = text;
+                                    document.body.appendChild(input);
+
+                                    input.focus();
+                                    input.setSelectionRange(0, input.value.length);
+                                    document.execCommand("Copy");
+
+                                    input.remove();
+                                    showCopySuccess(copyButton);
+                                } catch (err) {
+                                    console.error('Failed to copy text: ', err);
+                                    showCopyError(copyButton);
+                                }
+							}
+						}
+					});
+				});
+				
+				function showCopySuccess(button) {
+					const originalHTML = button.innerHTML;
+					button.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20,6 9,17 4,12"></polyline></svg>';
+					button.classList.add('copied');
+					
+					setTimeout(function() {
+						button.innerHTML = originalHTML;
+						button.classList.remove('copied');
+					}, 2000);
+				}
+				
+				function showCopyError(button) {
+					const originalHTML = button.innerHTML;
+					button.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>';
+					
+					setTimeout(function() {
+						button.innerHTML = originalHTML;
+					}, 2000);
+				}
+			});
+		</script>
+	</body>
+</html>

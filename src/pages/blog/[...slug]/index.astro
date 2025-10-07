@@ -1,6 +1,6 @@
 ---
 import { render } from "astro:content";
-import BlogPost from "@/src/layouts/BlogPost.astro";
+import Post from "@/src/layouts/Post.astro";
 import PrevNextPost from "@/src/components/PrevNextPost.astro";
 import { prepareContentPosts } from '@/src/utils'
 import { loadBlogCollection } from "@/src/content.config";
@@ -16,8 +16,8 @@ const { post, prevPost, nextPost } = Astro.props;
 const { Content } = await render(post);
 ---
 
-<BlogPost {...post.data}>
+<Post {...post.data}>
 	<Content components={{...TaggedHeadingComponents}} />
 
 	<PrevNextPost {prevPost} {nextPost} />
-</BlogPost>
+</Post>

@@ -2,6 +2,21 @@ import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { loadAndFormatCollection, sortByDate } from './utils';
 
+// Generic function to load and format any collection
+export async function loadCollection(collectionName: 'blog' | 'notes') {
+	const slugMapper = collectionName === 'blog' 
+		? (post: any) => post.id 
+		: (post: any) => `${post.id}`;
+	
+	const permalinkMapper = (post: any) => `/${collectionName}/${post.slug}`;
+	
+	return (await loadAndFormatCollection(collectionName, slugMapper, permalinkMapper)).sort(sortByDate);
+}
+
+export async function loadBlogCollection() {
+	return loadCollection('blog');
+}
+
 const blog = defineCollection({
 	// Load Markdown and MDX files in the `src/content/blog/` directory.
 	loader: glob({
@@ -24,10 +39,6 @@ const blog = defineCollection({
 		}),
 });
 
-export async function loadBlogCollection() {
-	return (await loadAndFormatCollection("blog", (post) => post.id, (post) => `/blog/${post.slug}`)).sort(sortByDate);
-}
-
 const notes = defineCollection({
 	// Load Markdown and MDX files in the `src/content/notes/` directory.
 	loader: glob({
@@ -49,7 +60,7 @@ const notes = defineCollection({
 });
 
 export async function loadNotesCollection() {
-	return (await loadAndFormatCollection("notes", (post) => `${post.id}`, (post) => `/notes/${post.slug}`)).sort(sortByDate);
+	return loadCollection('notes');
 }
 
 export const collections = { blog, notes };
