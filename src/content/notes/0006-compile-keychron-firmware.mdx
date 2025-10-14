@@ -1,0 +1,65 @@
+---
+title: Compile Keycrhon Firmware
+date: 2025-10-14
+tags: [keycrhon,python]
+---
+
+I recently aquired a Keycrhon K3 Max as my new keyboard and wanted to compile the firmware myself and flash it. This would allow me to be independent of the online website based tools or windows instructions. And it turns out, it is actually quite easy.
+
+## Get the code
+
+The code is in the official Keychron git repostiory for its QMK Firmware changes. Now, the keyboards can be found in the folder `keyboards/keychron`. However, if you don't find your keyboard there, like my K3 Max, you need to jump to another branch, in my case `wireless_playground`.
+
+You can open the folder [on GitHub](https://github.com/Keychron/qmk_firmware/tree/wireless_playground/keyboards/keychron) and just jump between the branches with the menu on the top left until you find your keyboard.
+
+```bash
+git clone https://github.com/Keychron/qmk_firmware
+git checkout wireless_playground
+```
+
+## Setup the environment
+
+Now, to setup the environment there are multiple ways [mentioned in the QMK Docs](https://docs.qmk.fm/newbs_getting_started). My preffered way after trying the system-wide tool installation, is using `uv` instead and setup a nice Python VirtualEnvironment.
+
+```bash
+uv venv
+# For me activate via fish shell
+source .venv/bin/activate.fish
+# Install QMK
+uv pip install qmk
+# Install other requirements
+uv pip install -r requirements.txt
+# Setup the QMK stuff
+uv run qmk setup
+# NOTE: Both should be the default answer anyway, so you can just press "Enter".
+# - Confirm "What do you want to do?" -> 3. Keep it and continue
+# - Confirm "Would you like to clone the submodules? [Y/n]" -> Y
+
+# Likely, you will be asked to install the udev rules to detect the bootloaders and stuff for flashing correctly.
+# NOTE: If no warning was presented to you during "uv run qmk setup" you can ignore this.
+sudo cp util/udev/50-qmk.rules /etc/udev/rules.d/
+```
+
+## Compile the firmware
+
+Now it should just be the matter of calling the correct keboard compile task. In my case this is:
+
+```bash
+qmk compile -kb keychron/k3_max/iso/rgb -km default
+```
+
+## Flashing the firmware
+
+> **WARNING**: Flashing firmware can brick your device if not done carefully. I do not take any responsibility for any damaged hardware or software.
+
+Before we can do this, it is best pratice to "reset" the Keyboard into a flashable mode. For me this is "Switching to cable mode" -> "Holding down ESC" -> "Connect the cable" ([Keychron K3 ISO Flashing Methods](https://www.keychron.com/pages/firmware-for-keychron-k3-version-2-iso-version)).
+
+After that, it is as simple as calling the flash command with the same parameters, and Done!
+
+```bash
+qmk flash -kb keychron/k3_max/iso/rgb -km default
+```
+
+## Exiting VirtualEnvironment
+
+Now you can simple call `deactivate` to exit the VirtualEnvironment, and all the tooling and dependencies only live in this folder and can be removed again quickly.
