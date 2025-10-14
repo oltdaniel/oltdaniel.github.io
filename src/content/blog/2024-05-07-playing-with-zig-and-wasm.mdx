@@ -39,7 +39,7 @@ const wasm_target = b.resolveTargetQuery(.{
         .mutable_globals,
         .nontrapping_fptoint,
         .reference_types,
-        //.relaxed_simd, not supported by Firefox or Safari
+        // .relaxed_simd, not supported by Firefox or Safari
         .sign_ext,
         // observed to cause Error occured during wast conversion :
         // Unknown operator: 0xfd058 in Firefox 117
@@ -304,5 +304,3 @@ String = Bye World!
 We learned how to handle numbers and strings between JS and WASM and realized quickly, a lot of boilerplate needs to be put around it to work smootly. Additionally, the flexibility of the JS environment goes out the window due to the low-level interface of WASM, which makes it quite a lot harder to adapt it easily for newcomers.
 
 However, by introducing an abstraction layer for types on both sides, we gain a lot more flexibility and with some more helper code around it, make it behave just like any other JS functions. All the code, that abstracts types fron null, over numbers and floats, to strings and json, can be found in my example repo [oltdaniel/zig-wasm-example](https://github.com/oltdaniel/zig-wasm-example).
-
-> Maybe I write a second part about how I implemented the actual abstraction.
