@@ -16,45 +16,62 @@ const numHiddenNotes = notes.length - maxPostsToShow;
 ---
 
 <BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION} type="website">
-	<div class="profile">
-		<Picture
-			src={profileImage}
-			alt="Daniel Oltmanns"
-			width={150}
-			height={150}
-		/>
-		<div class="profile-description">
-			<h2>Moin, I'm Daniel -</h2>
-			<p>
-				and this is my personal blog where I post stuff about my
-				projects and things that cross my path that I think might be
-				worth sharing.
-			</p>
-		</div>
-	</div>
+    <div class="profile">
+        <Picture
+            src={profileImage}
+            alt="Daniel Oltmanns"
+            width={150}
+            height={150}
+        />
+        <div class="profile-description">
+            <h2>Moin, I'm Daniel -</h2>
+            <p>
+                and this is my personal blog where I post stuff about my
+                projects and things that cross my path that I think might be
+                worth sharing.
+            </p>
+            <div class="social-links">
+                <a
+                    href="https://github.com/oltdaniel"
+                    target="_blank"
+                    rel="noopener noreferrer">GitHub</a
+                >
+                <a
+                    href="https://codeberg.org/oltdaniel"
+                    target="_blank"
+                    rel="noopener noreferrer">Codeberg</a
+                >
+                <a
+                    href="https://discord.com/users/635465695282331658"
+                    target="_blank"
+                    rel="noopener noreferrer">Discord</a
+                >
+            </div>
+        </div>
+    </div>
 
-	<h1>Latest Posts</h1>
-	<PostsList
-		posts={posts.slice(0, maxPostsToShow)}
-		totalLength={posts.length}
-	/>
-	{
-		numHiddenPosts > 0 && (
-			<p>
-				{numHiddenPosts} more post{numHiddenPosts > 1 ? "s" : ""} can be
-				found in <a href="/blog">the archive</a>.
-			</p>
-		)
-	}
+    <h1>Latest Posts</h1>
+    <PostsList
+        posts={posts.slice(0, maxPostsToShow)}
+        totalLength={posts.length}
+    />
+    {
+        numHiddenPosts > 0 && (
+            <p>
+                {numHiddenPosts} more post{numHiddenPosts > 1 ? "s" : ""} can be
+                found in <a href="/blog">the archive</a>.
+            </p>
+        )
+    }
 
-	<h1>Latest Notes</h1>
-	<PostsList posts={notes.slice(0, 3)} totalLength={notes.length} />
-	{
-		numHiddenNotes > 0 && (
-			<p>
-				{numHiddenNotes} more note{numHiddenNotes > 1 ? "s" : ""} can be
-				found in <a href="/notes">the archive</a>.
-			</p>
-		)
-	}
+    <h1>Latest Notes</h1>
+    <PostsList posts={notes.slice(0, 3)} totalLength={notes.length} />
+    {
+        numHiddenNotes > 0 && (
+            <p>
+                {numHiddenNotes} more note{numHiddenNotes > 1 ? "s" : ""} can be
+                found in <a href="/notes">the archive</a>.
+            </p>
+        )
+    }
 </BaseLayout>
