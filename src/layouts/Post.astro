@@ -16,7 +16,7 @@ const isBlogPost = (props: Props): props is BlogProps => {
 };
 
 const description = isBlogPost(Astro.props) ? Astro.props.description : SITE_DESCRIPTION;
-const image = isBlogPost(Astro.props) ? `${Astro.url.pathname}og.png` : undefined;
+const image = isBlogPost(Astro.props) ? new URL(`${Astro.url.pathname}og.png`, Astro.site).toString() : undefined;
 
 const isoDate = date.toISOString().split('T')[0];
 const isoUpdated = updated?.toISOString().split('T')[0];

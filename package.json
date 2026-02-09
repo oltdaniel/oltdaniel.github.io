@@ -11,7 +11,6 @@
     "astro": "^5.12.3",
     "hastscript": "^9.0.1",
     "satori": "^0.16.1",
-    "satori-html": "^0.3.2",
     "sharp": "^0.34.3"
   },
   "scripts": {

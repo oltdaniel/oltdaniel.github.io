@@ -65,14 +65,17 @@ const { title, description, image, publishedTime, type } = Astro.props;
 
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content={type} />
-<meta property="og:url" content={Astro.url} />
+<meta property="og:url" content={canonicalURL.toString()} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 { image && <meta property="og:image" content={image} /> }
 
 <!-- Twitter -->
 <meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter:url" content={Astro.url} />
+<meta property="twitter:url" content={canonicalURL.toString()} />
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
 { image && <meta property="twitter:image" content={image} /> }
+
+<!-- Web Analytics -->
+<script defer src="https://umami.labdn.de/script.js" data-website-id="49a30624-e257-451b-b1e6-faf5e56c5a0e"></script>
