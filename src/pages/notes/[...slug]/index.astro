@@ -5,6 +5,7 @@ import { prepareContentPosts} from '@/src/utils'
 import Post from "@/src/layouts/Post.astro";
 import { loadNotesCollection } from "@/src/content.config";
 import { TaggedHeadingComponents } from "@/src/components/TaggedHeadings";
+import PreWithMermaid from "@/src/components/PreWithMermaid.astro";
 
 export async function getStaticPaths() {
 	const posts = await loadNotesCollection();
@@ -17,7 +18,7 @@ const { Content } = await render(post);
 ---
 
 <Post {...post.data}>
-	<Content components={{...TaggedHeadingComponents}} />
+	<Content components={{ ...TaggedHeadingComponents, pre: PreWithMermaid }} />
 
 	<PrevNextPost {prevPost} {nextPost} />
 </Post>

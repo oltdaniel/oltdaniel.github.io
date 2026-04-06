@@ -23,6 +23,9 @@ export default defineConfig({
 				updateStyle(),
 				addMetaHead()
 			]
+		},
+		syntaxHighlight: {
+			excludeLangs: ['mermaid']
 		}
 	}
 });

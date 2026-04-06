@@ -1,0 +1,29 @@
+---
+import { renderMermaidSVG } from 'beautiful-mermaid';
+
+interface Props {
+	code: string;
+}
+
+const { code } = Astro.props;
+
+let svg = '';
+let error = '';
+
+try {
+	svg = renderMermaidSVG(code, {
+		bg: 'var(--shiki-bg)',
+		fg: 'var(--shiki)',
+		transparent: true,
+		font: 'var(--font-family)'
+	});
+} catch (e) {
+	error = e instanceof Error ? e.message : String(e);
+}
+---
+
+{error ? (
+	<pre class="mermaid-error">{error}</pre>
+) : (
+	<div class="mermaid-diagram" role="img" aria-label="Mermaid diagram" set:html={svg} />
+)}

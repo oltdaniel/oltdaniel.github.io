@@ -160,6 +160,38 @@ iframe {
     height: auto;
 }
 
+figure {
+    margin: 1.25rem 0;
+}
+
+figure > :is(img, picture, video, iframe, .astro-code, pre, .mermaid-diagram) {
+    margin: 0;
+}
+
+figure > figcaption {
+    padding: 0.5em var(--space-sm);
+    font-size: 0.8125rem;
+    line-height: 1.4;
+    color: var(--text-color);
+    opacity: 0.85;
+    text-align: center;
+}
+
+figure > figcaption:first-child {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+}
+
+figure.figure-image > figcaption {
+    text-align: center;
+}
+
+figure.figure-code > figcaption {
+    font-family: var(--font-family-monospace);
+    border-top: var(--border-width) var(--border-style) var(--border-color);
+    padding-top: var(--space-sm);
+}
+
 iframe {
     aspect-ratio: 16/9;
 }
@@ -601,6 +633,37 @@ code:not(pre code) {
     padding: 0.5rem;
     font-size: 0.75rem;
     font-weight: bold;
+}
+
+.mermaid-diagram {
+    overflow-x: auto;
+    border: var(--border-width) var(--border-style) var(--background-color);
+    border-radius: 4px;
+    padding: var(--space-sm);
+    margin: 1rem 0;
+    background-color: var(--shiki-bg);
+}
+
+.mermaid-diagram svg {
+    justify-self: center;
+    height: auto;
+}
+
+.mermaid-error {
+    overflow-x: auto;
+    border: var(--border-width) var(--border-style) #d32f2f;
+    border-radius: 4px;
+    padding: var(--space-sm);
+    margin: 1rem 0;
+    background-color: #fff5f5;
+    color: #7f1d1d;
+}
+
+@media (prefers-color-scheme: dark) {
+    .mermaid-error {
+        background-color: #2a1215;
+        color: #fecaca;
+    }
 }
 
 /* Astro specific stuff */
