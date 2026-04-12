@@ -1,0 +1,65 @@
+---
+title: LLDP Setup for UniFi Topology Discovery
+date: 2026-04-12
+tags: [unifi,proxmox,unraid]
+---
+
+> **NOTE**: This has only been tested with Proxmox and Unraid for now, but should work on other systems as well. It is also important to note, that this brings it's own problems wit iht and does not make the topology perfect.
+
+I run a few Proxmox nodes and one large Unraid server in my homelab and recently switched to Unifi for my network equipment. Using the topology feature to keep track of all my devices in my homelab is a nice feature. However, with specific setups that share the same port in my network for connectivity, but have their own MAC addresses, the topology discovery does not work out of the box.
+
+## Topology Discovery - Without LLDP
+
+<figure>
+    ```mermaid
+    flowchart TD
+        proxmox1[Proxmox Node 1]
+        proxmox11[Proxmox Node 1\nVM 1]
+        unraid[Unraid Server]
+        unraid1[Unraid Server\nVM 1]
+        unifi[UniFi Switch]
+
+        unifi --> proxmox1
+        unifi --> proxmox11
+        unifi --> unraid
+        unifi --> unraid1
+    ```
+    <figcaption>Topology discovery without LLDP, showing all devices on the same level.</figcaption>
+</figure>
+
+## Installation of LLDP
+
+On the Proxmox nodes this is rather easy, as you just need to install the package `lldpd` which also automatically starts the service.
+
+```bash
+apt install lldpd
+systemctl status lldpd
+```
+
+On Unraid, you can install the plugin "LLDP for UNRAID" by desertwitch from the Community Applications.
+
+## Topology Discovery - With LLDP
+
+<figure>
+    ```mermaid
+    flowchart TD
+        proxmox1[Proxmox Node 1]
+        proxmox11[Proxmox Node 1\nVM 1]
+        unraid[Unraid Server]
+        unraid1[Unraid Server\nVM 1]
+        unifi[UniFi Switch]
+
+        unifi --> proxmox1
+        proxmox1 --> proxmox11
+        unifi --> unraid
+        unraid --> unraid1
+    ```
+    <figcaption>Topology discovery with LLDP, showing the correct topology by positioning VMs below their hosts.</figcaption>
+</figure>
+
+## Problems
+
+> **NOTE**: The topology discover is not perfect, as it sometimes takes a while for devices to show up correctly. Additionally, there are some edge-cases that that I've already came across in the first minutes, that can easyil break things or show a wrong topology.
+
+- **On Unraid**, when allowing access for traffic between VMs/Containers and the host, there is an extra shim interface, which will be shown in the topology, even though it is not interesting for the topology. Due to the nature of Unraid and the plugin, you cannot exclude this from the service. As I've already changed the service that required the feature, I just disabled this. However, the topology is still not reliable for some reason.
+- **On Proxmox**, it works as expected in my setup. And this far, it was the server with the least troubles.
