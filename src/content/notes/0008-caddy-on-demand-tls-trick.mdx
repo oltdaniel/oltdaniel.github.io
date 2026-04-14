@@ -1,0 +1,88 @@
+---
+title: "Caddy On-Demand TLS trick"
+date: 2026-04-14
+tags: [caddy-tls]
+---
+
+Caddy offers many ways to issue TLS certificates. However, due to the nature of wildcard certificates, which are restricted to only be issued by DNS-01 challenges, caddy will require you to add a custom DNS Module for your provider.
+
+In scenarios with just a few subdomains, which are dynamic or change over time, and thus a limited number of certificates, we can just trick caddy into using On-Demand TLS. It avoids touching the config in the future and manually adding new subdomains, but still allows for dynamic issuing of certificates, but only for a domain we actually own and use for this server.
+
+## On-Demand TLS
+
+```caddyfile
+{
+    on_demand_tls {
+        ask http://localhost:2020/ask
+    }
+}
+
+:443 {
+    tls {
+        on_demand
+    }
+
+    @example host example.com *.example.com
+    handle @example {
+        respond "Hello World"
+    }
+}
+```
+
+This is a minimal example on how this can be used. The endpoint will be asked and depending on the return code, caddy will start issuing a certificate or not. This is a rather cool feature, that can be used to allow custom domains on a service, without requiring a specific configuration for each domain.
+
+A feature, we can trick caddy into using for wildcard certificates and without any external tools or servers. No need for a minimal python server that implements the ask endpoint.
+
+## The trick
+
+```caddyfile
+{
+    on_demand_tls {
+        ask http://localhost:2020/ask
+    }
+}
+
+http://localhost:2020 {
+    # Check if the domain is allowed
+    @allowed_domains {
+        expression {query.domain} == 'example.com' || {query.domain}.endsWith('.example.com')
+    }
+
+    handle @allowed_domains {
+        respond 200
+    }
+
+    # Block everything else
+    handle {
+        respond 404
+    }
+}
+
+:443 {
+    tls {
+        on_demand
+    }
+
+    # This is just an example to match an exact domain.
+    @example host example.com
+    handle @example {
+        respond "Hello World"
+    }
+
+    @example_wildcard host *.example.com
+    handle @example_wildcard {
+        respond "WILDCARD"
+    }
+}
+```
+
+## Conclusion
+
+This is more a trick and hacked version of using this feature just to avoid the need of adding a DNS module to the binary and access credentials to the DNS provider. But especially in scenarios where you only have a few subdomains it is a lot nicer, than having to touch the config every time you add a new subdomain.
+
+---
+
+#### References
+
+- [Caddy On-Demand TLS](https://caddyserver.com/docs/automatic-https#on-demand-tls)
+- [Caddy On-Demand TLS Options Documentation](https://caddyserver.com/docs/caddyfile/options#on-demand-tls)
